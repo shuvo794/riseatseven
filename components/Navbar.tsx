@@ -1,153 +1,144 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 
-import { MagneticButton } from "./MagneticButton";
+const navLinks = [
+  { label: "Services", hasPlus: true },
+  { label: "International", hasPlus: true },
+  { label: "About", hasPlus: true },
+  { label: "Work", badge: "25" },
+  { label: "Careers" },
+  { label: "Blog" },
+  { label: "Webinar" },
+];
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Work", href: "#work" },
-    { name: "Services", href: "#services" },
-    { name: "International", href: "#international" },
-    { name: "News", href: "#news" },
-    { name: "Careers", href: "#careers" },
-  ];
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
 
   return (
     <>
+      {/* Announcement Bar */}
+      <div className="w-full bg-[#a8f0d8] text-black text-center text-xs font-bold py-2.5 px-4 z-50 relative">
+        🚨 Where are your customers actually searching?{" "}
+        <span className="underline cursor-pointer">Download the report</span>
+      </div>
+
+      {/* Main Nav */}
       <header
-        className={cn(
-          "fixed top-0 left-0 w-full z-50 transition-all duration-300 px-6 py-6 lg:px-12",
-          scrolled ? "bg-black/80 backdrop-blur-md py-4" : "bg-transparent"
-        )}
+        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+          scrolled ? "bg-black" : "bg-transparent"
+        }`}
       >
-        <div className="max-w-screen-2xl mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-display font-black tracking-tighter">
-            RISE<span className="text-brand-mint">AT</span>SEVEN
+        <div className="max-w-[1400px] mx-auto flex items-center justify-between px-6 py-5">
+          {/* Logo */}
+          <Link href="/" className="text-white text-2xl font-bold tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
+            Rise at Seven<sup className="text-[10px] ml-0.5">®</sup>
           </Link>
 
-          <nav className="hidden lg:flex items-center space-x-8">
+          {/* Desktop Nav */}
+          <nav className="hidden xl:flex items-center gap-6">
             {navLinks.map((link) => (
-              <div key={link.name} className="relative group">
-                <Link
-                  href={link.href}
-                  className="text-sm font-semibold uppercase tracking-wider hover:text-brand-mint transition-colors flex items-center"
-                >
-                  {link.name}
-                  {link.name === "International" && (
-                    <span className="ml-1 text-[10px] bg-brand-mint text-brand-dark px-1.5 py-0.5 rounded-full">NEW</span>
-                  )}
-                </Link>
-                
-                {link.name === "International" && (
-                  <div className="absolute top-full left-0 mt-4 w-[400px] bg-white text-brand-dark p-8 rounded-3xl opacity-0 translate-y-4 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-2xl">
-                    <h4 className="font-display font-black text-2xl mb-4">WE ARE GLOBAL</h4>
-                    <p className="text-sm text-gray-600 mb-6 leading-relaxed">
-                      With offices in Sheffield, London, Manchester, and New York, we help brands grow internationally.
-                    </p>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-brand-grey p-4 rounded-xl font-bold text-xs uppercase tracking-widest">UK & Europe</div>
-                      <div className="bg-brand-grey p-4 rounded-xl font-bold text-xs uppercase tracking-widest">North America</div>
-                    </div>
-                  </div>
+              <Link
+                key={link.label}
+                href={`#${link.label.toLowerCase()}`}
+                className="text-sm font-semibold text-white/90 hover:text-white transition-colors flex items-center gap-1"
+              >
+                {link.label}
+                {link.hasPlus && <span className="text-white/50 text-xs">+</span>}
+                {link.badge && (
+                  <span className="bg-[#a8f0d8] text-black text-[10px] font-black px-1.5 py-0.5 rounded-full leading-none">
+                    {link.badge}
+                  </span>
                 )}
-              </div>
+              </Link>
             ))}
-            <MagneticButton>
-              <button className="bg-brand-mint text-brand-dark px-6 py-2 rounded-full font-bold text-sm uppercase tracking-widest hover:scale-105 transition-transform">
-                Get in touch
-              </button>
-            </MagneticButton>
+            <Link
+              href="#contact"
+              className="ml-2 bg-white text-black text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#a8f0d8] transition-colors flex items-center gap-1.5"
+            >
+              Get in touch <span className="text-base leading-none">↗</span>
+            </Link>
           </nav>
 
-          {/* Mobile Toggle */}
+          {/* Mobile Hamburger */}
           <button
-            onClick={() => setIsOpen(true)}
-            className="lg:hidden text-white"
+            onClick={() => setMobileOpen(true)}
+            className="xl:hidden text-white"
+            aria-label="Open menu"
           >
-            <Menu size={32} />
+            <Menu size={28} />
           </button>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       <AnimatePresence>
-        {isOpen && (
+        {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[60] bg-brand-dark flex flex-col p-8"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "tween", duration: 0.35, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-50 bg-black flex flex-col px-8 py-8 overflow-y-auto"
           >
-            <div className="flex justify-between items-center mb-12">
-              <span className="text-2xl font-display font-black tracking-tighter">
-                RISE<span className="text-brand-mint">AT</span>SEVEN
+            <div className="flex justify-between items-center mb-16">
+              <span className="text-white text-2xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
+                Rise at Seven<sup className="text-[10px] ml-0.5">®</sup>
               </span>
-              <button onClick={() => setIsOpen(false)}>
-                <X size={32} />
+              <button onClick={() => setMobileOpen(false)} className="text-white">
+                <X size={28} />
               </button>
             </div>
-
-            <nav className="flex flex-col space-y-4 mt-8">
+            <nav className="flex flex-col gap-6">
               {navLinks.map((link, i) => (
                 <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex flex-col"
+                  key={link.label}
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06 }}
                 >
-                  <div className="flex justify-between items-center group cursor-pointer" 
-                       onClick={() => {
-                         if (link.name === "Services" || link.name === "International") {
-                           // Toggle logic could go here if we had state
-                         } else {
-                           setIsOpen(false);
-                         }
-                       }}>
-                    <Link
-                      href={link.href}
-                      className="text-4xl font-display font-black uppercase hover:text-brand-mint transition-colors"
-                    >
-                      {link.name}
-                    </Link>
-                    {(link.name === "Services" || link.name === "International") && (
-                      <span className="text-brand-mint text-2xl">+</span>
+                  <Link
+                    href={`#${link.label.toLowerCase()}`}
+                    onClick={() => setMobileOpen(false)}
+                    className="text-5xl font-black text-white flex items-center gap-3 hover:text-[#a8f0d8] transition-colors"
+                    style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
+                  >
+                    {link.label}
+                    {link.badge && (
+                      <span className="bg-[#a8f0d8] text-black text-sm font-black px-2 py-0.5 rounded-full">
+                        {link.badge}
+                      </span>
                     )}
-                  </div>
+                  </Link>
                 </motion.div>
               ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-              >
-                <button className="bg-brand-mint text-brand-dark w-full py-5 rounded-full font-bold text-lg uppercase tracking-widest mt-12">
-                  Get in touch
-                </button>
-              </motion.div>
             </nav>
+            <div className="mt-auto pt-12">
+              <Link
+                href="#contact"
+                onClick={() => setMobileOpen(false)}
+                className="block w-full text-center bg-white text-black text-lg font-bold py-4 rounded-full hover:bg-[#a8f0d8] transition-colors"
+              >
+                Get in touch ↗
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
-};
-
-export default Navbar;
+}

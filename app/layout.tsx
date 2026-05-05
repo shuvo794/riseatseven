@@ -13,8 +13,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Rise at Seven | Search-First Creative Agency",
-  description: "We are Rise at Seven. A search-first creative agency. We build brands that people search for.",
+  title: "Rise at Seven® | Search-First Creative Agency",
+  description: "A global team of search-first content marketers creating, distributing & optimising content for SEO, Social, PR, Ai and LLM search.",
 };
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body className="antialiased">
+      <body className="antialiased bg-black text-white overflow-x-hidden">
         {children}
       </body>
     </html>

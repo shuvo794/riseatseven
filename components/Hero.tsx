@@ -1,91 +1,123 @@
 "use client";
-
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
-import { RevealText } from "./RevealText";
-
-const Hero = () => {
+export default function Hero() {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* Background Video Mask Effect */}
+    <section className="relative min-h-[calc(100vh-100px)] flex flex-col justify-between overflow-hidden bg-black">
+      {/* Background blurred image */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-50"
-        >
-          <source
-            src="https://assets.mixkit.co/videos/preview/mixkit-abstract-motion-of-colors-and-shapes-2342-large.mp4"
-            type="video/mp4"
-          />
-        </video>
-        <div className="absolute inset-0 bg-black/40" />
+        <Image
+          src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=2400"
+          alt="hero background"
+          fill
+          priority
+          className="object-cover opacity-50"
+          style={{ filter: "blur(60px)", transform: "scale(1.1)" }}
+        />
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
-      <div className="relative z-10 text-center px-6 max-w-7xl">
-        <div className="flex flex-col items-center">
-          <div className="relative">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-              style={{ clipPath: "inset(0 0 0 0)", zIndex: -1 }}
-            >
-              <source
-                src="https://assets.mixkit.co/videos/preview/mixkit-abstract-motion-of-colors-and-shapes-2342-large.mp4"
-                type="video/mp4"
-              />
-            </video>
-            <h1 className="text-[12vw] leading-[0.85] font-display font-black text-black bg-white mix-blend-lighten uppercase py-4">
-              WE BUILD <br /> BRANDS
-            </h1>
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center text-center pt-16 px-4">
+        {/* Award badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="flex flex-col items-center gap-4 mb-10"
+        >
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-white/60">
+            #1 Most Recommended Content Marketing Agency
+          </p>
+          <div className="flex items-center gap-6 opacity-50">
+            {/* Stylized award icons as text */}
+            <span className="text-white text-[10px] font-bold border border-white/30 px-2 py-1 rounded">Global<br/>Search<br/>Awards</span>
+            <span className="text-white text-[10px] font-bold border border-white/30 px-2 py-1 rounded">The<br/>Drum</span>
+            <span className="text-white text-[10px] font-bold border border-white/30 px-2 py-1 rounded">UK Social<br/>Media<br/>Awards</span>
+            <span className="text-white text-[10px] font-bold border border-white/30 px-2 py-1 rounded">Content<br/>Awards</span>
           </div>
-          <RevealText 
-            text="PEOPLE SEARCH FOR" 
-            className="text-[10vw] leading-[0.85] font-display font-black text-brand-mint mt-4" 
-            delay={0.5}
-          />
-        </div>
+        </motion.div>
 
+        {/* Main headline: We Create */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-[14vw] md:text-[12vw] lg:text-[11vw] font-black text-white leading-none tracking-[-0.04em]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          We Create
+        </motion.h1>
+
+        {/* Category [image] Leaders */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.35 }}
+          className="flex items-center justify-center gap-4 md:gap-6 flex-wrap"
+        >
+          <span
+            className="text-[14vw] md:text-[12vw] lg:text-[11vw] font-black text-white leading-none tracking-[-0.04em]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Category
+          </span>
+
+          {/* Embedded image pill */}
+          <div className="relative w-[18vw] h-[12vw] md:w-[13vw] md:h-[8.5vw] lg:w-[10vw] lg:h-[7vw] rounded-[2vw] overflow-hidden border-2 border-white/10 flex-shrink-0 self-center mt-1">
+            <Image
+              src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=600"
+              alt="category leaders"
+              fill
+              className="object-cover"
+            />
+          </div>
+
+          <span
+            className="text-[14vw] md:text-[12vw] lg:text-[11vw] font-black text-white leading-none tracking-[-0.04em]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Leaders
+          </span>
+        </motion.div>
+
+        {/* Sub-headline */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-6 text-xl md:text-3xl lg:text-4xl font-bold text-white tracking-tight"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          on every searchable platform
+        </motion.p>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end px-8 md:px-12 pb-10 pt-12 gap-6">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 1 }}
-          className="mt-8 text-xl lg:text-2xl font-medium text-gray-300 max-w-2xl mx-auto"
+          transition={{ delay: 0.8 }}
+          className="text-sm text-white/60 max-w-xs leading-relaxed"
         >
-          A search-first creative agency for the world's most ambitious brands.
+          Organic media planners creating, distributing &amp; optimising{" "}
+          <span className="text-white font-semibold">search-first</span> content
+          for SEO, Social, PR, Ai and LLM search
         </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1, duration: 0.5 }}
-          className="mt-12"
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9 }}
+          className="text-sm text-white/60 md:text-right"
         >
-          <div className="inline-flex items-center space-x-4 group cursor-pointer">
-            <div className="w-16 h-16 rounded-full bg-brand-mint flex items-center justify-center group-hover:scale-110 transition-transform">
-              <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[12px] border-l-brand-dark border-b-[8px] border-b-transparent ml-1" />
-            </div>
-            <span className="text-sm font-bold uppercase tracking-widest">Showreel 2024</span>
-          </div>
-        </motion.div>
+          4 Global Offices serving
+          <br />
+          <span className="text-white font-semibold">UK, USA (New York) &amp; EU</span>
+        </motion.p>
       </div>
-
-      {/* Bottom Scroll Indicator */}
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 w-px h-12 bg-white/20"
-      >
-        <div className="w-full h-1/2 bg-brand-mint" />
-      </motion.div>
     </section>
   );
-};
-
-export default Hero;
+}
