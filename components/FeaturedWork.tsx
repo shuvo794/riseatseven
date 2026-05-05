@@ -49,10 +49,6 @@ const ProjectItem = ({ project, index }: { project: typeof projects[0]; index: n
 
 const FeaturedWork = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
 
   return (
     <section ref={containerRef} className="relative bg-brand-dark">

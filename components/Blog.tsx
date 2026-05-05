@@ -8,17 +8,17 @@ const posts = [
   {
     title: "How to Win at Search-First Creative",
     date: "May 10, 2024",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=1200",
   },
   {
     title: "The Rise of AI in Content Marketing",
     date: "April 28, 2024",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
   },
   {
     title: "Why Digital PR is the Future of SEO",
     date: "April 15, 2024",
-    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2074&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=1200",
   },
 ];
 

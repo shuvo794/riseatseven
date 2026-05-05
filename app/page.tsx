@@ -12,7 +12,7 @@ import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-brand-dark overflow-x-hidden">
+    <main className="relative min-h-screen bg-brand-dark overflow-x-hidden">
       <Navbar />
       <Hero />
       <FeaturedWork />
