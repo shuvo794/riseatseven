@@ -25,6 +25,7 @@ export default function DrivingDemand() {
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400"
                   alt="person"
                   fill
+                  sizes="(max-width: 768px) 12vw, (max-width: 1024px) 8vw, 5vw"
                   className="object-cover"
                 />
               </span>{" "}

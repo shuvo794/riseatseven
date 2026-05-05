@@ -1,26 +1,28 @@
 "use client";
-
-import React from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import DrivingDemand from "@/components/DrivingDemand";
 import FeaturedWork from "@/components/FeaturedWork";
-import Services from "@/components/Services";
 import Awards from "@/components/Awards";
+import Expertise from "@/components/Expertise";
+import Legacy from "@/components/Legacy";
+import Testimonials from "@/components/Testimonials";
 import Blog from "@/components/Blog";
 import Footer from "@/components/Footer";
-import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-brand-dark overflow-x-hidden">
+    <>
       <Navbar />
       <Hero />
+      <DrivingDemand />
       <FeaturedWork />
       <Awards />
+      <Expertise />
+      <Legacy />
       <Testimonials />
-      <Services />
       <Blog />
       <Footer />
-    </main>
+    </>
   );
 }

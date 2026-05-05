@@ -13,6 +13,7 @@ export default function Hero() {
           alt="hero background"
           fill
           priority
+          sizes="100vw"
           className="object-cover opacity-50"
           style={{ filter: "blur(60px)", transform: "scale(1.1)" }}
         />
@@ -71,6 +72,7 @@ export default function Hero() {
               src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=600"
               alt="category leaders"
               fill
+              sizes="(max-width: 768px) 18vw, (max-width: 1024px) 13vw, 10vw"
               className="object-cover"
             />
           </div>

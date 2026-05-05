@@ -1,43 +1,65 @@
 "use client";
-
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const testimonials = [
   {
-    quote: "Rise at Seven are the best in the business. Their search-first approach has transformed our digital presence.",
-    author: "Marketing Director, Red Bull",
+    quote:
+      "Rise at Seven transformed our digital presence. We went from invisible to dominating search in under a year.",
+    author: "Head of Digital",
+    company: "Parkdean Resorts",
+    logo: null,
   },
   {
-    quote: "A truly creative agency that understands the technical side of search. They deliver results every time.",
-    author: "Head of Digital, Playstation",
+    quote:
+      "The team's reactive approach is unlike anything I've seen. They generated headlines within hours of a trend breaking.",
+    author: "Marketing Director",
+    company: "Revolution Beauty",
+    logo: null,
   },
   {
-    quote: "The energy and passion they bring to every project is infectious. They are a pleasure to work with.",
-    author: "CEO, Nike",
+    quote:
+      "Not just an agency — a true extension of our team. The results speak for themselves.",
+    author: "CMO",
+    company: "Dojo",
+    logo: null,
   },
 ];
 
-const Testimonials = () => {
+export default function Testimonials() {
   return (
-    <section className="bg-brand-grey py-24 lg:py-40 px-6 lg:px-12 text-brand-text-dark">
-      <div className="max-w-screen-xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
-          {testimonials.map((item, i) => (
+    <section className="bg-black py-24 px-6 md:px-12">
+      <div className="max-w-[1400px] mx-auto">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-[#a8f0d8] text-sm font-bold uppercase tracking-[0.3em] mb-16"
+        >
+          Client Stories
+        </motion.p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10">
+          {testimonials.map((t, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.2 }}
-              className="flex flex-col"
+              transition={{ delay: i * 0.1 }}
+              className="bg-black p-10 md:p-12 flex flex-col"
             >
-              <div className="text-4xl lg:text-5xl font-display font-black text-brand-mint mb-8">"</div>
-              <p className="text-xl lg:text-2xl font-semibold mb-8 leading-relaxed">
-                {item.quote}
+              <span className="text-5xl text-[#a8f0d8] font-black mb-6" style={{ fontFamily: "var(--font-display)" }}>
+                "
+              </span>
+              <p className="text-lg md:text-xl font-semibold text-white/80 leading-relaxed flex-1 mb-10">
+                {t.quote}
               </p>
-              <div className="mt-auto">
-                <p className="font-bold uppercase tracking-widest text-sm">— {item.author}</p>
+              <div>
+                <p className="text-white font-bold text-sm">{t.author}</p>
+                <p className="text-white/40 text-xs font-bold uppercase tracking-widest mt-1">
+                  {t.company}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -45,6 +67,4 @@ const Testimonials = () => {
       </div>
     </section>
   );
-};
-
-export default Testimonials;
+}
