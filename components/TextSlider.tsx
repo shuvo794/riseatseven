@@ -68,7 +68,7 @@ export default function TextSlider() {
         overflow: "hidden",
         borderTop: "1px solid rgba(0,0,0,0.05)",
         position: "relative",
-        cursor: isHovering ? "none" : "auto"
+        cursor: isHovering ? "none" : "auto",
       }}
     >
       {/* Custom Cursor / Button Follower */}
@@ -92,7 +92,7 @@ export default function TextSlider() {
           scale: isHovering ? 1 : 0,
           opacity: isHovering ? 1 : 0,
           boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-          whiteSpace: "nowrap"
+          whiteSpace: "nowrap",
         }}
       >
         <span style={{ color: "#000", fontSize: "15px", fontWeight: "700" }}>
@@ -102,10 +102,10 @@ export default function TextSlider() {
 
       <div style={{ display: "flex", width: "max-content" }}>
         <motion.div
-          animate={{ x: ["0%", "-50%"] }}
+          animate={{ x: [0, -1000] }}
           transition={{
             repeat: Infinity,
-            duration: 100,
+            duration: 60,
             ease: "linear",
           }}
           style={{
@@ -121,4 +121,3 @@ export default function TextSlider() {
     </section>
   );
 }
-
