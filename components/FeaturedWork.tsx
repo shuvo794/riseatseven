@@ -11,7 +11,7 @@ const projects = [
     hoverText: "Increasing brand and non brand visibility UK/ES",
     tag: "Organic search",
     hoverBg: "#ff5f00",
-    image: "https://riseatseven.com/media/work/sixt-cover.jpg"
+    image: "/images/1.jpg"
   },
   {
     id: "dojo",
@@ -20,7 +20,7 @@ const projects = [
     hoverText: "A search-first B2B strategy to drive leads",
     tag: "Card Machines",
     hoverBg: "#00ffaa",
-    image: "https://riseatseven.com/media/work/dojo-cover.jpg"
+    image: "/images/2.jpg"
   },
   {
     id: "magnet",
@@ -29,7 +29,7 @@ const projects = [
     hoverText: "A full service SEO success story 170%+ increase",
     tag: "Kitchen Showroom",
     hoverBg: "#1a3c34",
-    image: "https://riseatseven.com/media/work/magnet-trade-cover.jpg"
+    image: "/images/3.jpg"
   },
   {
     id: "saily",
@@ -38,7 +38,7 @@ const projects = [
     hoverText: "Building a global category leader in E Sims",
     tag: "E Sims",
     hoverBg: "#0055ff",
-    image: "https://riseatseven.com/media/work/saily-cover.jpg"
+    image: "/images/4.jpg"
   },
   {
     id: "jd",
@@ -47,7 +47,7 @@ const projects = [
     hoverText: "Dominating Google and AI search",
     tag: "Sportswear",
     hoverBg: "#000000",
-    image: "https://riseatseven.com/media/work/jd-sports-cover.jpg"
+    image: "/images/5.jpg"
   },
   {
     id: "pooky",
@@ -56,7 +56,7 @@ const projects = [
     hoverText: "Driving demand for Pooky Rechargeable Lights",
     tag: "Rechargeable Lights",
     hoverBg: "#ffcc00",
-    image: "https://riseatseven.com/media/work/pooky-cover.jpg"
+    image: "/images/7.jpg"
   },
   {
     id: "parkdean",
@@ -65,7 +65,7 @@ const projects = [
     hoverText: "Social search and multi channel content to #1",
     tag: "UK holidays",
     hoverBg: "#00a0a0",
-    image: "https://riseatseven.com/media/work/parkdean-resorts-cover.jpg"
+    image: "/images/8.jpg"
   },
   {
     id: "revolution",
@@ -74,7 +74,7 @@ const projects = [
     hoverText: "Building the UK's leading beauty dupe brand",
     tag: "Beauty Dupes",
     hoverBg: "#ff69b4",
-    image: "https://riseatseven.com/media/work/revolution-beauty-cover.jpg"
+    image: "/images/9.jpg"
   },
   {
     id: "lloyds",
@@ -83,7 +83,7 @@ const projects = [
     hoverText: "Driving category leadership for STI tests",
     tag: "STI tests",
     hoverBg: "#008000",
-    image: "https://riseatseven.com/media/work/lloyds-pharmacy-cover.jpg"
+    image: "/images/10.jpg"
   },
   {
     id: "plt",
@@ -92,7 +92,7 @@ const projects = [
     hoverText: "Driving discovery for everything \"outfits\" for PLT",
     tag: "Outfits",
     hoverBg: "#ffc0cb",
-    image: "https://riseatseven.com/media/work/plt-cover.jpg"
+    image: "/images/11.jpg"
   },
   {
     id: "next",
@@ -101,7 +101,7 @@ const projects = [
     hoverText: "Search-first content strategy for fashion",
     tag: "Fashion",
     hoverBg: "#1a1a1a",
-    image: "https://riseatseven.com/media/work/next-cover.jpg"
+    image: "/images/12.jpg"
   },
   {
     id: "playstation",
@@ -110,9 +110,10 @@ const projects = [
     hoverText: "Increasing visibility for gaming peripherals",
     tag: "Gaming",
     hoverBg: "#003791",
-    image: "https://riseatseven.com/media/work/playstation-cover.jpg"
+    image: "/images/1.jpg"
   }
 ];
+
 
 export default function FeaturedWork() {
   const [activeProject, setActiveProject] = useState(0);
