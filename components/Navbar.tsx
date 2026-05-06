@@ -5,13 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Services", hasPlus: true },
-  { label: "International", hasPlus: true },
-  { label: "About", hasPlus: true },
-  { label: "Work", badge: "21" },
-  { label: "Careers" },
-  { label: "Blog" },
-  { label: "Webinar" },
+  { label: "Services +", href: "#" },
+  { label: "Industries +", href: "#" },
+  { label: "International +", href: "#" },
+  { label: "About +", href: "#" },
+  { label: "Work", href: "#work", badge: "25" },
+  { label: "Careers", href: "#" },
+  { label: "Blog", href: "#" },
+  { label: "Webinar", href: "#" },
 ];
 
 export default function Navbar() {
@@ -24,90 +25,162 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [mobileOpen]);
-
   return (
     <>
       {/* Announcement Bar */}
-      <div className="px-[30px] py-3 relative z-50">
-        <div className="max-w-[1500px] mx-auto bg-mint text-black text-center text-[10px] sm:text-[12px] font-bold py-2.5 px-8 rounded-full tracking-tight shadow-sm cursor-pointer hover:bg-mint/80 transition-colors">
-          🎉 Where are your customers actually searching?{" "}
-          <span className="underline ml-1">Download the report</span>
+      <div 
+        style={{
+          padding: "10px 30px",
+          position: "relative",
+          zIndex: 50,
+        }}
+      >
+        <div 
+          style={{
+            maxWidth: "1500px",
+            margin: "0 auto",
+            backgroundColor: "#c1f1e0",
+            color: "#000",
+            textAlign: "center",
+            fontSize: "12px",
+            fontWeight: "700",
+            padding: "10px 20px",
+            borderRadius: "100px",
+            letterSpacing: "-0.01em",
+            cursor: "pointer",
+          }}
+        >
+          🚨 The Category Leaderboard - Live Now
         </div>
       </div>
 
       {/* Main Nav */}
       <header
-        className={`fixed left-0 right-0 z-40 w-full transition-all duration-700 ease-[0.16, 1, 0.3, 1] ${
-          scrolled 
-            ? "top-4 px-[30px]" 
-            : "top-[70px] px-[30px]"
-        }`}
+        style={{
+          position: "fixed",
+          left: 0,
+          right: 0,
+          zIndex: 40,
+          width: "100%",
+          transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+          top: scrolled ? "10px" : "60px",
+          padding: "0 40px",
+        }}
       >
         <div 
-          className={`mx-auto flex items-center justify-between transition-all duration-700 ease-[0.16, 1, 0.3, 1] ${
-            scrolled 
-              ? "max-w-[1200px] bg-white/95 backdrop-blur-xl py-3 px-8 rounded-[50px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]" 
-              : "max-w-[1500px] bg-transparent py-4 sm:py-6 px-[50px]"
-          }`}
+          style={{
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "between",
+            transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+            maxWidth: scrolled ? "1200px" : "100%",
+            backgroundColor: scrolled ? "rgba(255, 255, 255, 0.95)" : "transparent",
+            backdropFilter: scrolled ? "blur(20px)" : "none",
+            padding: scrolled ? "12px 30px" : "20px 0",
+            borderRadius: scrolled ? "100px" : "0",
+            boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.08)" : "none",
+            display: "flex",
+            width: "100%",
+          }}
         >
           {/* Logo */}
           <Link
             href="/"
-            className={`transition-colors duration-300 flex items-center ${
-              scrolled ? "text-black" : "text-white"
-            } text-[22px] sm:text-[28px] font-medium tracking-[-0.04em]`}
-            style={{ fontFamily: "var(--font-display)" }}
+            style={{
+              transition: "color 0.3s",
+              color: scrolled ? "#000" : "#fff",
+              fontSize: "26px",
+              fontWeight: "800",
+              letterSpacing: "-0.05em",
+              fontFamily: "var(--font-display)",
+              textDecoration: "none",
+              marginRight: "auto",
+            }}
           >
-            <span>Rise at Seven</span>
-            <sup className="text-[10px] ml-1 opacity-70">®</sup>
+            Rise at Seven
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden xl:flex items-center gap-7">
+          {/* Desktop Links */}
+          <nav 
+            className="hidden lg:flex" 
+            style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              gap: "24px",
+              margin: "0 auto" 
+            }}
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.label}
-                href={`#${link.label.toLowerCase()}`}
-                className={`text-[13px] font-bold transition-all flex items-center gap-0.5 ${
-                  scrolled ? "text-black hover:opacity-60" : "text-white hover:opacity-70"
-                }`}
+                href={link.href}
+                style={{
+                  fontSize: "13px",
+                  fontWeight: "700",
+                  color: scrolled ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.9)",
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                }}
               >
                 {link.label}
-                {link.hasPlus && (
-                  <span className={`${scrolled ? "text-black/40" : "text-white/50"} text-xs ml-0.5`}>+</span>
-                )}
                 {link.badge && (
-                  <span className={`${
-                    scrolled ? "bg-black text-white" : "bg-mint text-black"
-                  } text-[9px] font-black px-1.5 py-0.5 rounded-full ml-1 h-4 flex items-center justify-center`}>
+                  <span 
+                    style={{
+                      backgroundColor: "#c1f1e0",
+                      color: "#000",
+                      fontSize: "9px",
+                      fontWeight: "900",
+                      padding: "2px 6px",
+                      borderRadius: "100px",
+                      height: "16px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
                     {link.badge}
                   </span>
                 )}
               </Link>
             ))}
-            <Link
-              href="#contact"
-              className={`ml-4 text-[13px] font-bold px-7 py-3 rounded-full transition-all flex items-center gap-2 group ${
-                scrolled 
-                  ? "bg-black text-white hover:bg-black/80" 
-                  : "bg-white text-black hover:bg-mint"
-              }`}
-            >
-              Get In Touch <span className="text-[16px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
-            </Link>
           </nav>
+
+          {/* CTA */}
+          <Link
+            href="#contact"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              fontSize: "14px",
+              fontWeight: "700",
+              padding: "12px 28px",
+              borderRadius: "100px",
+              transition: "all 0.3s",
+              backgroundColor: scrolled ? "#000" : "#fff",
+              color: scrolled ? "#fff" : "#000",
+              textDecoration: "none",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.1)",
+              marginLeft: "auto",
+            }}
+          >
+            Get In Touch <span style={{ fontSize: "18px", lineHeight: 1 }}>↗</span>
+          </Link>
 
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(true)}
-            className={`xl:hidden p-2 transition-colors ${scrolled ? "text-black" : "text-white"}`}
-            aria-label="Open menu"
+            className="xl:hidden"
+            style={{
+              padding: "8px",
+              color: scrolled ? "#000" : "#fff",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+            }}
           >
             <Menu size={24} />
           </button>
@@ -121,20 +194,43 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black flex flex-col p-6 sm:p-10 overflow-y-auto"
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 100,
+              backgroundColor: "#000",
+              display: "flex",
+              flexDirection: "column",
+              padding: "40px",
+              overflowY: "auto",
+            }}
           >
-            <div className="flex justify-between items-center mb-16">
+            <div 
+              style={{ 
+                display: "flex", 
+                justifyContent: "space-between", 
+                alignItems: "center", 
+                marginBottom: "60px" 
+              }}
+            >
               <span
-                className="text-white text-2xl font-bold"
-                style={{ fontFamily: "var(--font-display)" }}
+                style={{ 
+                  color: "#fff", 
+                  fontSize: "24px", 
+                  fontWeight: "800", 
+                  fontFamily: "var(--font-display)" 
+                }}
               >
-                Rise at Seven<sup className="text-[10px] ml-0.5">®</sup>
+                Rise at Seven
               </span>
-              <button onClick={() => setMobileOpen(false)} className="text-white p-2">
+              <button 
+                onClick={() => setMobileOpen(false)} 
+                style={{ color: "#fff", background: "none", border: "none" }}
+              >
                 <X size={28} />
               </button>
             </div>
-            <nav className="flex flex-col gap-8">
+            <nav style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.label}
@@ -143,14 +239,32 @@ export default function Navbar() {
                   transition={{ delay: i * 0.05 }}
                 >
                   <Link
-                    href={`#${link.label.toLowerCase()}`}
+                    href="#"
                     onClick={() => setMobileOpen(false)}
-                    className="text-4xl sm:text-5xl font-black text-white flex items-center gap-3"
-                    style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.04em" }}
+                    style={{
+                      fontSize: "40px",
+                      fontWeight: "900",
+                      color: "#fff",
+                      textDecoration: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      fontFamily: "var(--font-display)",
+                      letterSpacing: "-0.04em",
+                    }}
                   >
                     {link.label}
                     {link.badge && (
-                      <span className="bg-[#c1f1e0] text-black text-xs font-black px-2 py-0.5 rounded-full">
+                      <span 
+                        style={{
+                          backgroundColor: "#c1f1e0",
+                          color: "#000",
+                          fontSize: "12px",
+                          fontWeight: "900",
+                          padding: "2px 10px",
+                          borderRadius: "100px",
+                        }}
+                      >
                         {link.badge}
                       </span>
                     )}
@@ -158,19 +272,11 @@ export default function Navbar() {
                 </motion.div>
               ))}
             </nav>
-            <div className="mt-auto pt-16">
-              <Link
-                href="#contact"
-                onClick={() => setMobileOpen(false)}
-                className="block w-full text-center bg-white text-black text-lg font-bold py-5 rounded-full hover:bg-[#c1f1e0] transition-colors"
-              >
-                Get In Touch ↗
-              </Link>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
 }
+
 

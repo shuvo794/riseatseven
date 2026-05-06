@@ -5,78 +5,131 @@ import Image from "next/image";
 
 export default function DrivingDemand() {
   return (
-    <section className="bg-transparent py-4">
-      <div className="bg-white rounded-[48px] p-10 md:p-20 shadow-sm overflow-hidden border border-black/5">
-        <div className="max-w-[1300px] mx-auto">
-          {/* Heading row */}
-          <div className="flex flex-col lg:flex-row items-start lg:items-end gap-10 mb-20">
-            <div className="flex-1">
-              <motion.h2
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold text-black leading-[0.9] tracking-[-0.05em] uppercase"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Driving Demand{" "}
-                {/* Inline image */}
-                <span className="inline-block align-middle w-[1.5em] h-[0.8em] rounded-full overflow-hidden relative mx-2 border border-black/5">
-                  <Image
-                    src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=400"
-                    alt="tech"
-                    fill
-                    sizes="20vw"
-                    className="object-cover"
-                  />
-                </span>{" "}
-                & Discovery
-              </motion.h2>
-            </div>
-          </div>
-
-          {/* Two-column layout */}
-          <div className="flex flex-col lg:flex-row gap-24">
+    <section style={{ backgroundColor: "transparent", padding: "16px 0" }}>
+      <div 
+        style={{ 
+          backgroundColor: "#f2f2f2", 
+          borderRadius: "48px", 
+          padding: "80px 40px", 
+          overflow: "hidden", 
+          border: "1px solid rgba(0,0,0,0.05)" 
+        }}
+      >
+        <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start" style={{ display: "grid", gap: "48px", alignItems: "flex-start" }}>
+            {/* Left: Description */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:w-1/2"
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-5"
+              style={{ gridColumn: "span 5 / span 5" }}
             >
-              <p className="text-2xl md:text-3xl font-medium text-black/60 leading-[1.3] tracking-tight mb-12 max-w-[600px]">
-                A global team of search-first content marketers. We create, distribute & optimise content that people actually search for.
+              <p 
+                style={{ 
+                  fontSize: "24px", 
+                  fontWeight: "700", 
+                  color: "#000", 
+                  lineHeight: "1.1", 
+                  letterSpacing: "-0.03em", 
+                  maxWidth: "420px",
+                  margin: 0
+                }}
+              >
+                A global team of search-first content marketers engineering
+                semantic relevancy & category signals for both the internet and
+                people
               </p>
-              <div className="flex items-center gap-4 flex-wrap">
-                <button className="group bg-black text-white px-12 py-5 rounded-full font-bold text-sm flex items-center gap-3 hover:bg-mint hover:text-black transition-all duration-500">
-                  OUR STORY 
-                  <span className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-500">↗</span>
-                </button>
-                <button className="group text-sm font-bold text-black px-8 py-5 rounded-full border border-black/10 hover:bg-black/5 transition-all duration-500 flex items-center gap-2">
-                  OUR SERVICES
-                  <span className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-500">↗</span>
-                </button>
-              </div>
             </motion.div>
 
+            {/* Right: Headline & Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6"
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-7 flex flex-col items-start"
+              style={{ 
+                gridColumn: "span 7 / span 7", 
+                display: "flex", 
+                flexDirection: "column", 
+                alignItems: "flex-start" 
+              }}
             >
-              {[
-                { title: "SEO & CONTENT", desc: "Strategy & Execution" },
-                { title: "DIGITAL PR", desc: "Creative Campaigning" },
-                { title: "SOCIAL & INFLUENCER", desc: "Platform Native" },
-                { title: "PAID MEDIA", desc: "Full-funnel Performance" }
-              ].map((s) => (
-                <div key={s.title} className="group bg-gray-50 rounded-3xl p-10 hover:bg-mint transition-all duration-500 cursor-default border border-black/[0.03]">
-                  <h3 className="font-bold text-2xl mb-2 text-black transition-colors">{s.title}</h3>
-                  <p className="text-xs text-black/40 group-hover:text-black/60 transition-colors font-bold uppercase tracking-[0.2em]">{s.desc}</p>
-                </div>
-              ))}
+              <h2
+                style={{ 
+                  fontSize: "clamp(60px, 8vw, 90px)", 
+                  fontWeight: "800", 
+                  color: "#000", 
+                  lineHeight: "0.82", 
+                  letterSpacing: "-0.05em", 
+                  marginBottom: "48px",
+                  fontFamily: "var(--font-display)",
+                  margin: 0
+                }}
+              >
+                Driving Demand &<br />
+                Discovery
+                <span 
+                  style={{ 
+                    display: "inline-block", 
+                    verticalAlign: "middle", 
+                    width: "65px", 
+                    height: "65px", 
+                    borderRadius: "16px", 
+                    overflow: "hidden", 
+                    border: "2px solid rgba(0,0,0,0.05)", 
+                    position: "relative", 
+                    marginLeft: "16px", 
+                    marginBottom: "8px" 
+                  }}
+                >
+                  <Image
+                    src="/images/discovery-icon.png"
+                    alt="Pill"
+                    fill
+                    sizes="80px"
+                    style={{ objectFit: "cover" }}
+                  />
+                </span>
+              </h2>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                <button 
+                  style={{ 
+                    backgroundColor: "#fff", 
+                    color: "#000", 
+                    padding: "16px 32px", 
+                    borderRadius: "100px", 
+                    fontWeight: "700", 
+                    fontSize: "15px", 
+                    display: "flex", 
+                    alignItems: "center", 
+                    gap: "12px", 
+                    boxShadow: "0 4px 14px rgba(0,0,0,0.05)",
+                    border: "none",
+                    cursor: "pointer"
+                  }}
+                >
+                  Our Story <span style={{ fontSize: "12px" }}>↗</span>
+                </button>
+                <button 
+                  style={{ 
+                    fontSize: "15px", 
+                    fontWeight: "700", 
+                    color: "#000", 
+                    display: "flex", 
+                    alignItems: "center", 
+                    gap: "8px",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer"
+                  }}
+                >
+                  Our Services <span style={{ fontSize: "12px" }}>↗</span>
+                </button>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -84,3 +137,4 @@ export default function DrivingDemand() {
     </section>
   );
 }
+
