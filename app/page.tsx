@@ -12,7 +12,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <>
+    <main className="max-w-[1536px] mx-auto pt-6 px-4 sm:px-6 lg:px-8 space-y-12 pb-32">
       <Navbar />
       <Hero />
       <DrivingDemand />
@@ -23,6 +23,6 @@ export default function Home() {
       <Testimonials />
       <Blog />
       <Footer />
-    </>
+    </main>
   );
 }

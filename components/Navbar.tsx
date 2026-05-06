@@ -34,26 +34,26 @@ export default function Navbar() {
   return (
     <>
       {/* Announcement Bar */}
-      <div className="px-4 py-2 relative z-50">
-        <div className="max-w-[1200px] mx-auto bg-[#a8f0d8] text-black text-center text-[10px] sm:text-[11px] font-bold py-2 px-6 rounded-full tracking-tight shadow-sm">
+      <div className="px-[30px] py-3 relative z-50">
+        <div className="max-w-[1500px] mx-auto bg-mint text-black text-center text-[10px] sm:text-[12px] font-bold py-2.5 px-8 rounded-full tracking-tight shadow-sm cursor-pointer hover:bg-mint/80 transition-colors">
           🎉 Where are your customers actually searching?{" "}
-          <span className="underline cursor-pointer">Download the report</span>
+          <span className="underline ml-1">Download the report</span>
         </div>
       </div>
 
       {/* Main Nav */}
       <header
-        className={`fixed left-0 right-0 z-40 w-full transition-all duration-500 ease-in-out ${
+        className={`fixed left-0 right-0 z-40 w-full transition-all duration-700 ease-[0.16, 1, 0.3, 1] ${
           scrolled 
-            ? "top-4 px-4" 
-            : "top-[56px] px-6"
+            ? "top-4 px-[30px]" 
+            : "top-[70px] px-[30px]"
         }`}
       >
         <div 
-          className={`mx-auto flex items-center justify-between transition-all duration-500 ${
+          className={`mx-auto flex items-center justify-between transition-all duration-700 ease-[0.16, 1, 0.3, 1] ${
             scrolled 
-              ? "max-w-[1200px] bg-white/95 backdrop-blur-md py-3 px-8 rounded-full shadow-lg" 
-              : "max-w-[1500px] bg-transparent py-4 sm:py-6"
+              ? "max-w-[1200px] bg-white/95 backdrop-blur-xl py-3 px-8 rounded-[50px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]" 
+              : "max-w-[1500px] bg-transparent py-4 sm:py-6 px-[50px]"
           }`}
         >
           {/* Logo */}
@@ -84,7 +84,7 @@ export default function Navbar() {
                 )}
                 {link.badge && (
                   <span className={`${
-                    scrolled ? "bg-black text-white" : "bg-[#a8f0d8] text-black"
+                    scrolled ? "bg-black text-white" : "bg-mint text-black"
                   } text-[9px] font-black px-1.5 py-0.5 rounded-full ml-1 h-4 flex items-center justify-center`}>
                     {link.badge}
                   </span>
@@ -96,7 +96,7 @@ export default function Navbar() {
               className={`ml-4 text-[13px] font-bold px-7 py-3 rounded-full transition-all flex items-center gap-2 group ${
                 scrolled 
                   ? "bg-black text-white hover:bg-black/80" 
-                  : "bg-white text-black hover:bg-[#a8f0d8]"
+                  : "bg-white text-black hover:bg-mint"
               }`}
             >
               Get In Touch <span className="text-[16px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>

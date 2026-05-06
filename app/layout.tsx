@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body className="antialiased bg-black text-white overflow-x-hidden">
+      <body className="antialiased overflow-x-hidden">
         {children}
       </body>
     </html>

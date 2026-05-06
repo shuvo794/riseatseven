@@ -46,89 +46,100 @@ export default function FeaturedWork() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section id="work" className="bg-black py-24">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        {/* Section label */}
-        <div className="flex items-center justify-between mb-16">
-          <h2
-            className="text-6xl md:text-8xl font-black text-white tracking-[-0.04em] leading-none"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Featured
-            <br />Work
-          </h2>
-          <button className="hidden md:flex items-center gap-2 text-sm font-bold text-white/60 border border-white/20 rounded-full px-6 py-2.5 hover:border-white hover:text-white transition-all">
-            View all work <span>↗</span>
-          </button>
-        </div>
-
-        {/* Split sticky layout */}
-        <div className="flex flex-col lg:flex-row gap-12">
-          {/* Left: Client list */}
-          <div className="lg:w-2/5 flex flex-col gap-1">
-            {clients.map((client, i) => (
-              <button
-                key={client.name}
-                onMouseEnter={() => setActiveIndex(i)}
-                onClick={() => setActiveIndex(i)}
-                className={`text-left px-4 py-5 rounded-xl transition-all duration-200 border ${
-                  activeIndex === i
-                    ? "bg-white/10 border-white/20"
-                    : "border-transparent hover:bg-white/5"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`text-2xl md:text-3xl font-black tracking-tight transition-colors ${
-                      activeIndex === i ? "text-white" : "text-white/40"
-                    }`}
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {client.name}
-                  </span>
-                  <span className="text-xs font-bold text-[#a8f0d8] uppercase tracking-widest">
-                    {client.category}
-                  </span>
-                </div>
-                {activeIndex === i && (
-                  <p className="text-sm text-white/60 mt-1">{client.tagline}</p>
-                )}
-              </button>
-            ))}
+    <section id="work" className="bg-transparent py-4">
+      <div className="bg-black rounded-[48px] p-10 md:p-20 overflow-hidden shadow-2xl relative">
+        {/* Glow effect */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-mint/10 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        
+        <div className="max-w-[1300px] mx-auto relative z-10">
+          {/* Section label */}
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-24 gap-8">
+            <h2
+              className="text-[clamp(4rem,8vw,8rem)] font-bold text-white tracking-[-0.05em] leading-[0.85] uppercase"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Featured
+              <br />Work
+            </h2>
+            <button className="group flex items-center gap-2 text-sm font-bold text-white border border-white/20 rounded-full px-10 py-4 hover:bg-white hover:text-black transition-all duration-500">
+              VIEW ALL WORK 
+              <span className="group-hover:translate-x-1 transition-transform">↗</span>
+            </button>
           </div>
 
-          {/* Right: Active project image */}
-          <div className="lg:w-3/5 lg:sticky lg:top-24 h-[400px] md:h-[550px] lg:h-[600px] rounded-3xl overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.4 }}
-                className="w-full h-full relative"
-              >
-                <Image
-                  src={clients[activeIndex].image}
-                  alt={clients[activeIndex].name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 60vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute bottom-8 left-8">
-                  <p className="text-[#a8f0d8] text-xs font-bold uppercase tracking-widest mb-2">
-                    {clients[activeIndex].category}
-                  </p>
-                  <h3
-                    className="text-white text-4xl md:text-5xl font-black tracking-[-0.04em]"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {clients[activeIndex].tagline}
-                  </h3>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+          {/* Split sticky layout */}
+          <div className="flex flex-col lg:flex-row gap-24">
+            {/* Left: Client list */}
+            <div className="lg:w-2/5 flex flex-col">
+              {clients.map((client, i) => (
+                <button
+                  key={client.name}
+                  onMouseEnter={() => setActiveIndex(i)}
+                  onClick={() => setActiveIndex(i)}
+                  className={`group text-left py-10 border-b border-white/10 transition-all duration-500 ${
+                    activeIndex === i ? "opacity-100" : "opacity-30 hover:opacity-100"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <span
+                      className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white uppercase"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {client.name}
+                    </span>
+                    <span className="text-[10px] font-black text-mint uppercase tracking-[0.3em]">
+                      {client.category}
+                    </span>
+                  </div>
+                  <AnimatePresence mode="wait">
+                    {activeIndex === i && (
+                      <motion.p 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="text-xl text-white/50 font-medium"
+                      >
+                        {client.tagline}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </button>
+              ))}
+            </div>
+
+            {/* Right: Active project image */}
+            <div className="lg:w-3/5 lg:sticky lg:top-32 h-[600px] md:h-[750px] rounded-[40px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] border border-white/5">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full h-full relative"
+                >
+                  <Image
+                    src={clients[activeIndex].image}
+                    alt={clients[activeIndex].name}
+                    fill
+                    sizes="60vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                  <div className="absolute bottom-16 left-16 right-16">
+                    <p className="text-mint text-[10px] font-black uppercase tracking-[0.4em] mb-6">
+                      {clients[activeIndex].category}
+                    </p>
+                    <h3
+                      className="text-white text-4xl md:text-5xl lg:text-7xl font-bold tracking-[-0.04em] leading-[1] uppercase"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {clients[activeIndex].tagline}
+                    </h3>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
