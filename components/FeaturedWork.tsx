@@ -1,148 +1,347 @@
 "use client";
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
 
-const clients = [
+const projects = [
   {
+    id: "sixt",
     name: "SIXT",
-    tagline: "An extra 3m clicks regionally through SEO",
-    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=1400",
-    category: "SEO & Content",
+    years: "2023-2025",
+    hoverText: "Increasing brand and non brand visibility UK/ES",
+    tag: "Organic search",
+    hoverBg: "#ff5f00",
+    image: "https://riseatseven.com/media/work/sixt-cover.jpg"
   },
   {
-    name: "Dojo",
-    tagline: "200% increase in organic visibility",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=1400",
-    category: "Digital PR",
+    id: "dojo",
+    name: "Dojo - B2B",
+    years: "2021-2025",
+    hoverText: "A search-first B2B strategy to drive leads",
+    tag: "Card Machines",
+    hoverBg: "#00ffaa",
+    image: "https://riseatseven.com/media/work/dojo-cover.jpg"
   },
   {
-    name: "Magnet Trade",
-    tagline: "Record-breaking coverage across 50+ publications",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=80&w=1400",
-    category: "Content Marketing",
+    id: "magnet",
+    name: "Magnet Trade - B2B",
+    years: "2023-2024",
+    hoverText: "A full service SEO success story 170%+ increase",
+    tag: "Kitchen Showroom",
+    hoverBg: "#1a3c34",
+    image: "https://riseatseven.com/media/work/magnet-trade-cover.jpg"
   },
   {
-    name: "Parkdean Resorts",
-    tagline: "50% uplift in organic sessions YoY",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1400",
-    category: "SEO",
+    id: "saily",
+    name: "Saily",
+    years: "2023-2025",
+    hoverText: "Building a global category leader in E Sims",
+    tag: "E Sims",
+    hoverBg: "#0055ff",
+    image: "https://riseatseven.com/media/work/saily-cover.jpg"
   },
   {
-    name: "Revolution Beauty",
-    tagline: "#1 for 'makeup' UK-wide in 6 months",
-    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=1400",
-    category: "SEO & PR",
+    id: "jd",
+    name: "JD Sports",
+    years: "2025",
+    hoverText: "Dominating Google and AI search",
+    tag: "Sportswear",
+    hoverBg: "#000000",
+    image: "https://riseatseven.com/media/work/jd-sports-cover.jpg"
   },
   {
+    id: "pooky",
     name: "Pooky",
-    tagline: "300% growth in organic traffic",
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=1400",
-    category: "Content & SEO",
+    years: "2025",
+    hoverText: "Driving demand for Pooky Rechargeable Lights",
+    tag: "Rechargeable Lights",
+    hoverBg: "#ffcc00",
+    image: "https://riseatseven.com/media/work/pooky-cover.jpg"
   },
+  {
+    id: "parkdean",
+    name: "Parkdean Resorts",
+    years: "2019-2025",
+    hoverText: "Social search and multi channel content to #1",
+    tag: "UK holidays",
+    hoverBg: "#00a0a0",
+    image: "https://riseatseven.com/media/work/parkdean-resorts-cover.jpg"
+  },
+  {
+    id: "revolution",
+    name: "Revolution Beauty",
+    years: "2022-2025",
+    hoverText: "Building the UK's leading beauty dupe brand",
+    tag: "Beauty Dupes",
+    hoverBg: "#ff69b4",
+    image: "https://riseatseven.com/media/work/revolution-beauty-cover.jpg"
+  },
+  {
+    id: "lloyds",
+    name: "Lloyds Pharmacy",
+    years: "2022-23",
+    hoverText: "Driving category leadership for STI tests",
+    tag: "STI tests",
+    hoverBg: "#008000",
+    image: "https://riseatseven.com/media/work/lloyds-pharmacy-cover.jpg"
+  },
+  {
+    id: "plt",
+    name: "PrettyLittleThing",
+    years: "2021-2023",
+    hoverText: "Driving discovery for everything \"outfits\" for PLT",
+    tag: "Outfits",
+    hoverBg: "#ffc0cb",
+    image: "https://riseatseven.com/media/work/plt-cover.jpg"
+  },
+  {
+    id: "next",
+    name: "Next",
+    years: "2021-2023",
+    hoverText: "Search-first content strategy for fashion",
+    tag: "Fashion",
+    hoverBg: "#1a1a1a",
+    image: "https://riseatseven.com/media/work/next-cover.jpg"
+  },
+  {
+    id: "playstation",
+    name: "Playstation",
+    years: "2022-2024",
+    hoverText: "Increasing visibility for gaming peripherals",
+    tag: "Gaming",
+    hoverBg: "#003791",
+    image: "https://riseatseven.com/media/work/playstation-cover.jpg"
+  }
 ];
 
 export default function FeaturedWork() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeProject, setActiveProject] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isHoveringImage, setIsHoveringImage] = useState(false);
+  
+  // Custom cursor logic
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 1000, damping: 50 });
+  const springY = useSpring(mouseY, { stiffness: 1000, damping: 50 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
+  // Scroll logic to highlight names
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute("data-index"));
+            setActiveProject(index);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    itemRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section id="work" className="bg-transparent py-4">
-      <div className="bg-black rounded-[48px] p-10 md:p-20 overflow-hidden shadow-2xl relative">
-        {/* Glow effect */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-mint/10 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+    <section 
+      style={{ 
+        backgroundColor: "#0a0a0a", 
+        borderRadius: "48px", 
+        margin: "10px", 
+        padding: "100px 0",
+        color: "#fff",
+        position: "relative",
+        overflow: "visible"
+      }}
+    >
+      {/* Custom Cursor */}
+      <motion.div
+        style={{
+          position: "fixed",
+          left: 0,
+          top: 0,
+          width: "100px",
+          height: "100px",
+          backgroundColor: "#c1f1e0",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          pointerEvents: "none",
+          zIndex: 9999,
+          x: springX,
+          y: springY,
+          marginLeft: "-50px",
+          marginTop: "-50px",
+          scale: isHoveringImage ? 1 : 0,
+          opacity: isHoveringImage ? 1 : 0
+        }}
+      >
+        <span style={{ color: "#000", fontSize: "40px", fontWeight: "300" }}>↗</span>
+      </motion.div>
+
+      <div style={{ maxWidth: "1600px", margin: "0 auto", padding: "0 80px", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "100px" }}>
         
-        <div className="max-w-[1300px] mx-auto relative z-10">
-          {/* Section label */}
-          <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-24 gap-8">
-            <h2
-              className="text-[clamp(4rem,8vw,8rem)] font-bold text-white tracking-[-0.05em] leading-[0.85] uppercase"
-              style={{ fontFamily: "var(--font-display)" }}
+        {/* Left Column: Sticky List */}
+        <div style={{ position: "sticky", top: "200px", height: "fit-content", alignSelf: "start" }}>
+          <div style={{ fontSize: "14px", fontWeight: "900", marginBottom: "100px", opacity: 0.9, letterSpacing: "0.05em" }}>
+            Featured Work
+          </div>
+          
+          <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+            {projects.map((project, index) => (
+              <div
+                key={project.id}
+                style={{ 
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "15px",
+                  transition: "opacity 0.4s ease"
+                }}
+              >
+                <h3 
+                  style={{ 
+                    fontSize: "clamp(40px, 4.5vw, 70px)", 
+                    fontWeight: "700", 
+                    lineHeight: "0.85", 
+                    letterSpacing: "-0.05em",
+                    color: activeProject === index ? "#fff" : "rgba(255,255,255,0.15)",
+                    transition: "color 0.4s ease",
+                    margin: 0,
+                    fontFamily: "var(--font-display)"
+                  }}
+                >
+                  {project.name}
+                </h3>
+                <span 
+                  style={{ 
+                    fontSize: "13px", 
+                    fontWeight: "600", 
+                    color: "rgba(255,255,255,0.3)",
+                    marginTop: "10px",
+                    fontFamily: "var(--font-display)"
+                  }}
+                >
+                  [{project.years}]
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Column: Scrolling Images */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+          {projects.map((project, index) => (
+            <div 
+              key={project.id}
+              ref={(el) => (itemRefs.current[index] = el)}
+              data-index={index}
+              onMouseEnter={() => {
+                setIsHoveringImage(true);
+                setHoveredIndex(index);
+              }}
+              onMouseLeave={() => {
+                setIsHoveringImage(false);
+                setHoveredIndex(null);
+              }}
+              style={{ 
+                position: "relative", 
+                width: "100%", 
+                aspectRatio: "1.3", 
+                borderRadius: "40px", 
+                overflow: "hidden",
+                backgroundColor: "#111",
+                cursor: "none"
+              }}
             >
-              Featured
-              <br />Work
-            </h2>
-            <button className="group flex items-center gap-2 text-sm font-bold text-white border border-white/20 rounded-full px-10 py-4 hover:bg-white hover:text-black transition-all duration-500">
-              VIEW ALL WORK 
-              <span className="group-hover:translate-x-1 transition-transform">↗</span>
-            </button>
-          </div>
+              <Image
+                src={project.image}
+                alt={project.name}
+                fill
+                priority={index === 0}
+                unoptimized={true}
+                sizes="(max-width: 1200px) 100vw, 800px"
+                style={{ objectFit: "cover" }}
+              />
 
-          {/* Split sticky layout */}
-          <div className="flex flex-col lg:flex-row gap-24">
-            {/* Left: Client list */}
-            <div className="lg:w-2/5 flex flex-col">
-              {clients.map((client, i) => (
-                <button
-                  key={client.name}
-                  onMouseEnter={() => setActiveIndex(i)}
-                  onClick={() => setActiveIndex(i)}
-                  className={`group text-left py-10 border-b border-white/10 transition-all duration-500 ${
-                    activeIndex === i ? "opacity-100" : "opacity-30 hover:opacity-100"
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span
-                      className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white uppercase"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {client.name}
-                    </span>
-                    <span className="text-[10px] font-black text-mint uppercase tracking-[0.3em]">
-                      {client.category}
-                    </span>
-                  </div>
-                  <AnimatePresence mode="wait">
-                    {activeIndex === i && (
-                      <motion.p 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="text-xl text-white/50 font-medium"
-                      >
-                        {client.tagline}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </button>
-              ))}
+              {/* Hover Overlay Content */}
+              <motion.div
+                initial={false}
+                animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  backgroundColor: project.hoverBg,
+                  padding: "60px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  zIndex: 2,
+                  pointerEvents: "none"
+                }}
+              >
+                <h2 style={{ 
+                  fontSize: "clamp(32px, 3.5vw, 48px)", 
+                  fontWeight: "700", 
+                  lineHeight: "1.1", 
+                  letterSpacing: "-0.03em",
+                  fontFamily: "var(--font-display)",
+                  color: "#000",
+                  maxWidth: "90%"
+                }}>
+                  {project.hoverText}
+                </h2>
+              </motion.div>
+              
+              {/* Pill Tag */}
+              <div 
+                style={{ 
+                  position: "absolute", 
+                  bottom: "30px", 
+                  right: "30px", 
+                  backgroundColor: "rgba(255,255,255,0.4)", 
+                  backdropFilter: "blur(12px)",
+                  padding: "10px 20px",
+                  borderRadius: "100px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  color: "#000",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+                  zIndex: 3,
+                  opacity: hoveredIndex === index ? 0 : 1,
+                  transition: "opacity 0.3s ease"
+                }}
+              >
+                <span style={{ fontSize: "16px" }}>🔍</span>
+                {project.tag}
+                <span style={{ fontSize: "16px" }}>📈</span>
+              </div>
             </div>
-
-            {/* Right: Active project image */}
-            <div className="lg:w-3/5 lg:sticky lg:top-32 h-[600px] md:h-[750px] rounded-[40px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] border border-white/5">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  initial={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
-                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-full h-full relative"
-                >
-                  <Image
-                    src={clients[activeIndex].image}
-                    alt={clients[activeIndex].name}
-                    fill
-                    sizes="60vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                  <div className="absolute bottom-16 left-16 right-16">
-                    <p className="text-mint text-[10px] font-black uppercase tracking-[0.4em] mb-6">
-                      {clients[activeIndex].category}
-                    </p>
-                    <h3
-                      className="text-white text-4xl md:text-5xl lg:text-7xl font-bold tracking-[-0.04em] leading-[1] uppercase"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {clients[activeIndex].tagline}
-                    </h3>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
+
