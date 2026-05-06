@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import DrivingDemand from "@/components/DrivingDemand";
 import FeaturedWork from "@/components/FeaturedWork";
 import OurServices from "@/components/OurServices";
+import TextSlider from "@/components/TextSlider";
 import Awards from "@/components/Awards";
 import Expertise from "@/components/Expertise";
 import Legacy from "@/components/Legacy";
@@ -19,6 +20,7 @@ export default function Home() {
       <DrivingDemand />
       <FeaturedWork />
       <OurServices />
+      <TextSlider />
       {/* <Awards />
       <Expertise />
       <Legacy />
