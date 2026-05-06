@@ -6,13 +6,13 @@ import FeaturedWork from "@/components/FeaturedWork";
 import OurServices from "@/components/OurServices";
 import TextSlider from "@/components/TextSlider";
 import Legacy from "@/components/Legacy";
+import Blog from "@/components/Blog";
 import ReadyToRise from "@/components/ReadyToRise";
 import Footer from "@/components/Footer";
 import Awards from "@/components/Awards";
 import Expertise from "@/components/Expertise";
 import Testimonials from "@/components/Testimonials";
 import Blog from "@/components/Blog";
-import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -24,6 +24,7 @@ export default function Home() {
       <OurServices />
       <TextSlider />
       <Legacy />
+      <Blog />
       <ReadyToRise />
       <Footer />
       {/* <Awards />

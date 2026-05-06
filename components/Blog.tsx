@@ -3,82 +3,161 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const posts = [
+const blogPosts = [
   {
-    category: "Insight",
-    title: "How to capitalise on AI search before your competitors do",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
-    date: "May 2025",
+    id: 1,
+    title: "Ryan McNamara Is Now Rise at Seven's Global Operations Director",
+    image: "/images/1.jpg",
+    author: "Carrie Rose",
+    time: "2 mins",
+    category: "News"
   },
   {
-    category: "Case Study",
-    title: "How we helped Dojo achieve 200% organic growth in 6 months",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800",
-    date: "Apr 2025",
+    id: 2,
+    title: "Rise at Seven Appointed by Coneys to Drive Demand and Retail Growth for them in the Chocolate Confectionery Category",
+    image: "/images/2.jpg",
+    author: "Fay Sadik",
+    time: "2 mins",
+    category: "News"
   },
   {
-    category: "Trend Report",
-    title: "The 2025 State of Search: What's changing and what you should do",
-    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=800",
-    date: "Mar 2025",
-  },
+    id: 3,
+    title: "Rise at Seven Appointed by Langtins to drive demand and retail growth for Noomz",
+    image: "/images/3.jpg",
+    author: "Carrie Rose",
+    time: "2 mins",
+    category: "Food/Hospitality/Drink",
+    hasFloatingBtn: true,
+    floatingBtnText: "Freeze Dried Sweets"
+  }
 ];
 
 export default function Blog() {
   return (
-    <section id="blog" className="bg-[#f2f2f2] text-black py-24 px-6 md:px-12">
-      <div className="max-w-[1400px] mx-auto">
-        <div className="flex items-end justify-between mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-black text-black tracking-[-0.04em] leading-none"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+    <section style={{ backgroundColor: "#f2f2f2", padding: "100px 40px" }}>
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        marginBottom: "60px",
+        borderTop: "1px solid rgba(0,0,0,0.05)",
+        paddingTop: "40px"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <h2 style={{ fontSize: "60px", fontWeight: "700", margin: 0, fontFamily: "var(--font-display)" }}>
             What&apos;s New
-          </motion.h2>
-          <button className="hidden md:flex items-center gap-2 text-sm font-bold text-black border border-black/20 rounded-full px-6 py-2.5 hover:bg-black hover:text-white transition-all">
-            View all <span>→</span>
-          </button>
+          </h2>
+          <div style={{ 
+            width: "30px", 
+            height: "30px", 
+            borderRadius: "50%", 
+            backgroundColor: "#000", 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center",
+            marginTop: "10px"
+          }}>
+             <div style={{ width: "15px", height: "15px", borderRadius: "50%", backgroundColor: "#c1f1e0" }}></div>
+          </div>
         </div>
+        <button style={{ 
+          backgroundColor: "#fff", 
+          border: "1px solid rgba(0,0,0,0.1)", 
+          borderRadius: "100px", 
+          padding: "10px 24px", 
+          fontSize: "14px", 
+          fontWeight: "600",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: "8px"
+        }}>
+          Explore More Thoughts <span>↗</span>
+        </button>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {posts.map((post, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group cursor-pointer"
-            >
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-5">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-black text-white text-xs font-bold px-3 py-1.5 rounded-full">
-                    {post.category}
-                  </span>
-                </div>
+      <div style={{ 
+        display: "grid", 
+        gridTemplateColumns: "repeat(3, 1fr)", 
+        gap: "30px" 
+      }}>
+        {blogPosts.map((post) => (
+          <motion.div 
+            key={post.id} 
+            whileHover={{ y: -10 }}
+            style={{ cursor: "pointer" }}
+          >
+            <div style={{ 
+              width: "100%", 
+              aspectRatio: "4/5", 
+              borderRadius: "32px", 
+              overflow: "hidden", 
+              position: "relative",
+              marginBottom: "24px"
+            }}>
+              <Image 
+                src={post.image} 
+                alt={post.title} 
+                fill 
+                style={{ objectFit: "cover" }} 
+              />
+              
+              {/* Category Badge */}
+              <div style={{ 
+                position: "absolute", 
+                top: "20px", 
+                left: "20px", 
+                backgroundColor: "rgba(0,0,0,0.3)", 
+                backdropFilter: "blur(10px)",
+                color: "#fff",
+                padding: "4px 12px",
+                borderRadius: "100px",
+                fontSize: "12px",
+                fontWeight: "600"
+              }}>
+                {post.category}
               </div>
-              <p className="text-xs text-black/40 font-bold uppercase tracking-widest mb-2">
-                {post.date}
-              </p>
-              <h3
-                className="text-xl md:text-2xl font-black text-black tracking-[-0.03em] leading-tight group-hover:text-[#333] transition-colors"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {post.title}
-              </h3>
-            </motion.div>
-          ))}
-        </div>
+
+              {/* Floating Button for 3rd card */}
+              {post.hasFloatingBtn && (
+                <div style={{ 
+                  position: "absolute", 
+                  top: "50%", 
+                  left: "50%", 
+                  transform: "translate(-50%, -50%)",
+                  backgroundColor: "#fff",
+                  padding: "10px 20px",
+                  borderRadius: "100px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+                  fontSize: "14px",
+                  fontWeight: "700"
+                }}>
+                  <span style={{ fontSize: "16px" }}>🔍</span> {post.floatingBtnText} <span style={{ opacity: 0.5 }}>↗</span>
+                </div>
+              )}
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px", opacity: 0.6, fontSize: "13px" }}>
+              <div style={{ width: "20px", height: "20px", borderRadius: "50%", backgroundColor: "#ccc" }}></div>
+              <span>{post.author}</span>
+              <span>•</span>
+              <span>{post.time}</span>
+            </div>
+
+            <h3 style={{ 
+              fontSize: "20px", 
+              fontWeight: "700", 
+              lineHeight: "1.3", 
+              letterSpacing: "-0.01em",
+              margin: 0
+            }}>
+              {post.title}
+            </h3>
+          </motion.div>
+        ))}
       </div>
     </section>
   );
