@@ -1,104 +1,170 @@
 "use client";
-import React from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
 const cards = [
   {
-    label: "Pioneers",
-    title: "Early Bird Catches the Worm",
-    description:
-      "We were founded on the insight that being first matters. As the search landscape evolves faster than ever, we help brands be there before the competition even realises the opportunity.",
-    bg: "#a8f0d8",
-    text: "#000",
+    id: 1,
+    title: "Pioneers",
+    description: "We're dedicated to creating the industry narrative that others follow 3 years from now. We paved the path for creative SEO, multi-channel search with Digital PR, and Social Search and we will continue to do it. We're on a mission to be the first search-first agency to win a Cannes Lion disrupting the status quo.",
+    bgColor: "#000",
+    textColor: "#fff",
+    image: "/images/1.jpg",
+    rotation: -2
   },
   {
-    label: "Award Winning",
-    title: "120+ Trophies. Every one earned.",
-    description:
-      "From Global Search Awards to The Drum, our work consistently gets recognised at the highest levels. But more importantly, it gets results.",
-    bg: "#000",
-    text: "#fff",
+    id: 2,
+    title: "Award Winning",
+    description: "A roll top bath full of 79 awards. Voted The Drum's best agency outside of London. We are official judges for industry awards including Global Search Awards and Global Content Marketing Awards.",
+    bgColor: "#c1f1e0",
+    textColor: "#000",
+    image: "/images/2.jpg",
+    rotation: 3
   },
   {
-    label: "Speed",
-    title: "60-Minute Reactive Content",
-    description:
-      "When the world moves, we move faster. Our reactive content engine means we can ideate, create, and publish in under 60 minutes — capitalising on cultural moments before they pass.",
-    bg: "#fff",
-    text: "#000",
-  },
+    id: 3,
+    title: "Speed",
+    description: "People ask us why we are called Rise at Seven? Ever heard the saying Early Bird catches the worm? Google is moving fast, but humans are moving faster. We chase consumers, not algorithms. We've created a service which takes ideas to result within 60 minutes.",
+    bgColor: "#fff",
+    textColor: "#000",
+    image: "/images/3.jpg",
+    rotation: -1
+  }
 ];
 
-function TiltCard({ card }: { card: typeof cards[0] }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useSpring(useTransform(y, [-100, 100], [8, -8]), { stiffness: 200, damping: 30 });
-  const rotateY = useSpring(useTransform(x, [-100, 100], [-8, 8]), { stiffness: 200, damping: 30 });
-
-  function handleMouse(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set(e.clientX - rect.left - rect.width / 2);
-    y.set(e.clientY - rect.top - rect.height / 2);
-  }
-
-  return (
-    <motion.div
-      style={{ rotateX, rotateY, transformPerspective: 1000, backgroundColor: card.bg, color: card.text }}
-      onMouseMove={handleMouse}
-      onMouseLeave={() => { x.set(0); y.set(0); }}
-      className="rounded-3xl p-10 md:p-14 cursor-default"
-    >
-      <span className="text-xs font-bold uppercase tracking-[0.25em] opacity-50 mb-6 block">
-        {card.label}
-      </span>
-      <h3
-        className="text-3xl md:text-4xl font-black leading-tight tracking-[-0.03em] mb-5"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {card.title}
-      </h3>
-      <p className="text-sm md:text-base font-medium opacity-60 leading-relaxed max-w-md">
-        {card.description}
-      </p>
-    </motion.div>
-  );
-}
-
 export default function Legacy() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
   return (
-    <section className="bg-black py-24 px-6 md:px-12">
-      <div className="max-w-[1400px] mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-[#a8f0d8] text-sm font-bold uppercase tracking-[0.3em] mb-4"
-        >
-          A Legacy In The Making
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-5xl md:text-7xl font-black text-white tracking-[-0.04em] leading-none mb-16"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Why Rise at Seven?
-        </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {cards.map((card, i) => (
-            <motion.div
-              key={card.label}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <TiltCard card={card} />
-            </motion.div>
-          ))}
+    <section 
+      ref={containerRef}
+      style={{ 
+        backgroundColor: "#f2f2f2", 
+        height: "400vh", 
+        position: "relative"
+      }}
+    >
+      <div style={{ 
+        position: "sticky", 
+        top: 0, 
+        height: "100vh", 
+        display: "flex", 
+        flexDirection: "column", 
+        alignItems: "center", 
+        justifyContent: "center",
+        overflow: "hidden"
+      }}>
+        
+        <h2 style={{ 
+          position: "absolute",
+          top: "80px",
+          textAlign: "center", 
+          fontSize: "16px", 
+          fontWeight: "700", 
+          fontFamily: "var(--font-display)",
+          zIndex: 10,
+          color: "#000"
+        }}>
+          Legacy In The Making
+        </h2>
+
+        <div style={{ position: "relative", width: "min(600px, 90vw)", height: "700px" }}>
+          {cards.map((card, index) => {
+            const start = index / cards.length;
+            const end = (index + 1) / cards.length;
+            
+            return (
+              <Card 
+                key={card.id} 
+                card={card} 
+                index={index} 
+                scrollYProgress={scrollYProgress}
+                start={start}
+                end={end}
+                total={cards.length}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
+  );
+}
+
+function Card({ card, index, scrollYProgress, start, end, total }: { card: any, index: number, scrollYProgress: any, start: number, end: number, total: number }) {
+  // Movement logic:
+  // Cards are stacked initially. 
+  // As we scroll, the top-most card (lowest index) rises UP to reveal the one underneath.
+  
+  const y = useTransform(scrollYProgress, [start, end], [0, -1000]); 
+  const opacity = useTransform(scrollYProgress, [start, end - 0.1, end], [1, 1, 0]);
+  const rotate = useTransform(scrollYProgress, [start, end], [card.rotation, card.rotation * 5]);
+  const scale = useTransform(scrollYProgress, [start, end], [1, 0.9]);
+
+  // Initial offsets to make them visible behind the first card
+  const initialRotate = card.rotation;
+  const initialX = index * 8;
+  const initialY = index * 8;
+
+  return (
+    <motion.div
+      style={{
+        position: "absolute",
+        inset: 0,
+        backgroundColor: card.bgColor,
+        color: card.textColor,
+        borderRadius: "60px",
+        padding: "60px 40px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+        boxShadow: "0 40px 100px rgba(0,0,0,0.15)",
+        zIndex: total - index, 
+        rotate: initialRotate,
+        // Only cards whose turn it is or past turn should move/reveal
+        y: index < total - 1 ? y : 0, 
+        scale: index < total - 1 ? scale : 1,
+        opacity: index < total - 1 ? opacity : 1,
+        x: initialX,
+        marginTop: initialY
+      }}
+    >
+      <div style={{ 
+        width: "140px", 
+        height: "140px", 
+        borderRadius: "24px", 
+        overflow: "hidden", 
+        position: "relative",
+        marginBottom: "40px"
+      }}>
+        <Image src={card.image} alt={card.title} fill style={{ objectFit: "cover" }} />
+      </div>
+
+      <h3 style={{ 
+        fontSize: "clamp(40px, 6vw, 80px)", 
+        fontWeight: "700", 
+        marginBottom: "20px",
+        lineHeight: "0.9",
+        fontFamily: "var(--font-display)"
+      }}>
+        {card.title}
+      </h3>
+
+      <p style={{ 
+        fontSize: "16px", 
+        lineHeight: "1.5", 
+        opacity: 0.8,
+        maxWidth: "450px",
+        margin: 0
+      }}>
+        {card.description}
+      </p>
+    </motion.div>
   );
 }

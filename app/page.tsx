@@ -5,9 +5,9 @@ import DrivingDemand from "@/components/DrivingDemand";
 import FeaturedWork from "@/components/FeaturedWork";
 import OurServices from "@/components/OurServices";
 import TextSlider from "@/components/TextSlider";
+import Legacy from "@/components/Legacy";
 import Awards from "@/components/Awards";
 import Expertise from "@/components/Expertise";
-import Legacy from "@/components/Legacy";
 import Testimonials from "@/components/Testimonials";
 import Blog from "@/components/Blog";
 import Footer from "@/components/Footer";
@@ -21,6 +21,7 @@ export default function Home() {
       <FeaturedWork />
       <OurServices />
       <TextSlider />
+      <Legacy />
       {/* <Awards />
       <Expertise />
       <Legacy />
