@@ -11,7 +11,7 @@ const projects = [
     hoverText: "Increasing brand and non brand visibility UK/ES",
     tag: "Organic search",
     hoverBg: "#ff5f00",
-    image: "/images/1.jpg"
+    image: "/images/1.jpg",
   },
   {
     id: "dojo",
@@ -20,7 +20,7 @@ const projects = [
     hoverText: "A search-first B2B strategy to drive leads",
     tag: "Card Machines",
     hoverBg: "#00ffaa",
-    image: "/images/2.jpg"
+    image: "/images/2.jpg",
   },
   {
     id: "magnet",
@@ -29,7 +29,7 @@ const projects = [
     hoverText: "A full service SEO success story 170%+ increase",
     tag: "Kitchen Showroom",
     hoverBg: "#1a3c34",
-    image: "/images/3.jpg"
+    image: "/images/3.jpg",
   },
   {
     id: "saily",
@@ -38,7 +38,7 @@ const projects = [
     hoverText: "Building a global category leader in E Sims",
     tag: "E Sims",
     hoverBg: "#0055ff",
-    image: "/images/4.jpg"
+    image: "/images/4.jpg",
   },
   {
     id: "jd",
@@ -46,8 +46,8 @@ const projects = [
     years: "2025",
     hoverText: "Dominating Google and AI search",
     tag: "Sportswear",
-    hoverBg: "#000000",
-    image: "/images/5.jpg"
+    hoverBg: "#00d5ff",
+    image: "/images/5.jpg",
   },
   {
     id: "pooky",
@@ -56,7 +56,7 @@ const projects = [
     hoverText: "Driving demand for Pooky Rechargeable Lights",
     tag: "Rechargeable Lights",
     hoverBg: "#ffcc00",
-    image: "/images/7.jpg"
+    image: "/images/7.jpg",
   },
   {
     id: "parkdean",
@@ -65,7 +65,7 @@ const projects = [
     hoverText: "Social search and multi channel content to #1",
     tag: "UK holidays",
     hoverBg: "#00a0a0",
-    image: "/images/8.jpg"
+    image: "/images/8.jpg",
   },
   {
     id: "revolution",
@@ -74,7 +74,7 @@ const projects = [
     hoverText: "Building the UK's leading beauty dupe brand",
     tag: "Beauty Dupes",
     hoverBg: "#ff69b4",
-    image: "/images/9.jpg"
+    image: "/images/9.jpg",
   },
   {
     id: "lloyds",
@@ -83,16 +83,16 @@ const projects = [
     hoverText: "Driving category leadership for STI tests",
     tag: "STI tests",
     hoverBg: "#008000",
-    image: "/images/10.jpg"
+    image: "/images/10.jpg",
   },
   {
     id: "plt",
     name: "PrettyLittleThing",
     years: "2021-2023",
-    hoverText: "Driving discovery for everything \"outfits\" for PLT",
+    hoverText: 'Driving discovery for everything "outfits" for PLT',
     tag: "Outfits",
     hoverBg: "#ffc0cb",
-    image: "/images/11.jpg"
+    image: "/images/11.jpg",
   },
   {
     id: "next",
@@ -100,8 +100,8 @@ const projects = [
     years: "2021-2023",
     hoverText: "Search-first content strategy for fashion",
     tag: "Fashion",
-    hoverBg: "#1a1a1a",
-    image: "/images/12.jpg"
+    hoverBg: "#0085ff",
+    image: "/images/12.jpg",
   },
   {
     id: "playstation",
@@ -110,16 +110,15 @@ const projects = [
     hoverText: "Increasing visibility for gaming peripherals",
     tag: "Gaming",
     hoverBg: "#003791",
-    image: "/images/1.jpg"
-  }
+    image: "/images/1.jpg",
+  },
 ];
-
 
 export default function FeaturedWork() {
   const [activeProject, setActiveProject] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isHoveringImage, setIsHoveringImage] = useState(false);
-  
+
   // Custom cursor logic
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -148,7 +147,7 @@ export default function FeaturedWork() {
           }
         });
       },
-      { threshold: 0.6 }
+      { threshold: 0.6 },
     );
 
     itemRefs.current.forEach((ref) => {
@@ -159,15 +158,15 @@ export default function FeaturedWork() {
   }, []);
 
   return (
-    <section 
-      style={{ 
-        backgroundColor: "#0a0a0a", 
-        borderRadius: "48px", 
-        margin: "10px", 
+    <section
+      style={{
+        backgroundColor: "#0a0a0a",
+        borderRadius: "48px",
+        margin: "10px",
         padding: "100px 0",
         color: "#fff",
         position: "relative",
-        overflow: "visible"
+        overflow: "visible",
       }}
     >
       {/* Custom Cursor */}
@@ -190,52 +189,82 @@ export default function FeaturedWork() {
           marginLeft: "-50px",
           marginTop: "-50px",
           scale: isHoveringImage ? 1 : 0,
-          opacity: isHoveringImage ? 1 : 0
+          opacity: isHoveringImage ? 1 : 0,
         }}
       >
-        <span style={{ color: "#000", fontSize: "40px", fontWeight: "300" }}>↗</span>
+        <span style={{ color: "#000", fontSize: "40px", fontWeight: "300" }}>
+          ↗
+        </span>
       </motion.div>
 
-      <div style={{ maxWidth: "1600px", margin: "0 auto", padding: "0 80px", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "100px" }}>
-        
+      <div
+        style={{
+          maxWidth: "1600px",
+          margin: "0 auto",
+          padding: "0 80px",
+          display: "grid",
+          gridTemplateColumns: "1fr 1.2fr",
+          gap: "100px",
+        }}
+      >
         {/* Left Column: Sticky List */}
-        <div style={{ position: "sticky", top: "200px", height: "fit-content", alignSelf: "start" }}>
-          <div style={{ fontSize: "14px", fontWeight: "900", marginBottom: "100px", opacity: 0.9, letterSpacing: "0.05em" }}>
+        <div
+          style={{
+            position: "sticky",
+            top: "200px",
+            height: "fit-content",
+            alignSelf: "start",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "14px",
+              fontWeight: "900",
+              marginBottom: "100px",
+              opacity: 0.9,
+              letterSpacing: "0.05em",
+            }}
+          >
             Featured Work
           </div>
-          
-          <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+          >
             {projects.map((project, index) => (
               <div
                 key={project.id}
-                style={{ 
+                style={{
                   display: "flex",
                   alignItems: "flex-start",
                   gap: "15px",
-                  transition: "opacity 0.4s ease"
+                  transition: "opacity 0.4s ease",
                 }}
               >
-                <h3 
-                  style={{ 
-                    fontSize: "clamp(40px, 4.5vw, 70px)", 
-                    fontWeight: "700", 
-                    lineHeight: "0.85", 
+                <h3
+                  style={{
+                    fontSize: "clamp(40px, 4.5vw, 70px)",
+                    fontWeight: "700",
+                    lineHeight: "0.85",
                     letterSpacing: "-0.05em",
-                    color: activeProject === index ? "#fff" : "rgba(255,255,255,0.15)",
+                    color:
+                      activeProject === index
+                        ? "#fff"
+                        : "rgba(255,255,255,0.15)",
                     transition: "color 0.4s ease",
                     margin: 0,
-                    fontFamily: "var(--font-display)"
+                    fontFamily: "var(--font-display)",
                   }}
                 >
                   {project.name}
                 </h3>
-                <span 
-                  style={{ 
-                    fontSize: "13px", 
-                    fontWeight: "600", 
+                <span
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: "600",
                     color: "rgba(255,255,255,0.3)",
                     marginTop: "10px",
-                    fontFamily: "var(--font-display)"
+                    fontFamily: "var(--font-display)",
                   }}
                 >
                   [{project.years}]
@@ -248,7 +277,7 @@ export default function FeaturedWork() {
         {/* Right Column: Scrolling Images */}
         <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
           {projects.map((project, index) => (
-            <div 
+            <div
               key={project.id}
               ref={(el) => (itemRefs.current[index] = el)}
               data-index={index}
@@ -260,14 +289,14 @@ export default function FeaturedWork() {
                 setIsHoveringImage(false);
                 setHoveredIndex(null);
               }}
-              style={{ 
-                position: "relative", 
-                width: "100%", 
-                aspectRatio: "1.3", 
-                borderRadius: "40px", 
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "1.3",
+                borderRadius: "40px",
                 overflow: "hidden",
                 backgroundColor: "#111",
-                cursor: "none"
+                cursor: "none",
               }}
             >
               <Image
@@ -294,29 +323,31 @@ export default function FeaturedWork() {
                   flexDirection: "column",
                   justifyContent: "flex-start",
                   zIndex: 2,
-                  pointerEvents: "none"
+                  pointerEvents: "none",
                 }}
               >
-                <h2 style={{ 
-                  fontSize: "clamp(32px, 3.5vw, 48px)", 
-                  fontWeight: "700", 
-                  lineHeight: "1.1", 
-                  letterSpacing: "-0.03em",
-                  fontFamily: "var(--font-display)",
-                  color: "#000",
-                  maxWidth: "90%"
-                }}>
+                <h2
+                  style={{
+                    fontSize: "clamp(32px, 3.5vw, 48px)",
+                    fontWeight: "700",
+                    lineHeight: "1.1",
+                    letterSpacing: "-0.03em",
+                    fontFamily: "var(--font-display)",
+                    color: "#000",
+                    maxWidth: "90%",
+                  }}
+                >
                   {project.hoverText}
                 </h2>
               </motion.div>
-              
+
               {/* Pill Tag */}
-              <div 
-                style={{ 
-                  position: "absolute", 
-                  bottom: "30px", 
-                  right: "30px", 
-                  backgroundColor: "rgba(255,255,255,0.4)", 
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "30px",
+                  right: "30px",
+                  backgroundColor: "rgba(255,255,255,0.4)",
                   backdropFilter: "blur(12px)",
                   padding: "10px 20px",
                   borderRadius: "100px",
@@ -330,7 +361,7 @@ export default function FeaturedWork() {
                   boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
                   zIndex: 3,
                   opacity: hoveredIndex === index ? 0 : 1,
-                  transition: "opacity 0.3s ease"
+                  transition: "opacity 0.3s ease",
                 }}
               >
                 <span style={{ fontSize: "16px" }}>🔍</span>
@@ -344,5 +375,3 @@ export default function FeaturedWork() {
     </section>
   );
 }
-
-
