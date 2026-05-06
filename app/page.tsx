@@ -12,7 +12,6 @@ import Footer from "@/components/Footer";
 import Awards from "@/components/Awards";
 import Expertise from "@/components/Expertise";
 import Testimonials from "@/components/Testimonials";
-import Blog from "@/components/Blog";
 
 export default function Home() {
   return (
