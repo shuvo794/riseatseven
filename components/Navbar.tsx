@@ -11,7 +11,7 @@ const navLinks = [
   { label: "About +", href: "#" },
   { label: "Work", href: "#work", badge: "25" },
   { label: "Careers", href: "#" },
-  { label: "Blog", href: "#" },
+  { label: "Blog & Resources", href: "#" },
   { label: "Webinar", href: "#" },
 ];
 
@@ -74,13 +74,14 @@ export default function Navbar() {
             alignItems: "center",
             justifyContent: "between",
             transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
-            maxWidth: scrolled ? "1200px" : "100%",
-            backgroundColor: scrolled ? "rgba(255, 255, 255, 0.95)" : "transparent",
-            backdropFilter: scrolled ? "blur(20px)" : "none",
-            padding: scrolled ? "12px 30px" : "20px 0",
+            maxWidth: scrolled ? "1400px" : "100%",
+            backgroundColor: scrolled ? "rgba(255, 255, 255, 0.75)" : "transparent",
+            backdropFilter: scrolled ? "blur(16px)" : "none",
+            WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
+            border: scrolled ? "1px solid rgba(255, 255, 255, 0.3)" : "1px solid transparent",
+            padding: scrolled ? "12px 24px" : "20px 0",
             borderRadius: scrolled ? "100px" : "0",
-            boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.08)" : "none",
-            display: "flex",
+            boxShadow: scrolled ? "0 4px 30px rgba(0, 0, 0, 0.1)" : "none",
             width: "100%",
           }}
         >
@@ -120,7 +121,7 @@ export default function Navbar() {
             style={{ 
               display: "flex", 
               alignItems: "center", 
-              gap: "24px",
+              gap: "28px",
               margin: "0 auto" 
             }}
           >
@@ -129,13 +130,14 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 style={{
-                  fontSize: "13px",
+                  fontSize: "14px",
                   fontWeight: "700",
-                  color: scrolled ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.9)",
+                  color: scrolled ? "#000" : "#fff",
                   textDecoration: "none",
                   display: "flex",
                   alignItems: "center",
-                  gap: "4px",
+                  position: "relative",
+                  letterSpacing: "-0.01em"
                 }}
               >
                 {link.label}
@@ -146,12 +148,16 @@ export default function Navbar() {
                       color: "#000",
                       fontSize: "9px",
                       fontWeight: "900",
-                      padding: "2px 6px",
-                      borderRadius: "100px",
+                      minWidth: "16px",
                       height: "16px",
+                      borderRadius: "100px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      position: "absolute",
+                      top: "-8px",
+                      right: "-16px",
+                      padding: "0 4px"
                     }}
                   >
                     {link.badge}
