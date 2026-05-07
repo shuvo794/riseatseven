@@ -24,15 +24,15 @@ export default function Home() {
   }, []);
 
   return (
-    <main 
-      style={{ 
-        maxWidth: "1536px", 
-        margin: "0 auto", 
-        paddingTop: isMobile ? "12px" : "24px", 
-        paddingLeft: isMobile ? "16px" : "32px", 
-        paddingRight: isMobile ? "16px" : "32px", 
-        paddingBottom: "128px",
-        minHeight: "100vh"
+    <main
+      style={{
+        maxWidth: "1536px",
+        margin: "0 auto",
+        paddingTop: isMobile ? "12px" : "24px",
+        paddingLeft: isMobile ? "16px" : "32px",
+        paddingRight: isMobile ? "16px" : "32px",
+        paddingBottom: "0",
+        minHeight: "100vh",
       }}
     >
       <Navbar />

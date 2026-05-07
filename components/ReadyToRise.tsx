@@ -88,7 +88,7 @@ export default function ReadyToRise() {
               style={{ 
                 fontSize: isMobile ? "30vw" : "16vw",
                 fontWeight: "500",
-                trackingTight: "-0.04em",
+                letterSpacing: "-0.04em",
                 lineHeight: "1",
                 color: "#000",
                 flexShrink: 0,

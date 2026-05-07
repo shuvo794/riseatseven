@@ -472,7 +472,7 @@ export default function FeaturedWork() {
                         }}
                       >
                         <Search size={14} style={{ opacity: 0.7 }} />
-                        <span style={{ trackingTight: "-0.01em" }}>
+                        <span style={{ letterSpacing: "-0.01em" }}>
                           {project.tag}
                         </span>
                         <TrendingUp size={14} style={{ opacity: 0.7 }} />

@@ -40,12 +40,13 @@ export default function Hero() {
             priority
             unoptimized
             sizes="100vw"
-            style={{ 
+            style={{
               objectFit: "cover",
               opacity: 0.6,
               transform: "scale(1.2)",
-              filter: isMobile ? "blur(40px)" : "blur(60px)",
-              brightness: isMobile ? "0.6" : "0.7",
+              filter: isMobile
+                ? "blur(40px) brightness(0.6)"
+                : "blur(60px) brightness(0.7)",
             }}
           />
           <div
@@ -75,22 +76,23 @@ export default function Hero() {
             }}
           >
             {/* Awards Label & Logos Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              style={{ marginBottom: isMobile ? "30px" : "50px" }}
+            {/* Awards section */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "15px",
+                marginBottom: isMobile ? "20px" : "30px",
+              }}
             >
               <div
                 style={{
-                  fontSize: isMobile ? "9px" : "11px",
-                  fontWeight: "800",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.15em",
-                  color: "rgba(255,255,255,0.9)",
-                  marginBottom: isMobile ? "16px" : "25px",
-                  maxWidth: isMobile ? "250px" : "none",
-                  margin: "0 auto",
+                  fontSize: isMobile ? "10px" : "12px",
+                  fontWeight: "900",
+                  letterSpacing: "0.05em",
+                  color: "#fff",
+                  opacity: 0.9,
                 }}
               >
                 #1 MOST RECOMMENDED CONTENT MARKETING AGENCY
@@ -101,19 +103,16 @@ export default function Hero() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: isMobile ? "10px" : "24px",
+                  gap: isMobile ? "15px" : "32px",
                 }}
               >
                 {/* Left Wreath */}
-                <div
-                  style={{
-                    color: "#fff",
-                    opacity: 0.6,
-                    transform: "translateY(-2px)",
-                  }}
-                >
+                <div style={{ color: "#fff", opacity: 0.7 }}>
                   <svg
-                    style={{ width: isMobile ? "16px" : "24px", height: isMobile ? "28px" : "40px" }}
+                    style={{
+                      width: isMobile ? "16px" : "24px",
+                      height: isMobile ? "28px" : "40px",
+                    }}
                     viewBox="0 0 24 40"
                     fill="currentColor"
                   >
@@ -122,26 +121,67 @@ export default function Hero() {
                   </svg>
                 </div>
 
-                {/* Logos */}
+                {/* Award Logos */}
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: isMobile ? "12px" : "20px",
-                    filter: "brightness(0) invert(1)",
-                    opacity: 0.8,
+                    gap: isMobile ? "15px" : "24px",
+                    color: "#fff",
+                    opacity: 0.9,
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                     <div style={{ fontSize: isMobile ? "8px" : "10px", fontWeight: "900" }}>GLOBAL</div>
-                     <div style={{ fontSize: isMobile ? "10px" : "12px", fontWeight: "900", marginTop: "-2px" }}>SEARCH</div>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      borderRight: "1px solid rgba(255,255,255,0.2)",
+                      paddingRight: "15px",
+                    }}
+                  >
+                    <div style={{ fontSize: "7px", fontWeight: "900" }}>
+                      GLOBAL
+                    </div>
+                    <div style={{ fontSize: "9px", fontWeight: "900" }}>
+                      SEARCH
+                    </div>
+                    <div style={{ fontSize: "7px", fontWeight: "900" }}>
+                      AWARDS
+                    </div>
                   </div>
-                  <div style={{ borderLeft: "1px solid rgba(255,255,255,0.3)", height: "20px" }}></div>
-                  <div style={{ fontSize: isMobile ? "12px" : "16px", fontWeight: "900" }}>The Drum</div>
-                  <div style={{ borderLeft: "1px solid rgba(255,255,255,0.3)", height: "20px" }}></div>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                     <div style={{ fontSize: isMobile ? "8px" : "9px", fontWeight: "900" }}>UK SOCIAL</div>
-                     <div style={{ fontSize: isMobile ? "10px" : "11px", fontWeight: "900", marginTop: "-2px" }}>MEDIA</div>
+                  <div
+                    style={{
+                      fontWeight: "800",
+                      fontSize: "16px",
+                      borderRight: "1px solid rgba(255,255,255,0.2)",
+                      paddingRight: "15px",
+                    }}
+                  >
+                    The Drum
+                  </div>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      borderRight: "1px solid rgba(255,255,255,0.2)",
+                      paddingRight: "15px",
+                    }}
+                  >
+                    <div style={{ fontSize: "7px", fontWeight: "900" }}>
+                      UK SOCIAL
+                    </div>
+                    <div style={{ fontSize: "9px", fontWeight: "900" }}>
+                      MEDIA
+                    </div>
+                    <div style={{ fontSize: "7px", fontWeight: "900" }}>
+                      AWARDS
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: "9px", fontWeight: "900" }}>
+                      CONTENT
+                    </div>
+                    <div style={{ fontSize: "7px", fontWeight: "900" }}>
+                      AWARDS
+                    </div>
                   </div>
                 </div>
 
@@ -149,12 +189,15 @@ export default function Hero() {
                 <div
                   style={{
                     color: "#fff",
-                    opacity: 0.6,
-                    transform: "translateY(-2px) scaleX(-1)",
+                    opacity: 0.7,
+                    transform: "scaleX(-1)",
                   }}
                 >
                   <svg
-                    style={{ width: isMobile ? "16px" : "24px", height: isMobile ? "28px" : "40px" }}
+                    style={{
+                      width: isMobile ? "16px" : "24px",
+                      height: isMobile ? "28px" : "40px",
+                    }}
                     viewBox="0 0 24 40"
                     fill="currentColor"
                   >
@@ -163,7 +206,7 @@ export default function Hero() {
                   </svg>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Headline */}
             <div
@@ -206,13 +249,19 @@ export default function Hero() {
                 style={{
                   display: "flex",
                   flexDirection: isMobile ? "column" : "row",
-                  itemsAlign: "center",
+                  alignItems: "center",
                   justifyContent: "center",
                   gap: isMobile ? "10px" : "20px",
                   marginTop: isMobile ? "10px" : "-5px",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "10px" : "20px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: isMobile ? "10px" : "20px",
+                  }}
+                >
                   <span
                     style={{
                       fontSize: isMobile ? "55px" : "clamp(60px, 12vw, 100px)",
@@ -241,8 +290,8 @@ export default function Hero() {
                     }}
                   >
                     <Image
-                      src="/images/hero-people.png"
-                      alt="People"
+                      src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&q=80&w=800"
+                      alt="Interior Detail"
                       fill
                       unoptimized
                       sizes="20vw"

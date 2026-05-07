@@ -1,236 +1,384 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { name: "Work", href: "/work" },
-  { name: "Services", href: "/services" },
-  { name: "About", href: "/about" },
-  { name: "Careers", href: "/careers" },
-  { name: "Contact", href: "/contact" },
+  { label: "Services +", href: "#" },
+  { label: "Industries +", href: "#" },
+  { label: "International +", href: "#" },
+  { label: "About +", href: "#" },
+  { label: "Work", href: "#work", badge: "25" },
+  { label: "Careers", href: "#" },
+  { label: "Blog & Resources", href: "#" },
+  { label: "Webinar", href: "#" },
 ];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    
-    window.addEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    const checkMobile = () => setIsMobile(window.innerWidth < 1280);
+
+    window.addEventListener("scroll", onScroll);
     window.addEventListener("resize", checkMobile);
     checkMobile();
-    
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", checkMobile);
     };
   }, []);
-
   return (
     <>
       {/* Announcement Bar */}
-      <div 
+      <div
         style={{
+          padding: isMobile ? "8px 10px" : "15px 30px 0 30px",
           position: "fixed",
-          top: isMobile ? "10px" : "20px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: isMobile ? "calc(100% - 20px)" : "calc(100% - 40px)",
-          maxWidth: "1440px",
-          backgroundColor: "#c1f1e0",
-          borderRadius: "100px",
-          padding: isMobile ? "10px 20px" : "12px 20px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          top: 0,
+          left: 0,
+          right: 0,
           zIndex: 1001,
-          cursor: "pointer",
-          transition: "all 0.3s ease",
+          marginTop: "-20px",
+          pointerEvents: "none",
+          opacity: scrolled ? 0 : 1,
+          transform: scrolled ? "translateY(-20px)" : "translateY(0)",
+          transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        <div style={{ 
-          fontSize: isMobile ? "12px" : "14px", 
-          fontWeight: "700", 
-          color: "#000",
-          display: "flex",
-          alignItems: "center",
-          gap: "8px"
-        }}>
-          <span>🚨</span>
-          <span>The Category Leaderboard - Live Now</span>
+        <div
+          style={{
+            maxWidth: "1300px",
+            margin: "0 auto",
+            backgroundColor: "#b5f5e0",
+            color: "#000",
+            textAlign: "center",
+            fontSize: isMobile ? "11px" : "13px",
+            fontWeight: "800",
+            padding: isMobile ? "8px 16px" : "10px 24px",
+            borderRadius: "100px",
+            letterSpacing: "-0.01em",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            pointerEvents: "auto",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.05)",
+          }}
+        >
+          <span style={{ fontSize: "16px" }}>🚨</span> The Category Leaderboard
+          - Live Now
         </div>
       </div>
 
-      <nav
+      {/* Main Nav */}
+      <header
         style={{
           position: "fixed",
-          top: isMobile ? "60px" : "80px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: isMobile ? "calc(100% - 20px)" : "calc(100% - 40px)",
-          maxWidth: "1440px",
-          height: isMobile ? "60px" : "80px",
-          backgroundColor: scrolled ? "rgba(255, 255, 255, 0.8)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          borderRadius: "100px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: isMobile ? "0 20px" : "0 40px",
+          left: 0,
+          right: 0,
           zIndex: 1000,
-          transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-          border: scrolled ? "1px solid rgba(0,0,0,0.05)" : "1px solid transparent",
+          width: "100%",
+          transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+          top: scrolled
+            ? isMobile
+              ? "5px"
+              : "15px"
+            : isMobile
+              ? "45px"
+              : "65px",
+          padding: isMobile ? "0 10px" : "0 40px",
         }}
       >
-        {/* Logo */}
-        <div style={{ display: "flex", alignItems: "center", height: isMobile ? "24px" : "32px" }}>
-          <svg 
-            style={{ 
-              height: "100%", 
-              width: "auto", 
-              fill: scrolled ? "#000" : "#fff",
-              transition: "fill 0.4s"
-            }} 
-            viewBox="0 0 168 21"
-          >
-            <path d="M91.3152 5.40061C91.3152 3.94241 92.5306 2.67359 93.9881 2.67359C95.7162 2.67359 96.797 3.83419 96.797 5.56225H99.7127C99.7127 2.1873 97.3096 0 93.9874 0C90.9371 0 88.3988 2.32257 88.3988 5.42766C88.3988 9.31596 90.883 10.2344 93.9874 11.4221C95.6627 12.07 97.2007 12.5563 97.2007 14.6895C97.2007 16.634 95.9867 18.0651 93.9874 18.0651C91.8813 18.0651 90.7477 16.3905 90.7477 14.446H87.832C87.832 18.0651 90.3426 20.7381 93.9874 20.7381C97.6323 20.7381 100.118 18.2816 100.118 14.6895C100.118 7.10161 91.3145 9.64061 91.3145 5.40061H91.3152Z"></path>
-            <path d="M109.209 4.99609C104.834 4.99609 101.539 8.53405 101.539 12.8539C101.539 17.1737 104.888 20.738 109.155 20.738C112.422 20.738 115.203 18.713 116.337 15.662H113.529C112.718 17.2278 111.017 18.1733 109.262 18.1733C106.806 18.1733 104.915 16.4182 104.348 14.0963H116.743C116.797 13.6371 116.823 13.1508 116.823 12.6922C116.823 8.47926 113.447 4.99609 109.209 4.99609ZM104.348 11.9361C104.509 9.47823 106.751 7.56147 109.181 7.56147C111.611 7.56147 113.853 9.47823 114.014 11.9361H104.348Z"></path>
-            <path d="M127.476 5.40039L123.575 16.0941L119.673 5.40039H116.676L122.617 20.3598H124.588L130.475 5.40039H127.476Z"></path>
-            <path d="M137.942 4.99609C133.567 4.99609 130.273 8.53405 130.273 12.8539C130.273 17.1737 133.621 20.738 137.888 20.738C141.155 20.738 143.936 18.713 145.071 15.662H142.262C141.453 17.2278 139.75 18.1733 137.996 18.1733C135.538 18.1733 133.649 16.4182 133.081 14.0963H145.476C145.53 13.6371 145.556 13.1508 145.556 12.6922C145.556 8.47926 142.182 4.99609 137.942 4.99609ZM133.081 11.9361C133.243 9.47823 135.484 7.56147 137.915 7.56147C140.347 7.56147 142.586 9.47823 142.749 11.9361H133.081Z"></path>
-            <path d="M147.473 8.21195V8.69013V20.3618H150.032V10.1815L167.216 20.3618V17.2405L147.473 5.40039V8.21195Z"></path>
-            <path d="M67.8431 7.50804H67.789C66.6818 5.80635 64.7103 4.99609 62.713 4.99609C58.1775 4.99609 54.7734 8.3981 54.7734 12.935C54.7734 17.4719 58.2296 20.7387 62.713 20.7387C64.7651 20.7387 66.7359 19.8473 67.789 18.0387H67.8431V20.3606H70.652V5.40122H67.8431V7.50804ZM62.686 18.1733C59.823 18.1733 57.5823 15.7168 57.5823 12.9073C57.5823 10.0978 59.7425 7.56079 62.7124 7.56079C65.6822 7.56079 67.8972 9.90973 67.8972 12.9073C67.8972 15.9048 65.6024 18.1733 62.6867 18.1733H62.686Z"></path>
-            <path d="M77.5832 0.378906H74.7736V5.40144H72.75V7.96681H74.7736V20.3608H77.5832V7.96681H80.0403V5.40144H77.5832V0.378906Z"></path>
-            <path d="M18.3089 0.378906H15.5V3.2953H18.3089V0.378906Z"></path>
-            <path d="M18.3089 5.02344H15.5V19.9828H18.3089V5.02344Z"></path>
-            <path d="M25.8409 10.7205C24.8142 10.3959 23.5183 10.0996 23.5183 8.77603C23.5183 7.77639 24.3279 7.18256 25.2728 7.18256C26.4077 7.18256 27.0549 7.91166 27.1895 8.99178H29.9984C29.9443 6.39935 27.9727 4.61719 25.4087 4.61719C22.8447 4.61719 20.7088 6.3723 20.7088 8.93767C20.7088 14.2307 27.5412 12.6102 27.5412 15.743C27.5412 17.0389 26.6227 17.7951 25.381 17.7951C23.707 17.7951 22.9516 16.6074 22.8427 15.0681H20.0352C20.0352 17.417 21.1951 19.2269 23.4094 20.0094C24.0303 20.2252 24.6789 20.3604 25.3262 20.3604C28.1892 20.3604 30.3494 18.5248 30.3494 15.5807C30.3494 12.6366 28.296 11.476 25.8402 10.7205H25.8409Z"></path>
-            <path d="M39.3637 4.61719C34.9891 4.61719 31.6953 8.15514 31.6953 12.475C31.6953 16.7948 35.0432 20.3591 39.3096 20.3591C42.577 20.3591 45.3581 18.3341 46.493 15.2831H43.6842C42.8746 16.8489 41.1722 17.7944 39.4178 17.7944C36.96 17.7944 35.0709 16.0393 34.5028 13.7174H46.8975C46.9516 13.2582 46.978 12.7719 46.978 12.3133C46.978 8.10036 43.6037 4.61719 39.3637 4.61719ZM34.5028 11.5565C34.6651 9.09864 36.9059 7.18188 39.3373 7.18188C41.7688 7.18188 44.0075 9.09932 44.1705 11.5565H34.5028Z"></path>
-            <path d="M9.55945 12.1512C12.1519 11.2327 13.3395 9.09953 13.3395 6.39957C13.3395 4.67151 12.7728 2.88934 11.5046 1.67395C10.0998 0.297591 8.07419 0H6.18314 0H0V19.9826H2.91572V13.8069L13.3389 19.9826V16.8606L6.22575 12.5949L7.61496 12.5293C8.26222 12.5293 8.96359 12.3676 9.55809 12.1512H9.55945ZM4.91499 10.3156H2.91572V2.67359H5.99444C8.317 2.67359 10.4231 3.86192 10.4231 6.40024C10.4231 9.5865 7.50742 10.3156 4.91499 10.3156Z"></path>
-            <path d="M164.759 7.94414L166.061 8.71517V8.08955L165.395 7.69051C165.437 7.68172 165.48 7.66954 165.521 7.65466C165.869 7.53157 166.061 7.24209 166.061 6.84034C166.061 6.57725 165.966 6.33579 165.801 6.17753C165.583 5.9638 165.277 5.93945 165.065 5.93945H164.191V8.63807H164.758V7.94346L164.759 7.94414ZM164.908 7.22856H164.76V6.47715H165.043C165.261 6.47715 165.495 6.57251 165.495 6.84102C165.495 7.10953 165.297 7.22856 164.908 7.22856H164.908Z"></path>
-            <path d="M165.127 10.1622C166.714 10.1622 168 8.87583 168 7.28913C168 5.70242 166.714 4.41602 165.127 4.41602C163.54 4.41602 162.254 5.70242 162.254 7.28913C162.254 8.87583 163.54 10.1622 165.127 10.1622ZM165.127 5.22763C166.264 5.22763 167.189 6.15219 167.189 7.28913C167.189 8.42606 166.264 9.35062 165.127 9.35062C163.99 9.35062 163.066 8.42606 163.066 7.28913C163.066 6.15219 163.99 5.22763 165.127 5.22763Z"></path>
-          </svg>
-        </div>
-
-        {/* Desktop Links */}
-        {!isMobile && mounted && (
-          <div style={{ display: "flex", alignItems: "center", gap: "32px" }}>
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                style={{
-                  fontSize: "15px",
-                  fontWeight: "600",
-                  color: scrolled ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.8)",
-                  textDecoration: "none",
-                  transition: "all 0.3s",
-                }}
-              >
-                {link.name}
-              </a>
-            ))}
-            <button
-              style={{
-                backgroundColor: scrolled ? "#000" : "#fff",
-                color: scrolled ? "#fff" : "#000",
-                padding: "12px 28px",
-                borderRadius: "100px",
-                border: "none",
-                fontSize: "15px",
-                fontWeight: "700",
-                cursor: "pointer",
-                transition: "all 0.3s",
-              }}
-            >
-              Get in touch
-            </button>
-          </div>
-        )}
-
-        {/* Mobile Toggle */}
-        {isMobile && mounted && (
-          <button
-            onClick={() => setIsOpen(!isOpen)}
+        <div
+          style={{
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+            maxWidth: scrolled ? "1300px" : "100%",
+            backgroundColor: scrolled
+              ? "rgba(255, 255, 255, 0.9)"
+              : "transparent",
+            backdropFilter: scrolled ? "blur(20px)" : "none",
+            padding: scrolled
+              ? isMobile
+                ? "10px 16px"
+                : "12px 30px"
+              : isMobile
+                ? "15px 10px"
+                : "20px 0",
+            borderRadius: scrolled ? "100px" : "0",
+            boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.08)" : "none",
+            width: "100%",
+            border: scrolled
+              ? "1px solid rgba(0,0,0,0.05)"
+              : "1px solid transparent",
+          }}
+        >
+          {/* Logo */}
+          <Link
+            href="/"
             style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              backgroundColor: scrolled ? "#000" : "#fff",
-              border: "none",
               display: "flex",
-              flexDirection: "column",
               alignItems: "center",
-              justifyContent: "center",
-              gap: "4px",
-              cursor: "pointer",
+              textDecoration: "none",
+              color: scrolled ? "#000" : "#fff",
+              fontSize: isMobile ? "20px" : "26px",
+              fontWeight: "700",
+              letterSpacing: "-0.02em",
+              flexShrink: 0,
             }}
           >
-            <div style={{ width: "18px", height: "2px", backgroundColor: scrolled ? "#fff" : "#000", transform: isOpen ? "rotate(45deg) translateY(4px)" : "none", transition: "0.3s" }} />
-            <div style={{ width: "18px", height: "2px", backgroundColor: scrolled ? "#fff" : "#000", opacity: isOpen ? 0 : 1, transition: "0.3s" }} />
-            <div style={{ width: "18px", height: "2px", backgroundColor: scrolled ? "#fff" : "#000", transform: isOpen ? "rotate(-45deg) translateY(-4px)" : "none", transition: "0.3s" }} />
-          </button>
-        )}
-      </nav>
+            Rise at Seven
+            <span
+              style={{
+                fontSize: "14px",
+                verticalAlign: "super",
+                marginLeft: "2px",
+              }}
+            >
+              ®
+            </span>
+          </Link>
+
+          {/* Desktop Links */}
+          {mounted && !isMobile && (
+            <nav
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "20px",
+                margin: "0 20px",
+              }}
+            >
+              {navLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "700",
+                    color: scrolled ? "rgba(0,0,0,0.8)" : "#fff",
+                    textDecoration: "none",
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {link.label}
+                  {link.badge && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "-12px",
+                        right: "-10px",
+                        backgroundColor: "#b5f5e0",
+                        color: "#000",
+                        fontSize: "9px",
+                        fontWeight: "900",
+                        width: "18px",
+                        height: "18px",
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                      }}
+                    >
+                      {link.badge}
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </nav>
+          )}
+
+          {/* CTA & Mobile Toggle */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "15px",
+              flexShrink: 0,
+            }}
+          >
+            {!isMobile && (
+              <Link
+                href="#contact"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  padding: "12px 28px",
+                  borderRadius: "100px",
+                  transition: "all 0.3s",
+                  backgroundColor: scrolled ? "#000" : "#fff",
+                  color: scrolled ? "#fff" : "#000",
+                  textDecoration: "none",
+                  boxShadow: "0 4px 14px rgba(0,0,0,0.1)",
+                }}
+              >
+                Get In Touch{" "}
+                <span style={{ fontSize: "18px", lineHeight: 1 }}>↗</span>
+              </Link>
+            )}
+
+            {isMobile && (
+              <button
+                onClick={() => setMobileOpen(true)}
+                style={{
+                  padding: "8px",
+                  color: scrolled ? "#000" : "#fff",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <Menu size={28} />
+              </button>
+            )}
+          </div>
+        </div>
+      </header>
 
       {/* Mobile Menu */}
       <AnimatePresence>
-        {isOpen && isMobile && (
+        {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
             style={{
               position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "#fff",
-              zIndex: 999,
-              padding: "100px 30px 40px",
+              inset: 0,
+              zIndex: 2000,
+              backgroundColor: "#000",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-between",
+              padding: "40px 20px",
+              overflowY: "auto",
             }}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "60px",
+              }}
+            >
+              <Link href="/" onClick={() => setMobileOpen(false)}>
+                <svg
+                  style={{ height: "24px", width: "auto", fill: "#fff" }}
+                  viewBox="0 0 168 21"
+                >
+                  <path d="M91.3152 5.40061C91.3152 3.94241 92.5306 2.67359 93.9881 2.67359C95.7162 2.67359 96.797 3.83419 96.797 5.56225H99.7127C99.7127 2.1873 97.3096 0 93.9874 0C90.9371 0 88.3988 2.32257 88.3988 5.42766C88.3988 9.31596 90.883 10.2344 93.9874 11.4221C95.6627 12.07 97.2007 12.5563 97.2007 14.6895C97.2007 16.634 95.9867 18.0651 93.9874 18.0651C91.8813 18.0651 90.7477 16.3905 90.7477 14.446H87.832C87.832 18.0651 90.3426 20.7381 93.9874 20.7381C97.6323 20.7381 100.118 18.2816 100.118 14.6895C100.118 7.10161 91.3145 9.64061 91.3145 5.40061H91.3152Z"></path>
+                  {/* ... (SVG paths) ... */}
+                  <path d="M109.209 4.99609C104.834 4.99609 101.539 8.53405 101.539 12.8539C101.539 17.1737 104.888 20.738 109.155 20.738C112.422 20.738 115.203 18.713 116.337 15.662H113.529C112.718 17.2278 111.017 18.1733 109.262 18.1733C106.806 18.1733 104.915 16.4182 104.348 14.0963H116.743C116.797 13.6371 116.823 13.1508 116.823 12.6922C116.823 8.47926 113.447 4.99609 109.209 4.99609ZM104.348 11.9361C104.509 9.47823 106.751 7.56147 109.181 7.56147C111.611 7.56147 113.853 9.47823 114.014 11.9361H104.348Z"></path>
+                  <path d="M127.476 5.40039L123.575 16.0941L119.673 5.40039H116.676L122.617 20.3598H124.588L130.475 5.40039H127.476Z"></path>
+                  <path d="M137.942 4.99609C133.567 4.99609 130.273 8.53405 130.273 12.8539C130.273 17.1737 133.621 20.738 137.888 20.738C141.155 20.738 143.936 18.713 145.071 15.662H142.262C141.453 17.2278 139.75 18.1733 137.996 18.1733C135.538 18.1733 133.649 16.4182 133.081 14.0963H145.476C145.53 13.6371 145.556 13.1508 145.556 12.6922C145.556 8.47926 142.182 4.99609 137.942 4.99609ZM133.081 11.9361C133.243 9.47823 135.484 7.56147 137.915 7.56147C140.347 7.56147 142.586 9.47823 142.749 11.9361H133.081Z"></path>
+                  <path d="M147.473 8.21195V8.69013V20.3618H150.032V10.1815L167.216 20.3618V17.2405L147.473 5.40039V8.21195Z"></path>
+                  <path d="M67.8431 7.50804H67.789C66.6818 5.80635 64.7103 4.99609 62.713 4.99609C58.1775 4.99609 54.7734 8.3981 54.7734 12.935C54.7734 17.4719 58.2296 20.7387 62.713 20.7387C64.7651 20.7387 66.7359 19.8473 67.789 18.0387H67.8431V20.3606H70.652V5.40122H67.8431V7.50804ZM62.686 18.1733C59.823 18.1733 57.5823 15.7168 57.5823 12.9073C57.5823 10.0978 59.7425 7.56079 62.7124 7.56079C65.6822 7.56079 67.8972 9.90973 67.8972 12.9073C67.8972 15.9048 65.6024 18.1733 62.6867 18.1733H62.686Z"></path>
+                  <path d="M77.5832 0.378906H74.7736V5.40144H72.75V7.96681H74.7736V20.3608H77.5832V7.96681H80.0403V5.40144H77.5832V0.378906Z"></path>
+                  <path d="M18.3089 0.378906H15.5V3.2953H18.3089V0.378906Z"></path>
+                  <path d="M18.3089 5.02344H15.5V19.9828H18.3089V5.02344Z"></path>
+                  <path d="M25.8409 10.7205C24.8142 10.3959 23.5183 10.0996 23.5183 8.77603C23.5183 7.77639 24.3279 7.18256 25.2728 7.18256C26.4077 7.18256 27.0549 7.91166 27.1895 8.99178H29.9984C29.9443 6.39935 27.9727 4.61719 25.4087 4.61719C22.8447 4.61719 20.7088 6.3723 20.7088 8.93767C20.7088 14.2307 27.5412 12.6102 27.5412 15.743C27.5412 17.0389 26.6227 17.7951 25.381 17.7951C23.707 17.7951 22.9516 16.6074 22.8427 15.0681H20.0352C20.0352 17.417 21.1951 19.2269 23.4094 20.0094C24.0303 20.2252 24.6789 20.3604 25.3262 20.3604C28.1892 20.3604 30.3494 18.5248 30.3494 15.5807C30.3494 12.6366 28.296 11.476 25.8402 10.7205H25.8409Z"></path>
+                  <path d="M39.3637 4.61719C34.9891 4.61719 31.6953 8.15514 31.6953 12.475C31.6953 16.7948 35.0432 20.3591 39.3096 20.3591C42.577 20.3591 45.3581 18.3341 46.493 15.2831H43.6842C42.8746 16.8489 41.1722 17.7944 39.4178 17.7944C36.96 17.7944 35.0709 16.0393 34.5028 13.7174H46.8975C46.9516 13.2582 46.978 12.7719 46.978 12.3133C46.978 8.10036 43.6037 4.61719 39.3637 4.61719ZM34.5028 11.5565C34.6651 9.09864 36.9059 7.18188 39.3373 7.18188C41.7688 7.18188 44.0075 9.09932 44.1705 11.5565H34.5028Z"></path>
+                  <path d="M9.55945 12.1512C12.1519 11.2327 13.3395 9.09953 13.3395 6.39957C13.3395 4.67151 12.7728 2.88934 11.5046 1.67395C10.0998 0.297591 8.07419 0H6.18314 0H0V19.9826H2.91572V13.8069L13.3389 19.9826V16.8606L6.22575 12.5949L7.61496 12.5293C8.26222 12.5293 8.96359 12.3676 9.55809 12.1512H9.55945ZM4.91499 10.3156H2.91572V2.67359H5.99444C8.317 2.67359 10.4231 3.86192 10.4231 6.40024C10.4231 9.5865 7.50742 10.3156 4.91499 10.3156Z"></path>
+                  <path d="M164.759 7.94414L166.061 8.71517V8.08955L165.395 7.69051C165.437 7.68172 165.48 7.66954 165.521 7.65466C165.869 7.53157 166.061 7.24209 166.061 6.84034C166.061 6.57725 165.966 6.33579 165.801 6.17753C165.583 5.9638 165.277 5.93945 165.065 5.93945H164.191V8.63807H164.758V7.94346L164.759 7.94414ZM164.908 7.22856H164.76V6.47715H165.043C165.261 6.47715 165.495 6.57251 165.495 6.84102C165.495 7.10953 165.297 7.22856 164.908 7.22856H164.908Z"></path>
+                  <path d="M165.127 10.1622C166.714 10.1622 168 8.87583 168 7.28913C168 5.70242 166.714 4.41602 165.127 4.41602C163.54 4.41602 162.254 5.70242 162.254 7.28913C162.254 8.87583 163.54 10.1622 165.127 10.1622ZM165.127 5.22763C166.264 5.22763 167.189 6.15219 167.189 7.28913C167.189 8.42606 166.264 9.35062 165.127 9.35062C163.99 9.35062 163.066 8.42606 163.066 7.28913C163.066 6.15219 163.99 5.22763 165.127 5.22763Z"></path>
+                </svg>
+              </Link>
+              <button
+                onClick={() => setMobileOpen(false)}
+                style={{ color: "#fff", background: "none", border: "none" }}
+              >
+                <X size={32} />
+              </button>
+            </div>
+            <nav
+              style={{ display: "flex", flexDirection: "column", gap: "25px" }}
+            >
               {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
+                <motion.div
+                  key={link.label}
+                  initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  href={link.href}
+                  transition={{ delay: i * 0.05 }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    style={{
+                      fontSize: "36px",
+                      fontWeight: "900",
+                      color: "#fff",
+                      textDecoration: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      fontFamily: "var(--font-display)",
+                      letterSpacing: "-0.04em",
+                    }}
+                  >
+                    {link.label}
+                    {link.badge && (
+                      <span
+                        style={{
+                          backgroundColor: "#c1f1e0",
+                          color: "#000",
+                          fontSize: "12px",
+                          fontWeight: "900",
+                          padding: "2px 10px",
+                          borderRadius: "100px",
+                        }}
+                      >
+                        {link.badge}
+                      </span>
+                    )}
+                  </Link>
+                </motion.div>
+              ))}
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                style={{ marginTop: "40px" }}
+              >
+                <Link
+                  href="#contact"
+                  onClick={() => setMobileOpen(false)}
                   style={{
-                    fontSize: "42px",
-                    fontWeight: "700",
+                    backgroundColor: "#fff",
                     color: "#000",
+                    padding: "15px 30px",
+                    borderRadius: "100px",
+                    fontSize: "18px",
+                    fontWeight: "800",
                     textDecoration: "none",
-                    letterSpacing: "-0.04em",
+                    display: "inline-block",
                   }}
                 >
-                  {link.name}
-                </motion.a>
-              ))}
-            </div>
-            
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-               <p style={{ opacity: 0.5, fontSize: "14px" }}>Email us: hello@riseatseven.com</p>
-               <button style={{ 
-                 backgroundColor: "#000", 
-                 color: "#fff", 
-                 padding: "20px", 
-                 borderRadius: "100px",
-                 fontSize: "18px",
-                 fontWeight: "700"
-               }}>
-                 Get in touch
-               </button>
-            </div>
+                  Get In Touch ↗
+                </Link>
+              </motion.div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
