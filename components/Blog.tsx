@@ -6,124 +6,72 @@ import Image from "next/image";
 const blogPosts = [
   {
     id: 1,
-    category: "Rise at Seven",
-    title: "Organic media planning: Why search is the new full-funnel media channel",
-    image: "/images/1.jpg",
-    date: "14 Feb 2025"
+    category: "Rise at Seven Blog",
+    location: "Manchester HQ",
+    title: "Rise at Seven Exits Sheffield and Triples Manchester as new HQ as they go for global expansion",
+    image: "https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&q=80&w=1200",
   },
   {
     id: 2,
     category: "Rise at Seven",
-    title: "Google is changing. Your SEO strategy should too.",
-    image: "/images/2.jpg",
-    date: "10 Feb 2025"
+    location: "Sheffield",
+    title: "Ryan McNamara Is Now Rise at Seven's Global Operations Director",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200",
   },
   {
     id: 3,
-    category: "Rise at Seven",
-    title: "How to win at Digital PR in 2025",
-    image: "/images/3.jpg",
-    date: "05 Feb 2025"
+    category: "Blog Post",
+    location: "PR & SEO",
+    title: "Rise at Seven Appointed by Cadbury's to Drive Demand and Retail Growth for them in the Chocolate Confectionary Category",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1200",
   }
 ];
 
 function BlogCard({ post, isMobile }: { post: any, isMobile: boolean }) {
-  const [isHovering, setIsHovering] = useState(false);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springX = useSpring(mouseX, { stiffness: 150, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 150, damping: 20 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isMobile) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
-  };
-
   return (
-    <div
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-      style={{
-        backgroundColor: "#fff",
-        borderRadius: isMobile ? "24px" : "32px",
-        padding: isMobile ? "24px" : "40px",
-        height: isMobile ? "auto" : "500px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
+    <div style={{ display: "flex", flexDirection: "column", gap: "16px", cursor: "pointer" }}>
+      {/* Image Container */}
+      <div style={{ 
+        width: "100%", 
+        aspectRatio: "1/1", 
+        borderRadius: "16px", 
+        overflow: "hidden", 
         position: "relative",
-        overflow: "hidden",
-        cursor: "pointer",
-        border: "1px solid rgba(0,0,0,0.05)"
-      }}
-    >
-      {!isMobile && (
-        <motion.div
-          style={{
-            position: "absolute",
-            width: "300px",
-            height: "200px",
-            borderRadius: "20px",
-            overflow: "hidden",
-            pointerEvents: "none",
-            zIndex: 1,
-            x: springX,
-            y: springY,
-            marginLeft: "-150px",
-            marginTop: "-100px",
-            scale: isHovering ? 1 : 0,
-            opacity: isHovering ? 1 : 0,
-          }}
-        >
-          <Image
-            src={post.image}
-            alt={post.title}
-            fill
-            unoptimized
-            style={{ objectFit: "cover" }}
-          />
-        </motion.div>
-      )}
+        backgroundColor: "#e0e0e0"
+      }}>
+        <Image 
+          src={post.image} 
+          alt={post.title} 
+          fill 
+          unoptimized 
+          style={{ objectFit: "cover", transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }} 
+          onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+          onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+        />
+      </div>
 
-      {isMobile && (
-        <div style={{ width: "100%", height: "200px", borderRadius: "16px", overflow: "hidden", marginBottom: "20px", position: "relative" }}>
-           <Image src={post.image} alt={post.title} fill unoptimized style={{ objectFit: "cover" }} />
+      {/* Content */}
+      <div style={{ padding: "0 4px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px", opacity: 0.6 }}>
+           <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+             <div style={{ width: "12px", height: "12px", borderRadius: "50%", border: "1px solid #000" }} />
+             <span style={{ fontSize: "11px", fontWeight: "700" }}>{post.category}</span>
+           </div>
+           <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+             <span style={{ fontSize: "14px" }}>📍</span>
+             <span style={{ fontSize: "11px", fontWeight: "700" }}>{post.location}</span>
+           </div>
         </div>
-      )}
-
-      <div style={{ position: "relative", zIndex: 2 }}>
-        <span style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.05em", opacity: 0.5 }}>
-          {post.category}
-        </span>
         <h3 style={{ 
-          fontSize: isMobile ? "24px" : "32px", 
+          fontSize: isMobile ? "18px" : "20px", 
           fontWeight: "700", 
-          marginTop: "16px", 
-          lineHeight: "1.1",
-          letterSpacing: "-0.02em"
+          lineHeight: "1.3",
+          letterSpacing: "-0.01em",
+          color: "#000",
+          margin: 0
         }}>
           {post.title}
         </h3>
-      </div>
-
-      <div style={{ position: "relative", zIndex: 2, display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: isMobile ? "24px" : "0" }}>
-        <span style={{ fontSize: "14px", opacity: 0.4 }}>{post.date}</span>
-        <div style={{ 
-          width: "40px", 
-          height: "40px", 
-          borderRadius: "50%", 
-          border: "1px solid rgba(0,0,0,0.1)", 
-          display: "flex", 
-          alignItems: "center", 
-          justifyContent: "center",
-          fontSize: "18px"
-        }}>
-          ↗
-        </div>
       </div>
     </div>
   );
@@ -144,66 +92,74 @@ export default function Blog() {
   return (
     <section
       style={{
-        backgroundColor: "#f2f2f2",
+        backgroundColor: "#f5f5f5",
         padding: isMobile ? "60px 20px" : "100px 40px",
-        minHeight: "600px"
+        minHeight: "600px",
+        borderTop: "1px solid rgba(0,0,0,0.05)"
       }}
     >
       {mounted && (
-        <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: isMobile ? "40px" : "60px" }}>
-            <div>
-              <span style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.5 }}>
-                Our Thoughts
-              </span>
-              <h2 style={{ 
-                fontSize: isMobile ? "42px" : "60px", 
-                fontWeight: "600", 
-                margin: "10px 0 0 0",
-                fontFamily: "var(--font-display)",
-                letterSpacing: "-0.03em"
+        <div style={{ maxWidth: "1600px", margin: "0 auto" }}>
+          {/* Header */}
+          <div style={{ 
+            display: "flex", 
+            justifyContent: "space-between", 
+            alignItems: "center", 
+            marginBottom: isMobile ? "40px" : "60px",
+            borderBottom: "1px solid rgba(0,0,0,0.1)",
+            paddingBottom: "24px"
+          }}>
+            <h2 style={{ 
+              fontSize: isMobile ? "32px" : "48px", 
+              fontWeight: "700", 
+              margin: 0,
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              letterSpacing: "-0.02em"
+            }}>
+              What&apos;s 
+              <div style={{ 
+                width: isMobile ? "32px" : "44px", 
+                height: isMobile ? "32px" : "44px", 
+                backgroundColor: "#000", 
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: isMobile ? "16px" : "24px"
               }}>
-                What&apos;s New
-              </h2>
-            </div>
-            {!isMobile && (
-              <button style={{ 
-                backgroundColor: "#fff", 
-                border: "1px solid rgba(0,0,0,0.1)", 
-                padding: "12px 28px", 
-                borderRadius: "100px", 
-                fontWeight: "700",
-                cursor: "pointer"
-              }}>
-                View All Posts ↗
-              </button>
-            )}
+                🌌
+              </div>
+              New
+            </h2>
+            
+            <button style={{ 
+              backgroundColor: "transparent", 
+              border: "1px solid rgba(0,0,0,0.2)", 
+              padding: isMobile ? "8px 16px" : "10px 24px", 
+              borderRadius: "100px", 
+              fontWeight: "700",
+              fontSize: isMobile ? "12px" : "14px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px"
+            }}>
+              Industry Insights ↗
+            </button>
           </div>
 
+          {/* Grid */}
           <div style={{ 
             display: "grid", 
             gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", 
-            gap: "20px" 
+            gap: isMobile ? "40px" : "32px" 
           }}>
             {blogPosts.map((post) => (
               <BlogCard key={post.id} post={post} isMobile={isMobile} />
             ))}
           </div>
-          
-          {isMobile && (
-            <button style={{ 
-              backgroundColor: "#fff", 
-              border: "1px solid rgba(0,0,0,0.1)", 
-              padding: "16px 32px", 
-              borderRadius: "100px", 
-              fontWeight: "700",
-              width: "100%",
-              marginTop: "32px",
-              cursor: "pointer"
-            }}>
-              View All Posts ↗
-            </button>
-          )}
         </div>
       )}
     </section>
