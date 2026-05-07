@@ -28,14 +28,14 @@ export default function Navbar() {
   return (
     <>
       {/* Announcement Bar */}
-      <div 
+      <div
         style={{
           padding: "10px 30px",
           position: "relative",
           zIndex: 50,
         }}
       >
-        <div 
+        <div
           style={{
             maxWidth: "1500px",
             margin: "0 auto",
@@ -67,7 +67,7 @@ export default function Navbar() {
           padding: "0 40px",
         }}
       >
-        <div 
+        <div
           style={{
             margin: "0 auto",
             display: "flex",
@@ -75,10 +75,14 @@ export default function Navbar() {
             justifyContent: "between",
             transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
             maxWidth: scrolled ? "1400px" : "100%",
-            backgroundColor: scrolled ? "rgba(255, 255, 255, 0.75)" : "transparent",
+            backgroundColor: scrolled
+              ? "rgba(255, 255, 255, 0.75)"
+              : "transparent",
             backdropFilter: scrolled ? "blur(16px)" : "none",
             WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
-            border: scrolled ? "1px solid rgba(255, 255, 255, 0.3)" : "1px solid transparent",
+            border: scrolled
+              ? "1px solid rgba(255, 255, 255, 0.3)"
+              : "1px solid transparent",
             padding: scrolled ? "12px 24px" : "20px 0",
             borderRadius: scrolled ? "100px" : "0",
             boxShadow: scrolled ? "0 4px 30px rgba(0, 0, 0, 0.1)" : "none",
@@ -97,7 +101,11 @@ export default function Navbar() {
               marginRight: "auto",
             }}
           >
-            <svg className="w-full h-full object-contain fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 21">
+            <svg
+              className="w-full h-full object-contain fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 168 21"
+            >
               <path d="M91.3152 5.40061C91.3152 3.94241 92.5306 2.67359 93.9881 2.67359C95.7162 2.67359 96.797 3.83419 96.797 5.56225H99.7127C99.7127 2.1873 97.3096 0 93.9874 0C90.9371 0 88.3988 2.32257 88.3988 5.42766C88.3988 9.31596 90.883 10.2344 93.9874 11.4221C95.6627 12.07 97.2007 12.5563 97.2007 14.6895C97.2007 16.634 95.9867 18.0651 93.9874 18.0651C91.8813 18.0651 90.7477 16.3905 90.7477 14.446H87.832C87.832 18.0651 90.3426 20.7381 93.9874 20.7381C97.6323 20.7381 100.118 18.2816 100.118 14.6895C100.118 7.10161 91.3145 9.64061 91.3145 5.40061H91.3152Z"></path>
               <path d="M109.209 4.99609C104.834 4.99609 101.539 8.53405 101.539 12.8539C101.539 17.1737 104.888 20.738 109.155 20.738C112.422 20.738 115.203 18.713 116.337 15.662H113.529C112.718 17.2278 111.017 18.1733 109.262 18.1733C106.806 18.1733 104.915 16.4182 104.348 14.0963H116.743C116.797 13.6371 116.823 13.1508 116.823 12.6922C116.823 8.47926 113.447 4.99609 109.209 4.99609ZM104.348 11.9361C104.509 9.47823 106.751 7.56147 109.181 7.56147C111.611 7.56147 113.853 9.47823 114.014 11.9361H104.348Z"></path>
               <path d="M127.476 5.40039L123.575 16.0941L119.673 5.40039H116.676L122.617 20.3598H124.588L130.475 5.40039H127.476Z"></path>
@@ -116,13 +124,13 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Links */}
-          <nav 
-            className="hidden lg:flex" 
-            style={{ 
-              display: "flex", 
-              alignItems: "center", 
+          <nav
+            className="hidden lg:flex"
+            style={{
+              display: "flex",
+              alignItems: "center",
               gap: "28px",
-              margin: "0 auto" 
+              margin: "0 auto",
             }}
           >
             {navLinks.map((link) => (
@@ -137,12 +145,12 @@ export default function Navbar() {
                   display: "flex",
                   alignItems: "center",
                   position: "relative",
-                  letterSpacing: "-0.01em"
+                  letterSpacing: "-0.01em",
                 }}
               >
                 {link.label}
                 {link.badge && (
-                  <span 
+                  <span
                     style={{
                       backgroundColor: "#c1f1e0",
                       color: "#000",
@@ -157,7 +165,7 @@ export default function Navbar() {
                       position: "absolute",
                       top: "-8px",
                       right: "-16px",
-                      padding: "0 4px"
+                      padding: "0 4px",
                     }}
                   >
                     {link.badge}
@@ -170,7 +178,7 @@ export default function Navbar() {
           {/* CTA */}
           <Link
             href="#contact"
-            className="hidden md:flex"
+            className="hidden lg:flex"
             style={{
               display: scrolled ? "flex" : "none", // Show on scroll
               alignItems: "center",
@@ -187,27 +195,54 @@ export default function Navbar() {
               marginLeft: "auto",
             }}
           >
-            Get In Touch <span style={{ fontSize: "18px", lineHeight: 1 }}>↗</span>
+            Get In Touch{" "}
+            <span style={{ fontSize: "18px", lineHeight: 1 }}>↗</span>
           </Link>
 
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(true)}
-            className="lg:hidden"
+            className="flex lg:hidden"
             style={{
-              padding: "8px",
-              color: scrolled ? "#000" : "#fff",
-              background: "none",
+              width: "48px",
+              height: "48px",
+              backgroundColor: "#000",
+              color: "#fff",
               border: "none",
+              borderRadius: "16px",
               cursor: "pointer",
-              display: "flex",
               flexDirection: "column",
-              gap: "6px",
-              marginLeft: "auto"
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "5px",
+              marginLeft: "auto",
+              padding: "0",
             }}
           >
-            <div style={{ width: "24px", height: "2px", backgroundColor: "currentColor", borderRadius: "10px" }} />
-            <div style={{ width: "24px", height: "2px", backgroundColor: "currentColor", borderRadius: "10px" }} />
+            <div
+              style={{
+                width: "20px",
+                height: "2px",
+                backgroundColor: "#fff",
+                borderRadius: "10px",
+              }}
+            />
+            <div
+              style={{
+                width: "20px",
+                height: "2px",
+                backgroundColor: "#fff",
+                borderRadius: "10px",
+              }}
+            />
+            <div
+              style={{
+                width: "20px",
+                height: "2px",
+                backgroundColor: "#fff",
+                borderRadius: "10px",
+              }}
+            />
           </button>
         </div>
       </header>
@@ -216,9 +251,10 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
             style={{
               position: "fixed",
               inset: 0,
@@ -226,20 +262,26 @@ export default function Navbar() {
               backgroundColor: "#000",
               display: "flex",
               flexDirection: "column",
-              padding: "40px",
+              padding: "20px",
               overflowY: "auto",
             }}
           >
-            <div 
-              style={{ 
-                display: "flex", 
-                justifyContent: "space-between", 
-                alignItems: "center", 
-                marginBottom: "60px" 
+            {/* Header in Menu */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "40px",
+                padding: "20px",
               }}
             >
-              <div style={{ color: "#fff", width: "140px" }}>
-                <svg className="w-full h-full object-contain fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 21">
+              <div style={{ color: "#fff", width: "120px" }}>
+                <svg
+                  className="w-full h-full object-contain fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 168 21"
+                >
                   <path d="M91.3152 5.40061C91.3152 3.94241 92.5306 2.67359 93.9881 2.67359C95.7162 2.67359 96.797 3.83419 96.797 5.56225H99.7127C99.7127 2.1873 97.3096 0 93.9874 0C90.9371 0 88.3988 2.32257 88.3988 5.42766C88.3988 9.31596 90.883 10.2344 93.9874 11.4221C95.6627 12.07 97.2007 12.5563 97.2007 14.6895C97.2007 16.634 95.9867 18.0651 93.9874 18.0651C91.8813 18.0651 90.7477 16.3905 90.7477 14.446H87.832C87.832 18.0651 90.3426 20.7381 93.9874 20.7381C97.6323 20.7381 100.118 18.2816 100.118 14.6895C100.118 7.10161 91.3145 9.64061 91.3145 5.40061H91.3152Z"></path>
                   <path d="M109.209 4.99609C104.834 4.99609 101.539 8.53405 101.539 12.8539C101.539 17.1737 104.888 20.738 109.155 20.738C112.422 20.738 115.203 18.713 116.337 15.662H113.529C112.718 17.2278 111.017 18.1733 109.262 18.1733C106.806 18.1733 104.915 16.4182 104.348 14.0963H116.743C116.797 13.6371 116.823 13.1508 116.823 12.6922C116.823 8.47926 113.447 4.99609 109.209 4.99609ZM104.348 11.9361C104.509 9.47823 106.751 7.56147 109.181 7.56147C111.611 7.56147 113.853 9.47823 114.014 11.9361H104.348Z"></path>
                   <path d="M127.476 5.40039L123.575 16.0941L119.673 5.40039H116.676L122.617 20.3598H124.588L130.475 5.40039H127.476Z"></path>
@@ -256,26 +298,86 @@ export default function Navbar() {
                   <path d="M165.127 10.1622C166.714 10.1622 168 8.87583 168 7.28913C168 5.70242 166.714 4.41602 165.127 4.41602C163.54 4.41602 162.254 5.70242 162.254 7.28913C162.254 8.87583 163.54 10.1622 165.127 10.1622ZM165.127 5.22763C166.264 5.22763 167.189 6.15219 167.189 7.28913C167.189 8.42606 166.264 9.35062 165.127 9.35062C163.99 9.35062 163.066 8.42606 163.066 7.28913C163.066 6.15219 163.99 5.22763 165.127 5.22763Z"></path>
                 </svg>
               </div>
-              <button 
-                onClick={() => setMobileOpen(false)} 
-                style={{ color: "#fff", background: "none", border: "none", cursor: "pointer" }}
+              <button
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  color: "#fff",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
               >
                 <X size={28} />
               </button>
             </div>
-            <nav style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-              {navLinks.map((link, i) => (
+
+            {/* Grid of First 4 Links */}
+            <div
+              style={{
+                backgroundColor: "#111",
+                borderRadius: "32px",
+                padding: "24px",
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "20px",
+                marginBottom: "30px",
+              }}
+            >
+              {navLinks.slice(0, 4).map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  style={{
+                    textDecoration: "none",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "8px",
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "#fff",
+                      fontSize: "16px",
+                      fontWeight: "700",
+                    }}
+                  >
+                    {link.label.replace(" +", "")}
+                  </span>
+                  <span
+                    style={{
+                      color: "rgba(255,255,255,0.4)",
+                      fontSize: "20px",
+                      fontWeight: "300",
+                    }}
+                  >
+                    +
+                  </span>
+                </Link>
+              ))}
+            </div>
+
+            {/* Other Links */}
+            <nav
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "24px",
+                padding: "0 10px",
+              }}
+            >
+              {navLinks.slice(4).map((link, i) => (
                 <motion.div
                   key={link.label}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  transition={{ delay: 0.2 + i * 0.05 }}
                 >
                   <Link
-                    href="#"
+                    href={link.href}
                     onClick={() => setMobileOpen(false)}
                     style={{
-                      fontSize: "40px",
+                      fontSize: "36px",
                       fontWeight: "900",
                       color: "#fff",
                       textDecoration: "none",
@@ -288,7 +390,7 @@ export default function Navbar() {
                   >
                     {link.label}
                     {link.badge && (
-                      <span 
+                      <span
                         style={{
                           backgroundColor: "#c1f1e0",
                           color: "#000",
@@ -311,5 +413,3 @@ export default function Navbar() {
     </>
   );
 }
-
-

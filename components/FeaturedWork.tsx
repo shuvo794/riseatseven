@@ -198,178 +198,196 @@ export default function FeaturedWork() {
       </motion.div>
 
       <div
+        className="px-6 lg:px-20"
         style={{
           maxWidth: "1600px",
           margin: "0 auto",
-          padding: "0 80px",
-          display: "grid",
-          gridTemplateColumns: "1fr 1.2fr",
-          gap: "100px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "60px",
         }}
       >
-        {/* Left Column: Sticky List */}
-        <div
-          style={{
-            position: "sticky",
-            top: "200px",
-            height: "fit-content",
-            alignSelf: "start",
-          }}
-        >
+        <div className="lg:grid lg:grid-cols-[1fr,1.2fr] lg:gap-[100px]">
+          {/* Left Column: Sticky List (Desktop Only) */}
           <div
+            className="hidden lg:block"
             style={{
-              fontSize: "14px",
-              fontWeight: "900",
-              marginBottom: "100px",
-              opacity: 0.9,
-              letterSpacing: "0.05em",
+              position: "sticky",
+              top: "200px",
+              height: "fit-content",
+              alignSelf: "start",
             }}
           >
-            Featured Work
+            <div
+              style={{
+                fontSize: "14px",
+                fontWeight: "900",
+                marginBottom: "100px",
+                opacity: 0.9,
+                letterSpacing: "0.05em",
+              }}
+            >
+              Featured Work
+            </div>
+
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+            >
+              {projects.map((project, index) => (
+                <div
+                  key={project.id}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "15px",
+                    transition: "opacity 0.4s ease",
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontSize: "clamp(40px, 4.5vw, 70px)",
+                      fontWeight: "700",
+                      lineHeight: "0.85",
+                      letterSpacing: "-0.05em",
+                      color:
+                        activeProject === index
+                          ? "#fff"
+                          : "rgba(255,255,255,0.15)",
+                      transition: "color 0.4s ease",
+                      margin: 0,
+                      fontFamily: "var(--font-display)",
+                    }}
+                  >
+                    {project.name}
+                  </h3>
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: "600",
+                      color: "rgba(255,255,255,0.3)",
+                      marginTop: "10px",
+                      fontFamily: "var(--font-display)",
+                    }}
+                  >
+                    [{project.years}]
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "15px" }}
-          >
-            {projects.map((project, index) => (
+          {/* Right Column: Scrolling Images */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+            <div className="lg:hidden mb-4">
               <div
-                key={project.id}
                 style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "15px",
-                  transition: "opacity 0.4s ease",
+                  fontSize: "14px",
+                  fontWeight: "900",
+                  opacity: 0.9,
+                  letterSpacing: "0.05em",
+                  color: "#fff",
                 }}
               >
-                <h3
+                Featured Work
+              </div>
+            </div>
+            {projects.map((project, index) => (
+              <div key={project.id} className="flex flex-col gap-4">
+                <div className="lg:hidden flex items-center justify-between">
+                  <h3 className="text-2xl font-bold tracking-tighter">{project.name}</h3>
+                  <span className="text-xs opacity-40">[{project.years}]</span>
+                </div>
+                <div
+                  ref={(el) => (itemRefs.current[index] = el)}
+                  data-index={index}
+                  onMouseEnter={() => {
+                    setIsHoveringImage(true);
+                    setHoveredIndex(index);
+                  }}
+                  onMouseLeave={() => {
+                    setIsHoveringImage(false);
+                    setHoveredIndex(null);
+                  }}
                   style={{
-                    fontSize: "clamp(40px, 4.5vw, 70px)",
-                    fontWeight: "700",
-                    lineHeight: "0.85",
-                    letterSpacing: "-0.05em",
-                    color:
-                      activeProject === index
-                        ? "#fff"
-                        : "rgba(255,255,255,0.15)",
-                    transition: "color 0.4s ease",
-                    margin: 0,
-                    fontFamily: "var(--font-display)",
+                    position: "relative",
+                    width: "100%",
+                    aspectRatio: "1.2",
+                    borderRadius: "32px",
+                    overflow: "hidden",
+                    backgroundColor: "#111",
+                    cursor: "none",
                   }}
                 >
-                  {project.name}
-                </h3>
-                <span
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    color: "rgba(255,255,255,0.3)",
-                    marginTop: "10px",
-                    fontFamily: "var(--font-display)",
-                  }}
-                >
-                  [{project.years}]
-                </span>
+                  <Image
+                    src={project.image}
+                    alt={project.name}
+                    fill
+                    priority={index === 0}
+                    unoptimized={true}
+                    sizes="(max-width: 1200px) 100vw, 800px"
+                    style={{ objectFit: "cover" }}
+                  />
+
+                  {/* Hover Overlay Content */}
+                  <motion.div
+                    initial={false}
+                    animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      backgroundColor: project.hoverBg,
+                      padding: "40px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-start",
+                      zIndex: 2,
+                      pointerEvents: "none",
+                    }}
+                  >
+                    <h2
+                      style={{
+                        fontSize: "clamp(28px, 6vw, 48px)",
+                        fontWeight: "700",
+                        lineHeight: "1.0",
+                        letterSpacing: "-0.03em",
+                        fontFamily: "var(--font-display)",
+                        color: "#000",
+                        maxWidth: "95%",
+                      }}
+                    >
+                      {project.hoverText}
+                    </h2>
+                  </motion.div>
+
+                  {/* Pill Tag */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "20px",
+                      right: "20px",
+                      backgroundColor: "rgba(255,255,255,0.4)",
+                      backdropFilter: "blur(12px)",
+                      padding: "8px 16px",
+                      borderRadius: "100px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      color: "#000",
+                      fontSize: "12px",
+                      fontWeight: "700",
+                      border: "1px solid rgba(255,255,255,0.2)",
+                      zIndex: 3,
+                      opacity: hoveredIndex === index ? 0 : 1,
+                      transition: "opacity 0.3s ease",
+                    }}
+                  >
+                    {project.tag}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Right Column: Scrolling Images */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
-          {projects.map((project, index) => (
-            <div
-              key={project.id}
-              ref={(el) => (itemRefs.current[index] = el)}
-              data-index={index}
-              onMouseEnter={() => {
-                setIsHoveringImage(true);
-                setHoveredIndex(index);
-              }}
-              onMouseLeave={() => {
-                setIsHoveringImage(false);
-                setHoveredIndex(null);
-              }}
-              style={{
-                position: "relative",
-                width: "100%",
-                aspectRatio: "1.3",
-                borderRadius: "40px",
-                overflow: "hidden",
-                backgroundColor: "#111",
-                cursor: "none",
-              }}
-            >
-              <Image
-                src={project.image}
-                alt={project.name}
-                fill
-                priority={index === 0}
-                unoptimized={true}
-                sizes="(max-width: 1200px) 100vw, 800px"
-                style={{ objectFit: "cover" }}
-              />
-
-              {/* Hover Overlay Content */}
-              <motion.div
-                initial={false}
-                animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  backgroundColor: project.hoverBg,
-                  padding: "60px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  zIndex: 2,
-                  pointerEvents: "none",
-                }}
-              >
-                <h2
-                  style={{
-                    fontSize: "clamp(32px, 3.5vw, 48px)",
-                    fontWeight: "700",
-                    lineHeight: "1.1",
-                    letterSpacing: "-0.03em",
-                    fontFamily: "var(--font-display)",
-                    color: "#000",
-                    maxWidth: "90%",
-                  }}
-                >
-                  {project.hoverText}
-                </h2>
-              </motion.div>
-
-              {/* Pill Tag */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "30px",
-                  right: "30px",
-                  backgroundColor: "rgba(255,255,255,0.4)",
-                  backdropFilter: "blur(12px)",
-                  padding: "10px 20px",
-                  borderRadius: "100px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  color: "#000",
-                  fontSize: "14px",
-                  fontWeight: "700",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-                  zIndex: 3,
-                  opacity: hoveredIndex === index ? 0 : 1,
-                  transition: "opacity 0.3s ease",
-                }}
-              >
-                <span style={{ fontSize: "16px" }}>🔍</span>
-                {project.tag}
-                <span style={{ fontSize: "16px" }}>📈</span>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>
