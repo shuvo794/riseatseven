@@ -37,21 +37,23 @@ export default function ReadyToRise() {
     offset: ["start start", "end end"]
   });
 
-  // Move the text horizontally from slightly right of center to far left
-  const x = useTransform(scrollYProgress, [0, 1], ["5%", "-75%"]);
+  // Start with text almost entirely off-screen to the right (approx 85vw).
+  // Only the first ~15vw will be visible, showing just "Re".
+  // Ends way off to the left so the whole text scrolls past.
+  const x = useTransform(scrollYProgress, [0, 1], ["85vw", "-220vw"]);
 
   return (
     <section 
       ref={containerRef}
-      className="relative h-[350vh] bg-[#f2f2f2]"
+      className="relative h-[400vh] bg-[#f2f2f2]"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
         <motion.div
           style={{ x }}
-          className="flex whitespace-nowrap items-center px-[5vw]"
+          className="flex whitespace-nowrap items-center"
         >
           <h2 
-            className="text-[25vw] lg:text-[16vw] 4xl:text-[14vw] font-medium tracking-tight leading-none text-black shrink-0 flex items-center"
+            className="text-[30vw] lg:text-[16vw] 4xl:text-[14vw] font-medium tracking-tight leading-none text-black shrink-0 flex items-center"
             style={{ fontFamily: "var(--font-display, sans-serif)" }}
           >
             {letters.map((letter, i) => (
