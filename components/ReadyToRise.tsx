@@ -2,72 +2,68 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-export default function ReadyToRise() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
+const text = "Ready to Rise at Seven?";
+const letters = text.split("");
+
+const AnimatedLetter = ({ letter, index, scrollYProgress }: { letter: string, index: number, scrollYProgress: any }) => {
+  const y = useTransform(scrollYProgress, (val: number) => {
+    // phase creates the wave. 
+    // index * 0.4 spreads the wave across the letters.
+    // val * 15 makes the wave travel as you scroll.
+    const phase = index * 0.4 - val * 20; 
+    return Math.sin(phase) * 80; // Moves up and down by 80px
   });
 
-  // Moves from right (500px) to left (-500px)
-  const x = useTransform(scrollYProgress, [0, 1], ["30%", "-30%"]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [15, -5]);
+  const rotate = useTransform(scrollYProgress, (val: number) => {
+    const phase = index * 0.4 - val * 20;
+    return Math.cos(phase) * 10; // Slight rotation to follow the wave curve
+  });
+
+  return (
+    <motion.span
+      style={{ y, rotate, display: "inline-block", transformOrigin: "center" }}
+      className={letter === " " ? "w-[3vw] lg:w-[2vw]" : ""}
+    >
+      {letter === " " ? "\u00A0" : letter}
+    </motion.span>
+  );
+};
+
+export default function ReadyToRise() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Move the text horizontally from slightly right of center to far left
+  const x = useTransform(scrollYProgress, [0, 1], ["5%", "-75%"]);
 
   return (
     <section 
       ref={containerRef}
-      style={{ 
-        backgroundColor: "#f2f2f2", 
-        padding: "200px 0", 
-        overflow: "hidden",
-        position: "relative"
-      }}
+      className="relative h-[350vh] bg-[#f2f2f2]"
     >
-      <motion.div
-        style={{
-          x,
-          rotate,
-          whiteSpace: "nowrap",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <h2 style={{ 
-          fontSize: "clamp(150px, 20vw, 350px)", 
-          fontWeight: "700", 
-          color: "#000", 
-          letterSpacing: "-0.04em",
-          margin: 0,
-          fontFamily: "var(--font-display)",
-          lineHeight: "0.8"
-        }}>
-          Ready to Rise at Seven?
-        </h2>
-      </motion.div>
-
-      {/* Optional Contact Button */}
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        marginTop: "100px" 
-      }}>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          style={{
-            backgroundColor: "#000",
-            color: "#fff",
-            padding: "20px 40px",
-            borderRadius: "100px",
-            fontSize: "20px",
-            fontWeight: "700",
-            border: "none",
-            cursor: "pointer",
-            fontFamily: "var(--font-display)"
-          }}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
+        <motion.div
+          style={{ x }}
+          className="flex whitespace-nowrap items-center px-[5vw]"
         >
-          Get in touch ↗
-        </motion.button>
+          <h2 
+            className="text-[25vw] lg:text-[16vw] 4xl:text-[14vw] font-medium tracking-tight leading-none text-black shrink-0 flex items-center"
+            style={{ fontFamily: "var(--font-display, sans-serif)" }}
+          >
+            {letters.map((letter, i) => (
+              <AnimatedLetter 
+                key={i} 
+                letter={letter} 
+                index={i} 
+                scrollYProgress={scrollYProgress} 
+              />
+            ))}
+          </h2>
+        </motion.div>
       </div>
     </section>
   );
