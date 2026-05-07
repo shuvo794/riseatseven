@@ -164,17 +164,10 @@ function BlogCard({ post }: { post: any }) {
 
 export default function Blog() {
   return (
-    <section style={{ backgroundColor: "#f2f2f2", padding: "100px 40px" }}>
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "space-between", 
-        alignItems: "center", 
-        marginBottom: "60px",
-        borderTop: "1px solid rgba(0,0,0,0.05)",
-        paddingTop: "40px"
-      }}>
+    <section style={{ backgroundColor: "#f2f2f2", padding: "60px 24px" }}>
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-8 mb-12 border-t border-black/5 pt-10">
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <h2 style={{ fontSize: "60px", fontWeight: "700", margin: 0, fontFamily: "var(--font-display)" }}>
+          <h2 style={{ fontSize: "clamp(48px, 10vw, 60px)", fontWeight: "700", margin: 0, fontFamily: "var(--font-display)", lineHeight: "0.9" }}>
             What&apos;s New
           </h2>
           <div style={{ 
@@ -194,23 +187,21 @@ export default function Blog() {
           backgroundColor: "#fff", 
           border: "1px solid rgba(0,0,0,0.1)", 
           borderRadius: "100px", 
-          padding: "10px 24px", 
-          fontSize: "14px", 
-          fontWeight: "600",
+          padding: "16px 28px", 
+          fontSize: "16px", 
+          fontWeight: "700",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
-          gap: "8px"
+          justifyContent: "center",
+          gap: "8px",
+          width: "fit-content"
         }}>
           Explore More Thoughts <span>↗</span>
         </button>
       </div>
 
-      <div style={{ 
-        display: "grid", 
-        gridTemplateColumns: "repeat(3, 1fr)", 
-        gap: "30px" 
-      }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-8">
         {blogPosts.map((post) => (
           <BlogCard key={post.id} post={post} />
         ))}

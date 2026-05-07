@@ -68,7 +68,7 @@ export default function Legacy() {
           style={{
             position: "relative",
             width: "min(600px, 90vw)",
-            height: "700px",
+            height: "clamp(550px, 80vh, 700px)",
           }}
         >
           {cards.map((card, index) => {
@@ -127,8 +127,8 @@ function Card({
 
   // Initial offsets to make them visible behind the first card
   const initialRotate = card.rotation;
-  const initialX = index * 8;
-  const initialY = index * 8;
+  const initialX = index * 4; // Reduced offset for mobile
+  const initialY = index * 4;
 
   return (
     <motion.div
@@ -137,8 +137,8 @@ function Card({
         inset: 0,
         backgroundColor: card.bgColor,
         color: card.textColor,
-        borderRadius: "60px",
-        padding: "60px 40px",
+        borderRadius: "40px", // Slightly smaller radius
+        padding: "clamp(40px, 8vw, 60px) clamp(20px, 5vw, 40px)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -156,12 +156,12 @@ function Card({
     >
       <div
         style={{
-          width: "140px",
-          height: "140px",
-          borderRadius: "24px",
+          width: "clamp(80px, 15vw, 140px)",
+          height: "clamp(80px, 15vw, 140px)",
+          borderRadius: "20px",
           overflow: "hidden",
           position: "relative",
-          marginBottom: "40px",
+          marginBottom: "30px",
         }}
       >
         <Image
@@ -174,9 +174,9 @@ function Card({
 
       <h3
         style={{
-          fontSize: "clamp(40px, 6vw, 80px)",
+          fontSize: "clamp(32px, 8vw, 80px)",
           fontWeight: "700",
-          marginBottom: "20px",
+          marginBottom: "16px",
           lineHeight: "0.9",
           fontFamily: "var(--font-display)",
         }}

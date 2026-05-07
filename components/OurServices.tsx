@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -14,14 +14,22 @@ const services = [
 
 export default function OurServices() {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <section
       style={{
         backgroundColor: "#f2f2f2",
-        borderRadius: "48px",
+        borderRadius: isMobile ? "32px" : "48px",
         margin: "10px",
-        padding: "100px 60px",
+        padding: isMobile ? "60px 24px" : "100px 60px",
         color: "#000",
         position: "relative",
       }}
@@ -31,28 +39,32 @@ export default function OurServices() {
         <div
           style={{
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
             justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "80px",
+            alignItems: isMobile ? "flex-start" : "center",
+            marginBottom: isMobile ? "40px" : "80px",
+            gap: "24px",
           }}
         >
           <h2
             style={{
-              fontSize: "clamp(60px, 8vw, 100px)",
+              fontSize: "clamp(48px, 8vw, 100px)",
               fontWeight: "700",
               letterSpacing: "-0.04em",
               display: "flex",
               alignItems: "center",
-              gap: "20px",
+              flexWrap: "wrap",
+              gap: "15px",
               margin: 0,
               fontFamily: "var(--font-display)",
+              lineHeight: "0.9",
             }}
           >
             Our
             <div
               style={{
-                width: "100px",
-                height: "100px",
+                width: isMobile ? "60px" : "100px",
+                height: isMobile ? "60px" : "100px",
                 borderRadius: "20px",
                 overflow: "hidden",
                 position: "relative",
@@ -72,7 +84,7 @@ export default function OurServices() {
           <button
             style={{
               backgroundColor: "#fff",
-              padding: "12px 24px",
+              padding: "12px 28px",
               borderRadius: "100px",
               border: "1px solid rgba(0,0,0,0.1)",
               fontSize: "15px",
@@ -91,8 +103,8 @@ export default function OurServices() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "0 80px",
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+            gap: isMobile ? "0" : "0 80px",
           }}
         >
           {services.map((service, index) => (
@@ -102,14 +114,14 @@ export default function OurServices() {
               onMouseLeave={() => setHoveredService(null)}
               style={{
                 borderBottom: "1px solid rgba(0,0,0,0.1)",
-                padding: "30px 0",
+                padding: isMobile ? "24px 0" : "30px 0",
                 position: "relative",
                 cursor: "pointer",
               }}
             >
               <h3
                 style={{
-                  fontSize: "42px",
+                  fontSize: isMobile ? "28px" : "42px",
                   fontWeight: "600",
                   letterSpacing: "-0.03em",
                   margin: 0,
@@ -120,9 +132,16 @@ export default function OurServices() {
                 {service.name}
               </h3>
 
-              {/* Hover Overlay Card */}
+              {/* Mobile Arrow Indicator */}
+              {isMobile && (
+                <span style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", fontSize: "20px", opacity: 0.3 }}>
+                  ↗
+                </span>
+              )}
+
+              {/* Hover Overlay Card (Desktop Only for Premium feel) */}
               <AnimatePresence>
-                {hoveredService === service.id && (
+                {!isMobile && hoveredService === service.id && (
                   <motion.div
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}

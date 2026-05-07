@@ -4,30 +4,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Hero() {
-  const [isMobile, setIsMobile] = React.useState(false);
-
-  React.useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
   return (
     <div style={{ minHeight: "100vh" }}>
       <section
-        style={{
-          position: "relative",
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-          borderRadius: isMobile ? "30px" : "40px",
-          margin: isMobile ? "5px" : "10px",
-          backgroundColor: "#000",
-        }}
+        className="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden rounded-[30px] md:rounded-[40px] m-[5px] md:m-[10px] bg-black"
       >
         {/* Background blurred image */}
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
@@ -37,12 +17,8 @@ export default function Hero() {
             fill
             priority
             sizes="100vw"
-            style={{
-              objectFit: "cover",
-              opacity: 0.6,
-              filter: isMobile ? "blur(40px) brightness(0.6)" : "blur(60px) brightness(0.7)",
-              transform: "scale(1.2)",
-            }}
+            className="opacity-60 scale-[1.2] blur-[40px] md:blur-[60px] brightness-[0.6] md:brightness-[0.7]"
+            style={{ objectFit: "cover" }}
           />
           <div
             style={{
@@ -56,61 +32,30 @@ export default function Hero() {
 
         {/* Content */}
         <div
-          style={{
-            position: "relative",
-            zIndex: 10,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            padding: isMobile ? "80px 20px" : "120px 20px",
-            maxWidth: "1600px",
-            margin: "0 auto",
-            width: "100%",
-          }}
+          className="relative z-10 flex flex-col items-center text-center px-5 py-20 md:py-[120px] max-w-[1600px] mx-auto w-full"
         >
           {/* Awards Label & Logos Section */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            style={{ marginBottom: isMobile ? "30px" : "50px" }}
+            className="mb-[30px] md:mb-[50px]"
           >
             <div
-              style={{
-                fontSize: isMobile ? "9px" : "11px",
-                fontWeight: "800",
-                textTransform: "uppercase",
-                letterSpacing: "0.15em",
-                color: "rgba(255,255,255,0.9)",
-                marginBottom: isMobile ? "15px" : "25px",
-                maxWidth: isMobile ? "250px" : "none",
-                margin: "0 auto 20px auto",
-              }}
+              className="text-[9px] md:text-[11px] font-extrabold uppercase tracking-[0.15em] text-white/90 mb-4 md:mb-[25px] max-w-[250px] md:max-w-none mx-auto"
             >
               #1 MOST RECOMMENDED CONTENT MARKETING AGENCY
             </div>
 
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: isMobile ? "10px" : "24px",
-              }}
+              className="flex items-center justify-center gap-[10px] md:gap-6"
             >
               {/* Left Wreath */}
               <div
-                style={{
-                  color: "#fff",
-                  opacity: 0.6,
-                  fontSize: isMobile ? "18px" : "24px",
-                  transform: "translateY(-2px)",
-                }}
+                className="text-white opacity-60 -translate-y-[2px]"
               >
                 <svg
-                  width={isMobile ? "16" : "24"}
-                  height={isMobile ? "28" : "40"}
+                  className="w-4 h-7 md:w-6 md:h-10"
                   viewBox="0 0 24 40"
                   fill="currentColor"
                 >
@@ -121,40 +66,27 @@ export default function Hero() {
 
               {/* Logos */}
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: isMobile ? "12px" : "20px",
-                  filter: "brightness(0) invert(1)",
-                  opacity: 0.8,
-                }}
+                className="flex items-center gap-3 md:gap-5 brightness-0 invert opacity-80"
               >
-                {/* Logo components simplified for scale */}
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                   <div style={{ fontSize: isMobile ? "8px" : "10px", fontWeight: "900" }}>GLOBAL</div>
-                   <div style={{ fontSize: isMobile ? "10px" : "12px", fontWeight: "900", marginTop: "-2px" }}>SEARCH</div>
+                <div className="flex flex-col items-center">
+                   <div className="text-[8px] md:text-[10px] font-black">GLOBAL</div>
+                   <div className="text-[10px] md:text-[12px] font-black -mt-[2px]">SEARCH</div>
                 </div>
-                <div style={{ borderLeft: "1px solid rgba(255,255,255,0.3)", height: "20px" }}></div>
-                <div style={{ fontSize: isMobile ? "12px" : "16px", fontWeight: "900" }}>The Drum</div>
-                <div style={{ borderLeft: "1px solid rgba(255,255,255,0.3)", height: "20px" }}></div>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                   <div style={{ fontSize: isMobile ? "8px" : "9px", fontWeight: "900" }}>UK SOCIAL</div>
-                   <div style={{ fontSize: isMobile ? "10px" : "11px", fontWeight: "900", marginTop: "-2px" }}>MEDIA</div>
+                <div className="border-l border-white/30 h-5"></div>
+                <div className="text-xs md:text-base font-black">The Drum</div>
+                <div className="border-l border-white/30 h-5"></div>
+                <div className="flex flex-col items-center">
+                   <div className="text-[8px] md:text-[9px] font-black">UK SOCIAL</div>
+                   <div className="text-[10px] md:text-[11px] font-black -mt-[2px]">MEDIA</div>
                 </div>
               </div>
 
               {/* Right Wreath */}
               <div
-                style={{
-                  color: "#fff",
-                  opacity: 0.6,
-                  fontSize: isMobile ? "18px" : "24px",
-                  transform: "translateY(-2px) scaleX(-1)",
-                }}
+                className="text-white opacity-60 -translate-y-[2px] -scale-x-100"
               >
                 <svg
-                  width={isMobile ? "16" : "24"}
-                  height={isMobile ? "28" : "40"}
+                  className="w-4 h-7 md:w-6 md:h-10"
                   viewBox="0 0 24 40"
                   fill="currentColor"
                 >
@@ -167,12 +99,7 @@ export default function Hero() {
 
           {/* Headline */}
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: isMobile ? "5px" : "0",
-            }}
+            className="flex flex-col items-center gap-[5px] md:gap-0"
           >
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -182,14 +109,9 @@ export default function Hero() {
                 delay: 0.2,
                 ease: [0.16, 1, 0.3, 1],
               }}
+              className="text-[55px] md:text-[clamp(60px,12vw,170px)] font-normal text-white leading-[0.85] tracking-[-0.04em] m-0"
               style={{
-                fontSize: isMobile ? "55px" : "clamp(60px, 12vw, 170px)",
-                fontWeight: "400",
-                color: "#fff",
-                lineHeight: "0.85",
-                letterSpacing: "-0.04em",
                 fontFamily: "var(--font-display)",
-                margin: 0,
               }}
             >
               We Create
@@ -203,23 +125,12 @@ export default function Hero() {
                 delay: 0.35,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              style={{
-                display: "flex",
-                flexDirection: isMobile ? "column" : "row",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: isMobile ? "10px" : "20px",
-                marginTop: isMobile ? "10px" : "-5px",
-              }}
+              className="flex flex-col md:flex-row items-center justify-center gap-[10px] md:gap-5 mt-[10px] md:-mt-[5px]"
             >
-              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "10px" : "20px" }}>
+              <div className="flex items-center gap-[10px] md:gap-5">
                 <span
+                  className="text-[55px] md:text-[clamp(60px,12vw,100px)] font-normal text-white leading-[0.85] tracking-[-0.04em]"
                   style={{
-                    fontSize: isMobile ? "55px" : "clamp(60px, 12vw, 100px)",
-                    fontWeight: "400",
-                    color: "#fff",
-                    lineHeight: "0.85",
-                    letterSpacing: "-0.04em",
                     fontFamily: "var(--font-display)",
                   }}
                 >
@@ -228,17 +139,7 @@ export default function Hero() {
 
                 {/* Squircle Image */}
                 <div
-                  style={{
-                    position: "relative",
-                    width: isMobile ? "60px" : "11vw",
-                    height: isMobile ? "50px" : "10vw",
-                    maxWidth: "160px",
-                    maxHeight: "140px",
-                    borderRadius: isMobile ? "15px" : "45px",
-                    overflow: "hidden",
-                    border: "2px solid rgba(255,255,255,0.1)",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                  }}
+                  className="relative w-[60px] md:w-[11vw] h-[50px] md:h-[10vw] max-w-[160px] max-h-[140px] rounded-[15px] md:rounded-[45px] overflow-hidden border-2 border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
                 >
                   <Image
                     src="/images/hero-people.png"
@@ -251,12 +152,8 @@ export default function Hero() {
               </div>
 
               <span
+                className="text-[55px] md:text-[clamp(60px,12vw,100px)] font-normal text-white leading-[0.85] tracking-[-0.04em]"
                 style={{
-                  fontSize: isMobile ? "55px" : "clamp(60px, 12vw, 100px)",
-                  fontWeight: "400",
-                  color: "#fff",
-                  lineHeight: "0.85",
-                  letterSpacing: "-0.04em",
                   fontFamily: "var(--font-display)",
                 }}
               >
@@ -270,14 +167,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-[30px] md:mt-[45px] text-lg md:text-[clamp(18px,2.8vw,36px)] font-semibold text-white tracking-[-0.02em] max-w-[280px] md:max-w-none"
             style={{
-              marginTop: isMobile ? "30px" : "45px",
-              fontSize: isMobile ? "18px" : "clamp(18px, 2.8vw, 36px)",
-              fontWeight: "600",
-              color: "#fff",
-              letterSpacing: "-0.02em",
               fontFamily: "var(--font-display)",
-              maxWidth: isMobile ? "280px" : "none",
             }}
           >
             on every searchable platform
@@ -286,50 +178,26 @@ export default function Hero() {
 
         {/* Bottom stats */}
         <div
-          style={{
-            position: "absolute",
-            bottom: isMobile ? "30px" : "40px",
-            left: isMobile ? "20px" : "50px",
-            right: isMobile ? "20px" : "50px",
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            justifyContent: "space-between",
-            alignItems: isMobile ? "center" : "flex-end",
-            zIndex: 10,
-            gap: isMobile ? "15px" : "0",
-          }}
+          className="absolute bottom-[30px] md:bottom-10 left-5 md:left-[50px] right-5 md:right-[50px] flex flex-col md:flex-row justify-between items-center md:items-end z-10 gap-[15px] md:gap-0"
         >
-          {!isMobile && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              style={{
-                fontSize: "13px",
-                color: "rgba(255,255,255,0.7)",
-                lineHeight: "1.6",
-                maxWidth: "380px",
-                textAlign: "left",
-              }}
-            >
-              Organic media planners creating, distributing & optimising{" "}
-              <span style={{ color: "#fff", fontWeight: "700" }}>
-                search-first
-              </span>{" "}
-              content for SEO, Social, PR, Ai and LLM search
-            </motion.p>
-          )}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="hidden md:block text-[13px] text-white/70 leading-[1.6] max-w-[380px] text-left"
+          >
+            Organic media planners creating, distributing & optimising{" "}
+            <span style={{ color: "#fff", fontWeight: "700" }}>
+              search-first
+            </span>{" "}
+            content for SEO, Social, PR, Ai and LLM search
+          </motion.p>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9 }}
-            style={{
-              fontSize: isMobile ? "11px" : "13px",
-              color: "rgba(255,255,255,0.7)",
-              lineHeight: "1.6",
-              textAlign: isMobile ? "center" : "right",
-            }}
+            className="text-[11px] md:text-[13px] text-white/70 leading-[1.6] text-center md:text-right"
           >
             4 Global Offices serving
             <br />
