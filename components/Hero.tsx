@@ -4,6 +4,15 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Hero() {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <div style={{ minHeight: "100vh" }}>
       <section
@@ -15,8 +24,8 @@ export default function Hero() {
           alignItems: "center",
           justifyContent: "center",
           overflow: "hidden",
-          borderRadius: "40px",
-          margin: "10px",
+          borderRadius: isMobile ? "30px" : "40px",
+          margin: isMobile ? "5px" : "10px",
           backgroundColor: "#000",
         }}
       >
@@ -31,7 +40,7 @@ export default function Hero() {
             style={{
               objectFit: "cover",
               opacity: 0.6,
-              filter: "blur(60px) brightness(0.7)",
+              filter: isMobile ? "blur(40px) brightness(0.6)" : "blur(60px) brightness(0.7)",
               transform: "scale(1.2)",
             }}
           />
@@ -54,7 +63,7 @@ export default function Hero() {
             flexDirection: "column",
             alignItems: "center",
             textAlign: "center",
-            padding: "120px 20px",
+            padding: isMobile ? "80px 20px" : "120px 20px",
             maxWidth: "1600px",
             margin: "0 auto",
             width: "100%",
@@ -65,16 +74,18 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            style={{ marginBottom: "50px" }}
+            style={{ marginBottom: isMobile ? "30px" : "50px" }}
           >
             <div
               style={{
-                fontSize: "11px",
+                fontSize: isMobile ? "9px" : "11px",
                 fontWeight: "800",
                 textTransform: "uppercase",
                 letterSpacing: "0.15em",
                 color: "rgba(255,255,255,0.9)",
-                marginBottom: "25px",
+                marginBottom: isMobile ? "15px" : "25px",
+                maxWidth: isMobile ? "250px" : "none",
+                margin: "0 auto 20px auto",
               }}
             >
               #1 MOST RECOMMENDED CONTENT MARKETING AGENCY
@@ -85,7 +96,7 @@ export default function Hero() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "24px",
+                gap: isMobile ? "10px" : "24px",
               }}
             >
               {/* Left Wreath */}
@@ -93,13 +104,13 @@ export default function Hero() {
                 style={{
                   color: "#fff",
                   opacity: 0.6,
-                  fontSize: "24px",
+                  fontSize: isMobile ? "18px" : "24px",
                   transform: "translateY(-2px)",
                 }}
               >
                 <svg
-                  width="24"
-                  height="40"
+                  width={isMobile ? "16" : "24"}
+                  height={isMobile ? "28" : "40"}
                   viewBox="0 0 24 40"
                   fill="currentColor"
                 >
@@ -113,108 +124,22 @@ export default function Hero() {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "20px",
+                  gap: isMobile ? "12px" : "20px",
                   filter: "brightness(0) invert(1)",
                   opacity: 0.8,
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "10px",
-                      fontWeight: "900",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    GLOBAL
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      fontWeight: "900",
-                      marginTop: "-4px",
-                    }}
-                  >
-                    SEARCH
-                  </div>
-                  <div
-                    style={{ fontSize: "8px", fontWeight: "800", opacity: 0.7 }}
-                  >
-                    AWARDS
-                  </div>
+                {/* Logo components simplified for scale */}
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                   <div style={{ fontSize: isMobile ? "8px" : "10px", fontWeight: "900" }}>GLOBAL</div>
+                   <div style={{ fontSize: isMobile ? "10px" : "12px", fontWeight: "900", marginTop: "-2px" }}>SEARCH</div>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    borderLeft: "1px solid rgba(255,255,255,0.3)",
-                    borderRight: "1px solid rgba(255,255,255,0.3)",
-                    padding: "0 20px",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: "900",
-                      letterSpacing: "-0.05em",
-                    }}
-                  >
-                    The Drum
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <div style={{ fontSize: "9px", fontWeight: "900" }}>
-                    UK SOCIAL MEDIA
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "900",
-                      marginTop: "-2px",
-                    }}
-                  >
-                    AWARDS
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    marginLeft: "10px",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "900",
-                      letterSpacing: "0.1em",
-                    }}
-                  >
-                    CONTENT
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "900",
-                      marginTop: "-3px",
-                    }}
-                  >
-                    AWARDS
-                  </div>
+                <div style={{ borderLeft: "1px solid rgba(255,255,255,0.3)", height: "20px" }}></div>
+                <div style={{ fontSize: isMobile ? "12px" : "16px", fontWeight: "900" }}>The Drum</div>
+                <div style={{ borderLeft: "1px solid rgba(255,255,255,0.3)", height: "20px" }}></div>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                   <div style={{ fontSize: isMobile ? "8px" : "9px", fontWeight: "900" }}>UK SOCIAL</div>
+                   <div style={{ fontSize: isMobile ? "10px" : "11px", fontWeight: "900", marginTop: "-2px" }}>MEDIA</div>
                 </div>
               </div>
 
@@ -223,13 +148,13 @@ export default function Hero() {
                 style={{
                   color: "#fff",
                   opacity: 0.6,
-                  fontSize: "24px",
+                  fontSize: isMobile ? "18px" : "24px",
                   transform: "translateY(-2px) scaleX(-1)",
                 }}
               >
                 <svg
-                  width="24"
-                  height="40"
+                  width={isMobile ? "16" : "24"}
+                  height={isMobile ? "28" : "40"}
                   viewBox="0 0 24 40"
                   fill="currentColor"
                 >
@@ -246,6 +171,7 @@ export default function Hero() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              gap: isMobile ? "5px" : "0",
             }}
           >
             <motion.h1
@@ -257,7 +183,7 @@ export default function Hero() {
                 ease: [0.16, 1, 0.3, 1],
               }}
               style={{
-                fontSize: "clamp(60px, 12vw, 170px)",
+                fontSize: isMobile ? "55px" : "clamp(60px, 12vw, 170px)",
                 fontWeight: "400",
                 color: "#fff",
                 lineHeight: "0.85",
@@ -279,52 +205,54 @@ export default function Hero() {
               }}
               style={{
                 display: "flex",
+                flexDirection: isMobile ? "column" : "row",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "20px",
-                marginTop: "-5px",
+                gap: isMobile ? "10px" : "20px",
+                marginTop: isMobile ? "10px" : "-5px",
               }}
             >
-              <span
-                style={{
-                  fontSize: "clamp(60px, 12vw, 100px)",
-                  fontWeight: "400",
-                  color: "#fff",
-                  lineHeight: "0.85",
-                  letterSpacing: "-0.04em",
-                  fontFamily: "var(--font-display)",
-                }}
-              >
-                Category
-              </span>
+              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "10px" : "20px" }}>
+                <span
+                  style={{
+                    fontSize: isMobile ? "55px" : "clamp(60px, 12vw, 100px)",
+                    fontWeight: "400",
+                    color: "#fff",
+                    lineHeight: "0.85",
+                    letterSpacing: "-0.04em",
+                    fontFamily: "var(--font-display)",
+                  }}
+                >
+                  Category
+                </span>
 
-              {/* Squircle Image */}
-              <div
-                style={{
-                  position: "relative",
-                  width: "11vw",
-                  height: "10vw",
-                  maxWidth: "160px",
-                  maxHeight: "140px",
-                  borderRadius: "45px", // Squircle-like rounding
-                  overflow: "hidden",
-                  border: "3px solid rgba(255,255,255,0.1)",
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
-                  margin: "0 15px",
-                }}
-              >
-                <Image
-                  src="/images/hero-people.png"
-                  alt="People"
-                  fill
-                  sizes="20vw"
-                  style={{ objectFit: "cover" }}
-                />
+                {/* Squircle Image */}
+                <div
+                  style={{
+                    position: "relative",
+                    width: isMobile ? "60px" : "11vw",
+                    height: isMobile ? "50px" : "10vw",
+                    maxWidth: "160px",
+                    maxHeight: "140px",
+                    borderRadius: isMobile ? "15px" : "45px",
+                    overflow: "hidden",
+                    border: "2px solid rgba(255,255,255,0.1)",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  <Image
+                    src="/images/hero-people.png"
+                    alt="People"
+                    fill
+                    sizes="20vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
               </div>
 
               <span
                 style={{
-                  fontSize: "clamp(60px, 12vw, 100px)",
+                  fontSize: isMobile ? "55px" : "clamp(60px, 12vw, 100px)",
                   fontWeight: "400",
                   color: "#fff",
                   lineHeight: "0.85",
@@ -343,12 +271,13 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             style={{
-              marginTop: "45px",
-              fontSize: "clamp(18px, 2.8vw, 36px)",
+              marginTop: isMobile ? "30px" : "45px",
+              fontSize: isMobile ? "18px" : "clamp(18px, 2.8vw, 36px)",
               fontWeight: "600",
               color: "#fff",
               letterSpacing: "-0.02em",
               fontFamily: "var(--font-display)",
+              maxWidth: isMobile ? "280px" : "none",
             }}
           >
             on every searchable platform
@@ -359,49 +288,53 @@ export default function Hero() {
         <div
           style={{
             position: "absolute",
-            bottom: "40px",
-            left: "50px",
-            right: "50px",
+            bottom: isMobile ? "30px" : "40px",
+            left: isMobile ? "20px" : "50px",
+            right: isMobile ? "20px" : "50px",
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
             justifyContent: "space-between",
-            alignItems: "flex-end",
+            alignItems: isMobile ? "center" : "flex-end",
             zIndex: 10,
+            gap: isMobile ? "15px" : "0",
           }}
         >
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            style={{
-              fontSize: "13px",
-              color: "rgba(255,255,255,0.7)",
-              lineHeight: "1.6",
-              maxWidth: "380px",
-              textAlign: "left",
-            }}
-          >
-            Organic media planners creating, distributing & optimising{" "}
-            <span style={{ color: "#fff", fontWeight: "700" }}>
-              search-first
-            </span>{" "}
-            content for SEO, Social, PR, Ai and LLM search
-          </motion.p>
+          {!isMobile && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              style={{
+                fontSize: "13px",
+                color: "rgba(255,255,255,0.7)",
+                lineHeight: "1.6",
+                maxWidth: "380px",
+                textAlign: "left",
+              }}
+            >
+              Organic media planners creating, distributing & optimising{" "}
+              <span style={{ color: "#fff", fontWeight: "700" }}>
+                search-first
+              </span>{" "}
+              content for SEO, Social, PR, Ai and LLM search
+            </motion.p>
+          )}
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9 }}
             style={{
-              fontSize: "13px",
+              fontSize: isMobile ? "11px" : "13px",
               color: "rgba(255,255,255,0.7)",
               lineHeight: "1.6",
-              textAlign: "right",
+              textAlign: isMobile ? "center" : "right",
             }}
           >
             4 Global Offices serving
             <br />
             <span style={{ color: "#fff", fontWeight: "700" }}>
-              UK, USA, Spain, Nordics & EU
+              UK, USA (New York) & EU
             </span>
           </motion.p>
         </div>
