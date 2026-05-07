@@ -26,12 +26,6 @@ export default function Home() {
       <Blog />
       <ReadyToRise />
       <Footer />
-      {/* <Awards />
-      <Expertise />
-      <Legacy />
-      <Testimonials />
-      <Blog />
-      <Footer /> */}
     </main>
   );
 }
