@@ -1,212 +1,211 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
 
 const blogPosts = [
   {
     id: 1,
-    title: "Ryan McNamara Is Now Rise at Seven's Global Operations Director",
-    image: "/images/download.png",
-    author: "Carrie Rose",
-    time: "2 mins",
-    category: "News"
+    category: "Rise at Seven",
+    title: "Organic media planning: Why search is the new full-funnel media channel",
+    image: "/images/1.jpg",
+    date: "14 Feb 2025"
   },
   {
     id: 2,
-    title: "Rise at Seven Appointed by Coneys to Drive Demand and Retail Growth for them in the Chocolate Confectionery Category",
-    image: "/images/3-copy.webp",
-    author: "Fay Sadik",
-    time: "2 mins",
-    category: "News"
+    category: "Rise at Seven",
+    title: "Google is changing. Your SEO strategy should too.",
+    image: "/images/2.jpg",
+    date: "10 Feb 2025"
   },
   {
     id: 3,
-    title: "Rise at Seven Appointed by Langtins to drive demand and retail growth for Noomz",
-    image: "/images/Noomz1-4.webp",
-    author: "Carrie Rose",
-    time: "2 mins",
-    category: "Food/Hospitality/Drink",
-    hasFloatingBtn: true,
-    floatingBtnText: "Freeze Dried Sweets"
+    category: "Rise at Seven",
+    title: "How to win at Digital PR in 2025",
+    image: "/images/3.jpg",
+    date: "05 Feb 2025"
   }
 ];
 
-function BlogCard({ post }: { post: any }) {
-  const [isHovering, setIsHovering] = React.useState(false);
+function BlogCard({ post, isMobile }: { post: any, isMobile: boolean }) {
+  const [isHovering, setIsHovering] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 1000, damping: 50 });
-  const springY = useSpring(mouseY, { stiffness: 1000, damping: 50 });
+
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 20 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (isMobile) return;
     const rect = e.currentTarget.getBoundingClientRect();
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
   };
 
   return (
-    <motion.div 
+    <div
+      onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      onMouseMove={handleMouseMove}
-      whileHover={{ y: -10 }}
-      style={{ cursor: "none", position: "relative" }}
-    >
-      <div style={{ 
-        width: "100%", 
-        aspectRatio: "4/5", 
-        borderRadius: "32px", 
-        overflow: "hidden", 
+      style={{
+        backgroundColor: "#fff",
+        borderRadius: isMobile ? "24px" : "32px",
+        padding: isMobile ? "24px" : "40px",
+        height: isMobile ? "auto" : "500px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
         position: "relative",
-        marginBottom: "24px",
-        backgroundColor: "#e0e0e0"
-      }}>
-        <motion.div
-          animate={{ filter: isHovering ? "blur(10px)" : "blur(0px)" }}
-          transition={{ duration: 0.3 }}
-          style={{ width: "100%", height: "100%", position: "relative" }}
-        >
-          <Image 
-            src={post.image} 
-            alt={post.title} 
-            fill 
-            unoptimized
-            style={{ objectFit: "cover" }} 
-          />
-        </motion.div>
-        
-        {/* Custom Follower Button */}
+        overflow: "hidden",
+        cursor: "pointer",
+        border: "1px solid rgba(0,0,0,0.05)"
+      }}
+    >
+      {!isMobile && (
         <motion.div
           style={{
             position: "absolute",
-            left: 0,
-            top: 0,
-            width: "80px",
-            height: "80px",
-            backgroundColor: "#c1f1e0",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            width: "300px",
+            height: "200px",
+            borderRadius: "20px",
+            overflow: "hidden",
             pointerEvents: "none",
-            zIndex: 20,
+            zIndex: 1,
             x: springX,
             y: springY,
-            marginLeft: "-40px",
-            marginTop: "-40px",
+            marginLeft: "-150px",
+            marginTop: "-100px",
             scale: isHovering ? 1 : 0,
             opacity: isHovering ? 1 : 0,
           }}
         >
-          <span style={{ color: "#000", fontSize: "24px", fontWeight: "300" }}>↗</span>
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            unoptimized
+            style={{ objectFit: "cover" }}
+          />
         </motion.div>
+      )}
 
-        {/* Category Badge */}
-        <div style={{ 
-          position: "absolute", 
-          top: "20px", 
-          left: "20px", 
-          backgroundColor: "rgba(0,0,0,0.3)", 
-          backdropFilter: "blur(10px)",
-          color: "#fff",
-          padding: "4px 12px",
-          borderRadius: "100px",
-          fontSize: "12px",
-          fontWeight: "600",
-          zIndex: 5
-        }}>
-          {post.category}
+      {isMobile && (
+        <div style={{ width: "100%", height: "200px", borderRadius: "16px", overflow: "hidden", marginBottom: "20px", position: "relative" }}>
+           <Image src={post.image} alt={post.title} fill unoptimized style={{ objectFit: "cover" }} />
         </div>
+      )}
 
-        {/* Floating Button for 3rd card */}
-        {post.hasFloatingBtn && !isHovering && (
-          <div style={{ 
-            position: "absolute", 
-            top: "50%", 
-            left: "50%", 
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "#fff",
-            padding: "10px 20px",
-            borderRadius: "100px",
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-            fontSize: "14px",
-            fontWeight: "700",
-            zIndex: 10
-          }}>
-            <span style={{ fontSize: "16px" }}>🔍</span> {post.floatingBtnText} <span style={{ opacity: 0.5 }}>↗</span>
-          </div>
-        )}
+      <div style={{ position: "relative", zIndex: 2 }}>
+        <span style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.05em", opacity: 0.5 }}>
+          {post.category}
+        </span>
+        <h3 style={{ 
+          fontSize: isMobile ? "24px" : "32px", 
+          fontWeight: "700", 
+          marginTop: "16px", 
+          lineHeight: "1.1",
+          letterSpacing: "-0.02em"
+        }}>
+          {post.title}
+        </h3>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px", opacity: 0.6, fontSize: "13px" }}>
-        <div style={{ width: "20px", height: "20px", borderRadius: "50%", backgroundColor: "#ccc" }}></div>
-        <span>{post.author}</span>
-        <span>•</span>
-        <span>{post.time}</span>
+      <div style={{ position: "relative", zIndex: 2, display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: isMobile ? "24px" : "0" }}>
+        <span style={{ fontSize: "14px", opacity: 0.4 }}>{post.date}</span>
+        <div style={{ 
+          width: "40px", 
+          height: "40px", 
+          borderRadius: "50%", 
+          border: "1px solid rgba(0,0,0,0.1)", 
+          display: "flex", 
+          alignItems: "center", 
+          justifyContent: "center",
+          fontSize: "18px"
+        }}>
+          ↗
+        </div>
       </div>
-
-      <h3 style={{ 
-        fontSize: "20px", 
-        fontWeight: "700", 
-        lineHeight: "1.3", 
-        letterSpacing: "-0.01em",
-        margin: 0
-      }}>
-        {post.title}
-      </h3>
-    </motion.div>
+    </div>
   );
 }
 
 export default function Blog() {
-  return (
-    <section style={{ backgroundColor: "#f2f2f2", padding: "60px 24px" }}>
-      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-8 mb-12 border-t border-black/5 pt-10">
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <h2 style={{ fontSize: "clamp(48px, 10vw, 60px)", fontWeight: "700", margin: 0, fontFamily: "var(--font-display)", lineHeight: "0.9" }}>
-            What&apos;s New
-          </h2>
-          <div style={{ 
-            width: "30px", 
-            height: "30px", 
-            borderRadius: "50%", 
-            backgroundColor: "#000", 
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center",
-            marginTop: "10px"
-          }}>
-             <div style={{ width: "15px", height: "15px", borderRadius: "50%", backgroundColor: "#c1f1e0" }}></div>
-          </div>
-        </div>
-        <button style={{ 
-          backgroundColor: "#fff", 
-          border: "1px solid rgba(0,0,0,0.1)", 
-          borderRadius: "100px", 
-          padding: "16px 28px", 
-          fontSize: "16px", 
-          fontWeight: "700",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "8px",
-          width: "fit-content"
-        }}>
-          Explore More Thoughts <span>↗</span>
-        </button>
-      </div>
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-8">
-        {blogPosts.map((post) => (
-          <BlogCard key={post.id} post={post} />
-        ))}
-      </div>
+  useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return (
+    <section
+      style={{
+        backgroundColor: "#f2f2f2",
+        padding: isMobile ? "60px 20px" : "100px 40px",
+        minHeight: "600px"
+      }}
+    >
+      {mounted && (
+        <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: isMobile ? "40px" : "60px" }}>
+            <div>
+              <span style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.5 }}>
+                Our Thoughts
+              </span>
+              <h2 style={{ 
+                fontSize: isMobile ? "42px" : "60px", 
+                fontWeight: "600", 
+                margin: "10px 0 0 0",
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.03em"
+              }}>
+                What&apos;s New
+              </h2>
+            </div>
+            {!isMobile && (
+              <button style={{ 
+                backgroundColor: "#fff", 
+                border: "1px solid rgba(0,0,0,0.1)", 
+                padding: "12px 28px", 
+                borderRadius: "100px", 
+                fontWeight: "700",
+                cursor: "pointer"
+              }}>
+                View All Posts ↗
+              </button>
+            )}
+          </div>
+
+          <div style={{ 
+            display: "grid", 
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", 
+            gap: "20px" 
+          }}>
+            {blogPosts.map((post) => (
+              <BlogCard key={post.id} post={post} isMobile={isMobile} />
+            ))}
+          </div>
+          
+          {isMobile && (
+            <button style={{ 
+              backgroundColor: "#fff", 
+              border: "1px solid rgba(0,0,0,0.1)", 
+              padding: "16px 32px", 
+              borderRadius: "100px", 
+              fontWeight: "700",
+              width: "100%",
+              marginTop: "32px",
+              cursor: "pointer"
+            }}>
+              View All Posts ↗
+            </button>
+          )}
+        </div>
+      )}
     </section>
   );
 }
-

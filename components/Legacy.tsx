@@ -36,63 +36,6 @@ const cards = [
   },
 ];
 
-export default function Legacy() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  return (
-    <section
-      ref={containerRef}
-      style={{
-        backgroundColor: "#f2f2f2",
-        height: "400vh",
-        position: "relative",
-      }}
-    >
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "relative",
-            width: "min(600px, 90vw)",
-            height: "clamp(550px, 80vh, 700px)",
-          }}
-        >
-          {cards.map((card, index) => {
-            const start = index / cards.length;
-            const end = (index + 1) / cards.length;
-
-            return (
-              <Card
-                key={card.id}
-                card={card}
-                index={index}
-                scrollYProgress={scrollYProgress}
-                start={start}
-                end={end}
-                total={cards.length}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Card({
   card,
   index,
@@ -100,6 +43,7 @@ function Card({
   start,
   end,
   total,
+  isMobile,
 }: {
   card: any;
   index: number;
@@ -107,11 +51,8 @@ function Card({
   start: number;
   end: number;
   total: number;
+  isMobile: boolean;
 }) {
-  // Movement logic:
-  // Cards are stacked initially.
-  // As we scroll, the top-most card (lowest index) rises UP to reveal the one underneath.
-
   const y = useTransform(scrollYProgress, [start, end], [0, -1000]);
   const opacity = useTransform(
     scrollYProgress,
@@ -125,10 +66,9 @@ function Card({
   );
   const scale = useTransform(scrollYProgress, [start, end], [1, 0.9]);
 
-  // Initial offsets to make them visible behind the first card
   const initialRotate = card.rotation;
-  const initialX = index * 4; // Reduced offset for mobile
-  const initialY = index * 4;
+  const initialX = index * (isMobile ? 2 : 4);
+  const initialY = index * (isMobile ? 2 : 4);
 
   return (
     <motion.div
@@ -137,8 +77,8 @@ function Card({
         inset: 0,
         backgroundColor: card.bgColor,
         color: card.textColor,
-        borderRadius: "40px", // Slightly smaller radius
-        padding: "clamp(40px, 8vw, 60px) clamp(20px, 5vw, 40px)",
+        borderRadius: isMobile ? "24px" : "40px",
+        padding: isMobile ? "40px 24px" : "60px 40px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -146,7 +86,6 @@ function Card({
         boxShadow: "0 40px 100px rgba(0,0,0,0.15)",
         zIndex: total - index,
         rotate: initialRotate,
-        // Only cards whose turn it is or past turn should move/reveal
         y: index < total - 1 ? y : 0,
         scale: index < total - 1 ? scale : 1,
         opacity: index < total - 1 ? opacity : 1,
@@ -156,25 +95,26 @@ function Card({
     >
       <div
         style={{
-          width: "clamp(80px, 15vw, 140px)",
-          height: "clamp(80px, 15vw, 140px)",
+          width: isMobile ? "80px" : "140px",
+          height: isMobile ? "80px" : "140px",
           borderRadius: "20px",
           overflow: "hidden",
           position: "relative",
-          marginBottom: "30px",
+          marginBottom: isMobile ? "20px" : "30px",
         }}
       >
         <Image
           src={card.image}
           alt={card.title}
           fill
+          unoptimized
           style={{ objectFit: "cover" }}
         />
       </div>
 
       <h3
         style={{
-          fontSize: "clamp(32px, 8vw, 80px)",
+          fontSize: isMobile ? "32px" : "clamp(32px, 8vw, 80px)",
           fontWeight: "700",
           marginBottom: "16px",
           lineHeight: "0.9",
@@ -186,7 +126,7 @@ function Card({
 
       <p
         style={{
-          fontSize: "16px",
+          fontSize: isMobile ? "14px" : "16px",
           lineHeight: "1.5",
           opacity: 0.8,
           maxWidth: "450px",
@@ -196,5 +136,77 @@ function Card({
         {card.description}
       </p>
     </motion.div>
+  );
+}
+
+export default function Legacy() {
+  const containerRef = useRef(null);
+  const [mounted, setMounted] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  return (
+    <section
+      ref={containerRef}
+      style={{
+        backgroundColor: "#f2f2f2",
+        height: isMobile ? "300vh" : "400vh",
+        position: "relative",
+        minHeight: mounted ? "auto" : "100vh",
+      }}
+    >
+      {mounted && (
+        <div
+          style={{
+            position: "sticky",
+            top: 0,
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              width: isMobile ? "90vw" : "600px",
+              height: isMobile ? "70vh" : "clamp(550px, 80vh, 700px)",
+            }}
+          >
+            {cards.map((card, index) => {
+              const start = index / cards.length;
+              const end = (index + 1) / cards.length;
+
+              return (
+                <Card
+                  key={card.id}
+                  card={card}
+                  index={index}
+                  scrollYProgress={scrollYProgress}
+                  start={start}
+                  end={end}
+                  total={cards.length}
+                  isMobile={isMobile}
+                />
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </section>
   );
 }

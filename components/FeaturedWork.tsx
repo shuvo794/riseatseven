@@ -115,6 +115,65 @@ const projects = [
   },
 ];
 
+function ProjectListItem({ project, index, scrollYProgress }: { project: any, index: number, scrollYProgress: any }) {
+  const start = index / projects.length;
+  const end = (index + 1) / projects.length;
+  const middle = (start + end) / 2;
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [middle - 0.1, middle, middle + 0.1],
+    [0.15, 1, 0.15],
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [middle - 0.1, middle, middle + 0.1],
+    [0.85, 1, 0.85],
+  );
+  const translateY = useTransform(
+    scrollYProgress,
+    [middle - 0.1, middle, middle + 0.1],
+    [20, 0, -20],
+  );
+
+  return (
+    <motion.div
+      style={{
+        opacity,
+        scale,
+        y: translateY,
+        display: "flex",
+        alignItems: "flex-start",
+        gap: "15px",
+        transformOrigin: "left center",
+      }}
+    >
+      <h3
+        style={{
+          fontSize: "clamp(40px, 4.5vw, 70px)",
+          fontWeight: "700",
+          lineHeight: "0.85",
+          letterSpacing: "-0.05em",
+          margin: 0,
+          fontFamily: "var(--font-display)",
+        }}
+      >
+        {project.name}
+      </h3>
+      <span
+        style={{
+          fontSize: "12px",
+          fontWeight: "600",
+          color: "rgba(255,255,255,0.3)",
+          marginTop: "10px",
+        }}
+      >
+        [{project.years}]
+      </span>
+    </motion.div>
+  );
+}
+
 export default function FeaturedWork() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -124,9 +183,11 @@ export default function FeaturedWork() {
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isHoveringImage, setIsHoveringImage] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -140,13 +201,14 @@ export default function FeaturedWork() {
   const springY = useSpring(mouseY, { stiffness: 1000, damping: 50 });
 
   useEffect(() => {
+    if (!mounted) return;
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, mounted]);
 
   return (
     <section
@@ -159,316 +221,270 @@ export default function FeaturedWork() {
         color: "#fff",
         position: "relative",
         overflow: "visible",
+        minHeight: mounted ? "auto" : "800px",
       }}
     >
-      {/* Custom Cursor */}
-      <motion.div
-        style={{
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100px",
-          height: "100px",
-          backgroundColor: "#c1f1e0",
-          borderRadius: "50%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          pointerEvents: "none",
-          zIndex: 9999,
-          x: springX,
-          y: springY,
-          marginLeft: "-50px",
-          marginTop: "-50px",
-          scale: isHoveringImage ? 1 : 0,
-          opacity: isHoveringImage ? 1 : 0,
-        }}
-      >
-        <span style={{ color: "#000", fontSize: "32px", fontWeight: "300" }}>
-          ↗
-        </span>
-      </motion.div>
-
-      <div
-        style={{
-          padding: isMobile ? "0 24px" : "0 80px",
-          maxWidth: "1600px",
-          margin: "0 auto",
-        }}
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "1fr 1.2fr",
-            gap: isMobile ? "40px" : "100px",
-          }}
-        >
-          {/* Left Column: Sticky Scroll-Focus List */}
-          {!isMobile && (
-            <div
-              style={{
-                position: "sticky",
-                top: 0,
-                height: "100vh",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "900",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                  marginBottom: "60px",
-                  opacity: 0.8,
-                  position: "absolute",
-                  top: "15vh",
-                }}
-              >
-                Featured Work
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "20px",
-                }}
-              >
-                {projects.map((project, index) => {
-                  const start = index / projects.length;
-                  const end = (index + 1) / projects.length;
-                  const middle = (start + end) / 2;
-
-                  const opacity = useTransform(
-                    scrollYProgress,
-                    [middle - 0.1, middle, middle + 0.1],
-                    [0.15, 1, 0.15],
-                  );
-                  const scale = useTransform(
-                    scrollYProgress,
-                    [middle - 0.1, middle, middle + 0.1],
-                    [0.85, 1, 0.85],
-                  );
-                  const translateY = useTransform(
-                    scrollYProgress,
-                    [middle - 0.1, middle, middle + 0.1],
-                    [20, 0, -20],
-                  );
-
-                  return (
-                    <motion.div
-                      key={project.id}
-                      style={{
-                        opacity,
-                        scale,
-                        y: translateY,
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: "15px",
-                        transformOrigin: "left center",
-                      }}
-                    >
-                      <h3
-                        style={{
-                          fontSize: "clamp(40px, 4.5vw, 70px)",
-                          fontWeight: "700",
-                          lineHeight: "0.85",
-                          letterSpacing: "-0.05em",
-                          margin: 0,
-                          fontFamily: "var(--font-display)",
-                        }}
-                      >
-                        {project.name}
-                      </h3>
-                      <span
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "600",
-                          color: "rgba(255,255,255,0.3)",
-                          marginTop: "10px",
-                        }}
-                      >
-                        [{project.years}]
-                      </span>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Right Column: Scrolling Images */}
-          <div
+      {mounted && (
+        <>
+          {/* Custom Cursor */}
+          <motion.div
             style={{
+              position: "fixed",
+              left: 0,
+              top: 0,
+              width: "100px",
+              height: "100px",
+              backgroundColor: "#c1f1e0",
+              borderRadius: "50%",
               display: "flex",
-              flexDirection: "column",
-              gap: isMobile ? "60px" : "100px",
+              alignItems: "center",
+              justifyContent: "center",
+              pointerEvents: "none",
+              zIndex: 9999,
+              x: springX,
+              y: springY,
+              marginLeft: "-50px",
+              marginTop: "-50px",
+              scale: isHoveringImage ? 1 : 0,
+              opacity: isHoveringImage ? 1 : 0,
             }}
           >
-            {isMobile && (
-              <div
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "900",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                  opacity: 0.8,
-                }}
-              >
-                Featured Work
-              </div>
-            )}
+            <span style={{ color: "#000", fontSize: "32px", fontWeight: "300" }}>
+              ↗
+            </span>
+          </motion.div>
 
-            {projects.map((project, index) => (
+          <div
+            style={{
+              padding: isMobile ? "0 24px" : "0 80px",
+              maxWidth: "1600px",
+              margin: "0 auto",
+            }}
+          >
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr" : "1fr 1.2fr",
+                gap: isMobile ? "40px" : "100px",
+              }}
+            >
+              {/* Left Column: Sticky Scroll-Focus List */}
+              {!isMobile && (
+                <div
+                  style={{
+                    position: "sticky",
+                    top: 0,
+                    height: "100vh",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      fontWeight: "900",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                      marginBottom: "60px",
+                      opacity: 0.8,
+                      position: "absolute",
+                      top: "15vh",
+                    }}
+                  >
+                    Featured Work
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "20px",
+                    }}
+                  >
+                    {projects.map((project, index) => (
+                      <ProjectListItem
+                        key={project.id}
+                        project={project}
+                        index={index}
+                        scrollYProgress={scrollYProgress}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Right Column: Scrolling Images */}
               <div
-                key={project.id}
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: "24px",
+                  gap: isMobile ? "60px" : "100px",
                 }}
               >
                 {isMobile && (
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "between",
-                      width: "100%",
+                      fontSize: "14px",
+                      fontWeight: "900",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                      opacity: 0.8,
                     }}
                   >
-                    <h3
-                      style={{
-                        fontSize: "28px",
-                        fontWeight: "700",
-                        letterSpacing: "-0.03em",
-                        margin: 0,
-                      }}
-                    >
-                      {project.name}
-                    </h3>
-                    <span
-                      style={{
-                        fontSize: "12px",
-                        opacity: 0.4,
-                        marginLeft: "auto",
-                      }}
-                    >
-                      [{project.years}]
-                    </span>
+                    Featured Work
                   </div>
                 )}
 
-                <div
-                  onMouseEnter={() => {
-                    setIsHoveringImage(true);
-                    setHoveredIndex(index);
-                  }}
-                  onMouseLeave={() => {
-                    setIsHoveringImage(false);
-                    setHoveredIndex(null);
-                  }}
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    aspectRatio: "1.2",
-                    borderRadius: "32px",
-                    overflow: "hidden",
-                    backgroundColor: "#111",
-                    cursor: "none",
-                  }}
-                >
-                  <motion.div
-                    animate={{ scale: hoveredIndex === index ? 1.05 : 1 }}
-                    transition={{ duration: 0.7 }}
-                    style={{ width: "100%", height: "100%" }}
-                  >
-                    <Image
-                      src={project.image}
-                      alt={project.name}
-                      fill
-                      unoptimized
-                      priority={index === 0}
-                      sizes="(max-width: 1024px) 100vw, 800px"
-                      style={{ objectFit: "cover" }}
-                    />
-                  </motion.div>
-
-                  {/* Hover Color Overlay */}
-                  <AnimatePresence>
-                    {hoveredIndex === index && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        style={{
-                          position: "absolute",
-                          inset: 0,
-                          backgroundColor: project.hoverBg,
-                          padding: isMobile ? "24px" : "40px",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "flex-start",
-                          zIndex: 10,
-                          pointerEvents: "none",
-                        }}
-                      >
-                        <h2
-                          style={{
-                            fontSize: "clamp(28px, 6vw, 48px)",
-                            fontWeight: "700",
-                            lineHeight: "1.0",
-                            letterSpacing: "-0.03em",
-                            color: "#000",
-                            maxWidth: "95%",
-                            margin: 0,
-                            fontFamily: "var(--font-display)",
-                          }}
-                        >
-                          {project.hoverText}
-                        </h2>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Premium Badge */}
+                {projects.map((project, index) => (
                   <div
+                    key={project.id}
                     style={{
-                      position: "absolute",
-                      bottom: "24px",
-                      right: "24px",
-                      backgroundColor: "rgba(0,0,0,0.4)",
-                      backdropFilter: "blur(20px)",
-                      WebkitBackdropFilter: "blur(20px)",
-                      padding: "10px 20px",
-                      borderRadius: "100px",
                       display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      color: "#fff",
-                      fontSize: "13px",
-                      fontWeight: "700",
-                      border: "1px solid rgba(255,255,255,0.15)",
-                      zIndex: 20,
-                      opacity: hoveredIndex === index ? 0.2 : 1,
-                      transition: "opacity 0.3s ease",
+                      flexDirection: "column",
+                      gap: "24px",
                     }}
                   >
-                    <Search size={14} style={{ opacity: 0.7 }} />
-                    <span style={{ trackingTight: "-0.01em" }}>
-                      {project.tag}
-                    </span>
-                    <TrendingUp size={14} style={{ opacity: 0.7 }} />
+                    {isMobile && (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          width: "100%",
+                        }}
+                      >
+                        <h3
+                          style={{
+                            fontSize: "28px",
+                            fontWeight: "700",
+                            letterSpacing: "-0.03em",
+                            margin: 0,
+                          }}
+                        >
+                          {project.name}
+                        </h3>
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            opacity: 0.4,
+                            marginLeft: "auto",
+                          }}
+                        >
+                          [{project.years}]
+                        </span>
+                      </div>
+                    )}
+
+                    <div
+                      onMouseEnter={() => {
+                        setIsHoveringImage(true);
+                        setHoveredIndex(index);
+                      }}
+                      onMouseLeave={() => {
+                        setIsHoveringImage(false);
+                        setHoveredIndex(null);
+                      }}
+                      style={{
+                        position: "relative",
+                        width: "100%",
+                        aspectRatio: "1.2",
+                        borderRadius: "32px",
+                        overflow: "hidden",
+                        backgroundColor: "#111",
+                        cursor: "none",
+                      }}
+                    >
+                      <motion.div
+                        animate={{ scale: hoveredIndex === index ? 1.05 : 1 }}
+                        transition={{ duration: 0.7 }}
+                        style={{ width: "100%", height: "100%" }}
+                      >
+                        <Image
+                          src={project.image}
+                          alt={project.name}
+                          fill
+                          unoptimized
+                          priority={index === 0}
+                          sizes="(max-width: 1024px) 100vw, 800px"
+                          style={{ objectFit: "cover" }}
+                        />
+                      </motion.div>
+
+                      {/* Hover Color Overlay */}
+                      <AnimatePresence>
+                        {hoveredIndex === index && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            style={{
+                              position: "absolute",
+                              inset: 0,
+                              backgroundColor: project.hoverBg,
+                              padding: isMobile ? "24px" : "40px",
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "flex-start",
+                              zIndex: 10,
+                              pointerEvents: "none",
+                            }}
+                          >
+                            <h2
+                              style={{
+                                fontSize: "clamp(28px, 6vw, 48px)",
+                                fontWeight: "700",
+                                lineHeight: "1.0",
+                                letterSpacing: "-0.03em",
+                                color: "#000",
+                                maxWidth: "95%",
+                                margin: 0,
+                                fontFamily: "var(--font-display)",
+                              }}
+                            >
+                              {project.hoverText}
+                            </h2>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {/* Premium Badge */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: "24px",
+                          right: "24px",
+                          backgroundColor: "rgba(0,0,0,0.4)",
+                          backdropFilter: "blur(20px)",
+                          WebkitBackdropFilter: "blur(20px)",
+                          padding: "10px 20px",
+                          borderRadius: "100px",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                          color: "#fff",
+                          fontSize: "13px",
+                          fontWeight: "700",
+                          border: "1px solid rgba(255,255,255,0.15)",
+                          zIndex: 20,
+                          opacity: hoveredIndex === index ? 0.2 : 1,
+                          transition: "opacity 0.3s ease",
+                        }}
+                      >
+                        <Search size={14} style={{ opacity: 0.7 }} />
+                        <span style={{ trackingTight: "-0.01em" }}>
+                          {project.tag}
+                        </span>
+                        <TrendingUp size={14} style={{ opacity: 0.7 }} />
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </section>
   );
 }

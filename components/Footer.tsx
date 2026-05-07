@@ -2,6 +2,17 @@
 import React from "react";
 
 export default function Footer() {
+  const [mounted, setMounted] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const socialIcons = [
     { name: "f", icon: "f" },
     { name: "X", icon: "X" },
@@ -26,21 +37,31 @@ export default function Footer() {
     }
   ];
 
+  if (!mounted) return null;
+
   return (
     <footer style={{ 
       backgroundColor: "#000", 
       color: "#fff", 
-      padding: "80px 24px 40px 24px",
-      borderRadius: "40px 40px 0 0",
+      padding: isMobile ? "60px 20px 40px" : "80px 40px 40px",
+      borderRadius: isMobile ? "32px 32px 0 0" : "40px 40px 0 0",
       marginTop: "-40px",
       position: "relative",
       zIndex: 10,
       fontFamily: "Inter, sans-serif"
     }}>
-      <div className="flex flex-col lg:flex-row lg:justify-between gap-16 lg:gap-10 mb-20 lg:mb-32">
+      <div 
+        style={{ 
+          display: "flex", 
+          flexDirection: isMobile ? "column" : "row",
+          justifyContent: "space-between",
+          gap: isMobile ? "60px" : "40px",
+          marginBottom: isMobile ? "80px" : "120px"
+        }}
+      >
         {/* Newsletter & Socials */}
-        <div className="w-full lg:max-w-[450px]">
-          <h4 style={{ fontSize: "28px", fontWeight: "700", marginBottom: "32px", letterSpacing: "-0.02em", lineHeight: "1.1" }}>
+        <div style={{ width: "100%", maxWidth: isMobile ? "100%" : "450px" }}>
+          <h4 style={{ fontSize: isMobile ? "24px" : "28px", fontWeight: "700", marginBottom: "32px", letterSpacing: "-0.02em", lineHeight: "1.1", margin: "0 0 32px 0" }}>
             Stay updated with Rise news
           </h4>
           <div style={{ 
@@ -79,7 +100,7 @@ export default function Footer() {
               <span style={{ color: "#000", fontWeight: "bold", fontSize: "18px" }}>↗</span>
             </button>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
             {socialIcons.map((social, i) => (
               <div key={i} style={{ 
                 backgroundColor: "#fff", 
@@ -100,10 +121,21 @@ export default function Footer() {
         </div>
 
         {/* Links Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-20">
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3, 1fr)",
+          gap: isMobile ? "40px" : "80px"
+        }}>
           {columns.map((col, idx) => (
-            <div key={idx} className="flex flex-col gap-6">
-              <h5 className="text-xs uppercase tracking-widest font-black opacity-30">{col.title}</h5>
+            <div key={idx} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+              <h5 style={{ 
+                fontSize: "11px", 
+                textTransform: "uppercase", 
+                letterSpacing: "0.1em", 
+                fontWeight: "900", 
+                opacity: 0.3,
+                margin: 0
+              }}>{col.title}</h5>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "12px" }}>
                 {col.links.map((link, lIdx) => (
                   <li key={lIdx} style={{ 
@@ -132,7 +164,7 @@ export default function Footer() {
             <path d="M91.3152 5.40061C91.3152 3.94241 92.5306 2.67359 93.9881 2.67359C95.7162 2.67359 96.797 3.83419 96.797 5.56225H99.7127C99.7127 2.1873 97.3096 0 93.9874 0C90.9371 0 88.3988 2.32257 88.3988 5.42766C88.3988 9.31596 90.883 10.2344 93.9874 11.4221C95.6627 12.07 97.2007 12.5563 97.2007 14.6895C97.2007 16.634 95.9867 18.0651 93.9874 18.0651C91.8813 18.0651 90.7477 16.3905 90.7477 14.446H87.832C87.832 18.0651 90.3426 20.7381 93.9874 20.7381C97.6323 20.7381 100.118 18.2816 100.118 14.6895C100.118 7.10161 91.3145 9.64061 91.3145 5.40061H91.3152Z"></path>
             <path d="M109.209 4.99609C104.834 4.99609 101.539 8.53405 101.539 12.8539C101.539 17.1737 104.888 20.738 109.155 20.738C112.422 20.738 115.203 18.713 116.337 15.662H113.529C112.718 17.2278 111.017 18.1733 109.262 18.1733C106.806 18.1733 104.915 16.4182 104.348 14.0963H116.743C116.797 13.6371 116.823 13.1508 116.823 12.6922C116.823 8.47926 113.447 4.99609 109.209 4.99609ZM104.348 11.9361C104.509 9.47823 106.751 7.56147 109.181 7.56147C111.611 7.56147 113.853 9.47823 114.014 11.9361H104.348Z"></path>
             <path d="M127.476 5.40039L123.575 16.0941L119.673 5.40039H116.676L122.617 20.3598H124.588L130.475 5.40039H127.476Z"></path>
-            <path d="M137.942 4.99609C133.567 4.99609 130.273 8.53405 130.273 12.8539C130.273 17.1737 133.621 20.738 137.888 20.738C141.155 20.738 143.936 18.713 145.071 15.662H142.262C141.453 17.2278 139.75 18.1733 137.996 18.1733C135.538 18.1733 133.649 16.4182 133.081 14.0963H145.476C145.53 13.6371 145.556 13.1508 145.556 12.6922C145.556 8.47926 142.182 4.99609 137.942 4.99609ZM133.081 11.9361C133.243 9.09864 135.484 7.56147 137.915 7.56147C140.347 7.56147 142.586 9.47823 142.749 11.9361H133.081Z"></path>
+            <path d="M137.942 4.99609C133.567 4.99609 130.273 8.53405 130.273 12.8539C130.273 17.1737 133.621 20.738 137.888 20.738C141.155 20.738 143.936 18.713 145.071 15.662H142.262C141.453 17.2278 139.75 18.1733 137.996 18.1733C135.538 18.1733 133.649 16.4182 133.081 14.0963H145.476C145.53 13.6371 145.556 13.1508 145.556 12.6922C145.556 8.47926 142.182 4.99609 137.942 4.99609ZM133.081 11.9361C133.243 9.47823 135.484 7.56147 137.915 7.56147C140.347 7.56147 142.586 9.47823 142.749 11.9361H133.081Z"></path>
             <path d="M147.473 8.21195V8.69013V20.3618H150.032V10.1815L167.216 20.3618V17.2405L147.473 5.40039V8.21195Z"></path>
             <path d="M67.8431 7.50804H67.789C66.6818 5.80635 64.7103 4.99609 62.713 4.99609C58.1775 4.99609 54.7734 8.3981 54.7734 12.935C54.7734 17.4719 58.2296 20.7387 62.713 20.7387C64.7651 20.7387 66.7359 19.8473 67.789 18.0387H67.8431V20.3606H70.652V5.40122H67.8431V7.50804ZM62.686 18.1733C59.823 18.1733 57.5823 15.7168 57.5823 12.9073C57.5823 10.0978 59.7425 7.56079 62.7124 7.56079C65.6822 7.56079 67.8972 9.90973 67.8972 12.9073C67.8972 15.9048 65.6024 18.1733 62.6867 18.1733H62.686Z"></path>
             <path d="M77.5832 0.378906H74.7736V5.40144H72.75V7.96681H74.7736V20.3608H77.5832V7.96681H80.0403V5.40144H77.5832V0.378906Z"></path>
@@ -148,16 +180,21 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-[11px] opacity-50 pb-10">
-        <div className="flex flex-wrap gap-x-4 gap-y-2">
+      <div style={{ 
+        display: "flex", 
+        flexDirection: isMobile ? "column" : "row",
+        justifyContent: "space-between",
+        alignItems: isMobile ? "flex-start" : "center",
+        gap: "24px",
+        fontSize: "11px",
+        opacity: 0.5,
+        paddingBottom: "40px"
+      }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
           <span>© 2025 Rise at Seven Ltd. All rights reserved</span>
-          <span className="hidden md:inline">•</span>
           <span>Company Number 11955187</span>
-          <span className="hidden md:inline">•</span>
           <span>VAT Registered GB 322402945</span>
-          <span className="hidden md:inline">•</span>
           <span style={{ cursor: "pointer" }}>Privacy Policy</span>
-          <span className="hidden md:inline">•</span>
           <span style={{ cursor: "pointer" }}>Terms & conditions</span>
         </div>
         <div>

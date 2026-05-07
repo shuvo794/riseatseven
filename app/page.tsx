@@ -1,4 +1,5 @@
 "use client";
+import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import DrivingDemand from "@/components/DrivingDemand";
@@ -11,8 +12,29 @@ import ReadyToRise from "@/components/ReadyToRise";
 import Footer from "@/components/Footer";
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
-    <main className="max-w-[1536px] mx-auto pt-6 px-4 sm:px-6 lg:px-8 pb-32">
+    <main 
+      style={{ 
+        maxWidth: "1536px", 
+        margin: "0 auto", 
+        paddingTop: isMobile ? "12px" : "24px", 
+        paddingLeft: isMobile ? "16px" : "32px", 
+        paddingRight: isMobile ? "16px" : "32px", 
+        paddingBottom: "128px",
+        minHeight: "100vh"
+      }}
+    >
       <Navbar />
       <Hero />
       <DrivingDemand />

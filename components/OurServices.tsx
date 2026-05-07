@@ -9,14 +9,16 @@ const services = [
   { id: 3, name: "Data & Insights", image: "/images/3.jpg" },
   { id: 4, name: "Organic Social & Content", image: "/images/4.jpg" },
   { id: 5, name: "Content Experience", image: "/images/5.jpg" },
-  { id: 6, name: "Onsite SEO", image: "/images/7.jpg" }, // 6.jpg was missing
+  { id: 6, name: "Onsite SEO", image: "/images/7.jpg" }, 
 ];
 
 export default function OurServices() {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -32,173 +34,178 @@ export default function OurServices() {
         padding: isMobile ? "60px 24px" : "100px 60px",
         color: "#000",
         position: "relative",
+        minHeight: "600px",
       }}
     >
-      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-        {/* Header */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            justifyContent: "space-between",
-            alignItems: isMobile ? "flex-start" : "center",
-            marginBottom: isMobile ? "40px" : "80px",
-            gap: "24px",
-          }}
-        >
-          <h2
+      {mounted && (
+        <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+          {/* Header */}
+          <div
             style={{
-              fontSize: "clamp(48px, 8vw, 100px)",
-              fontWeight: "700",
-              letterSpacing: "-0.04em",
               display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: "15px",
-              margin: 0,
-              fontFamily: "var(--font-display)",
-              lineHeight: "0.9",
+              flexDirection: isMobile ? "column" : "row",
+              justifyContent: "space-between",
+              alignItems: isMobile ? "flex-start" : "center",
+              marginBottom: isMobile ? "40px" : "80px",
+              gap: "24px",
             }}
           >
-            Our
-            <div
+            <h2
               style={{
-                width: isMobile ? "60px" : "100px",
-                height: isMobile ? "60px" : "100px",
-                borderRadius: "20px",
-                overflow: "hidden",
-                position: "relative",
-                display: "inline-block",
+                fontSize: "clamp(48px, 8vw, 100px)",
+                fontWeight: "700",
+                letterSpacing: "-0.04em",
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: "15px",
+                margin: 0,
+                fontFamily: "var(--font-display)",
+                lineHeight: "0.9",
               }}
             >
-              <Image
-                src="/images/829-600x600.jpg"
-                alt="Team"
-                fill
-                style={{ objectFit: "cover" }}
-              />
-            </div>
-            Services
-          </h2>
+              Our
+              <div
+                style={{
+                  width: isMobile ? "60px" : "100px",
+                  height: isMobile ? "60px" : "100px",
+                  borderRadius: "20px",
+                  overflow: "hidden",
+                  position: "relative",
+                  display: "inline-block",
+                }}
+              >
+                <Image
+                  src="/images/829-600x600.jpg"
+                  alt="Team"
+                  fill
+                  unoptimized
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+              Services
+            </h2>
 
-          <button
-            style={{
-              backgroundColor: "#fff",
-              padding: "12px 28px",
-              borderRadius: "100px",
-              border: "1px solid rgba(0,0,0,0.1)",
-              fontSize: "15px",
-              fontWeight: "700",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              cursor: "pointer",
-            }}
-          >
-            View All Services <span style={{ fontSize: "14px" }}>↗</span>
-          </button>
-        </div>
-
-        {/* Services Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-            gap: isMobile ? "0" : "0 80px",
-          }}
-        >
-          {services.map((service, index) => (
-            <div
-              key={service.id}
-              onMouseEnter={() => setHoveredService(service.id)}
-              onMouseLeave={() => setHoveredService(null)}
+            <button
               style={{
-                borderBottom: "1px solid rgba(0,0,0,0.1)",
-                padding: isMobile ? "24px 0" : "30px 0",
-                position: "relative",
+                backgroundColor: "#fff",
+                padding: "12px 28px",
+                borderRadius: "100px",
+                border: "1px solid rgba(0,0,0,0.1)",
+                fontSize: "15px",
+                fontWeight: "700",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
                 cursor: "pointer",
               }}
             >
-              <h3
+              View All Services <span style={{ fontSize: "14px" }}>↗</span>
+            </button>
+          </div>
+
+          {/* Services Grid */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+              gap: isMobile ? "0" : "0 80px",
+            }}
+          >
+            {services.map((service, index) => (
+              <div
+                key={service.id}
+                onMouseEnter={() => setHoveredService(service.id)}
+                onMouseLeave={() => setHoveredService(null)}
                 style={{
-                  fontSize: isMobile ? "28px" : "42px",
-                  fontWeight: "600",
-                  letterSpacing: "-0.03em",
-                  margin: 0,
-                  transition: "opacity 0.3s ease",
-                  opacity: hoveredService === service.id ? 0 : 1,
+                  borderBottom: "1px solid rgba(0,0,0,0.1)",
+                  padding: isMobile ? "24px 0" : "30px 0",
+                  position: "relative",
+                  cursor: "pointer",
                 }}
               >
-                {service.name}
-              </h3>
+                <h3
+                  style={{
+                    fontSize: isMobile ? "28px" : "42px",
+                    fontWeight: "600",
+                    letterSpacing: "-0.03em",
+                    margin: 0,
+                    transition: "opacity 0.3s ease",
+                    opacity: hoveredService === service.id ? 0 : 1,
+                  }}
+                >
+                  {service.name}
+                </h3>
 
-              {/* Mobile Arrow Indicator */}
-              {isMobile && (
-                <span style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", fontSize: "20px", opacity: 0.3 }}>
-                  ↗
-                </span>
-              )}
+                {/* Mobile Arrow Indicator */}
+                {isMobile && (
+                  <span style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", fontSize: "20px", opacity: 0.3 }}>
+                    ↗
+                  </span>
+                )}
 
-              {/* Hover Overlay Card (Desktop Only for Premium feel) */}
-              <AnimatePresence>
-                {!isMobile && hoveredService === service.id && (
-                  <motion.div
-                    initial={{ scale: 0.95, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.95, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    style={{
-                      position: "absolute",
-                      left: "-20px",
-                      right: "-20px",
-                      top: "10px",
-                      bottom: "10px",
-                      borderRadius: "60px",
-                      overflow: "hidden",
-                      zIndex: 10,
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "0 60px",
-                      backgroundColor: "#000",
-                    }}
-                  >
-                    <Image
-                      src={service.image}
-                      alt={service.name}
-                      fill
-                      style={{ objectFit: "cover", opacity: 0.6 }}
-                    />
-                    <div
+                {/* Hover Overlay Card (Desktop Only for Premium feel) */}
+                <AnimatePresence>
+                  {!isMobile && hoveredService === service.id && (
+                    <motion.div
+                      initial={{ scale: 0.95, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.95, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                       style={{
-                        position: "relative",
-                        zIndex: 2,
+                        position: "absolute",
+                        left: "-20px",
+                        right: "-20px",
+                        top: "10px",
+                        bottom: "10px",
+                        borderRadius: "60px",
+                        overflow: "hidden",
+                        zIndex: 10,
                         display: "flex",
                         alignItems: "center",
-                        gap: "30px",
-                        color: "#fff",
+                        padding: "0 60px",
+                        backgroundColor: "#000",
                       }}
                     >
-                      <span style={{ fontSize: "80px", fontWeight: "300" }}>
-                        ↗
-                      </span>
-                      <span
+                      <Image
+                        src={service.image}
+                        alt={service.name}
+                        fill
+                        unoptimized
+                        style={{ objectFit: "cover", opacity: 0.6 }}
+                      />
+                      <div
                         style={{
-                          fontSize: "35px",
-                          fontWeight: "400",
-                          letterSpacing: "-0.03em",
-                          whiteSpace: "nowrap"
+                          position: "relative",
+                          zIndex: 2,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "30px",
+                          color: "#fff",
                         }}
                       >
-                        {service.name}
-                      </span>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+                        <span style={{ fontSize: "80px", fontWeight: "300" }}>
+                          ↗
+                        </span>
+                        <span
+                          style={{
+                            fontSize: "35px",
+                            fontWeight: "400",
+                            letterSpacing: "-0.03em",
+                            whiteSpace: "nowrap"
+                          }}
+                        >
+                          {service.name}
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
