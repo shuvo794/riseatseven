@@ -33,6 +33,7 @@ export default function Home() {
         paddingRight: isMobile ? "16px" : "32px",
         paddingBottom: "0",
         minHeight: "100vh",
+        position: "relative",
       }}
     >
       <Navbar />

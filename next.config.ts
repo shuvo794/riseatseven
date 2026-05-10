@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "assets.mixkit.co" },
     ],
   },
+  experimental: {
+    allowedDevOrigins: ["192.168.201.160"],
+  },
 };
 
 export default nextConfig;

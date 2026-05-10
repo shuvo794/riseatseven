@@ -70,7 +70,6 @@ export default function Footer() {
                 style={{
                   fontSize: isMobile ? "24px" : "28px",
                   fontWeight: "700",
-                  marginBottom: "32px",
                   letterSpacing: "-0.02em",
                   lineHeight: "1.1",
                   margin: "0 0 32px 0",

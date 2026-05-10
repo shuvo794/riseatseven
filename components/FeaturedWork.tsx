@@ -398,7 +398,7 @@ export default function FeaturedWork() {
                       <motion.div
                         animate={{ scale: hoveredIndex === index ? 1.05 : 1 }}
                         transition={{ duration: 0.7 }}
-                        style={{ width: "100%", height: "100%" }}
+                        style={{ width: "100%", height: "100%", position: "relative" }}
                       >
                         <Image
                           src={project.image}
