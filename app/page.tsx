@@ -28,7 +28,7 @@ export default function Home() {
       style={{
         maxWidth: "1536px",
         margin: "0 auto",
-        paddingTop: isMobile ? "12px" : "24px",
+        paddingTop: isMobile ? "30px" : "45px",
         paddingLeft: isMobile ? "16px" : "32px",
         paddingRight: isMobile ? "16px" : "32px",
         paddingBottom: "0",
