@@ -44,9 +44,19 @@ function BlogCard({ post, isMobile }: { post: any, isMobile: boolean }) {
           alt={post.title} 
           fill 
           unoptimized 
-          style={{ objectFit: "cover", transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }} 
-          onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
-          onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          style={{ 
+            objectFit: "cover", 
+            transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+            filter: "blur(0px)"
+          }} 
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.1)";
+            e.currentTarget.style.filter = "blur(10px) brightness(0.8)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.filter = "blur(0px) brightness(1)";
+          }}
         />
       </div>
 
