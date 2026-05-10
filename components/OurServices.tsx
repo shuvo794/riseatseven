@@ -117,6 +117,11 @@ export default function OurServices() {
                 key={service.id}
                 onMouseEnter={() => setHoveredService(service.id)}
                 onMouseLeave={() => setHoveredService(null)}
+                onClick={() => {
+                  if (isMobile) {
+                    setHoveredService(hoveredService === service.id ? null : service.id);
+                  }
+                }}
                 style={{
                   borderBottom: "1px solid rgba(0,0,0,0.1)",
                   padding: isMobile ? "24px 0" : "30px 0",
@@ -144,9 +149,9 @@ export default function OurServices() {
                   </span>
                 )}
 
-                {/* Hover Overlay Card (Desktop Only for Premium feel) */}
+                {/* Hover Overlay Card */}
                 <AnimatePresence>
-                  {!isMobile && hoveredService === service.id && (
+                  {hoveredService === service.id && (
                     <motion.div
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
@@ -154,16 +159,16 @@ export default function OurServices() {
                       transition={{ duration: 0.3, ease: "easeOut" }}
                       style={{
                         position: "absolute",
-                        left: "-20px",
-                        right: "-20px",
+                        left: isMobile ? "-10px" : "-20px",
+                        right: isMobile ? "-10px" : "-20px",
                         top: "10px",
                         bottom: "10px",
-                        borderRadius: "60px",
+                        borderRadius: isMobile ? "20px" : "60px",
                         overflow: "hidden",
                         zIndex: 10,
                         display: "flex",
                         alignItems: "center",
-                        padding: "0 60px",
+                        padding: isMobile ? "0 24px" : "0 60px",
                         backgroundColor: "#000",
                       }}
                     >
