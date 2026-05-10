@@ -136,7 +136,7 @@ export default function Navbar() {
                     ? "10px 16px"
                     : "12px 30px"
                   : isMobile
-                    ? "15px 0"
+                    ? "15px 20px"
                     : "20px 0",
                 borderRadius: scrolled ? "100px" : "0",
                 boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.08)" : "none",
