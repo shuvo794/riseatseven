@@ -100,8 +100,8 @@ export default function Navbar() {
               ? "5px"
               : "15px"
             : isMobile
-              ? "45px"
-              : "55px", // 10px gap below the ~35px tall announcement bar
+              ? "55px"
+              : "85px", // Adjusting so it sits nicely inside the newly lowered Hero section
           left: 0,
           right: 0,
           zIndex: 1000,
