@@ -9,21 +9,21 @@ const blogPosts = [
     category: "Rise at Seven Blog",
     location: "Manchester HQ",
     title: "Rise at Seven Exits Sheffield and Triples Manchester as new HQ as they go for global expansion",
-    image: "https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&q=80&w=1200",
+    image: "/images/download.png",
   },
   {
     id: 2,
     category: "Rise at Seven",
     location: "Sheffield",
     title: "Ryan McNamara Is Now Rise at Seven's Global Operations Director",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200",
+    image: "/images/3-copy.webp",
   },
   {
     id: 3,
     category: "Blog Post",
     location: "PR & SEO",
     title: "Rise at Seven Appointed by Cadbury's to Drive Demand and Retail Growth for them in the Chocolate Confectionary Category",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1200",
+    image: "/images/Noomz1-4.webp",
   }
 ];
 
