@@ -11,7 +11,7 @@ const navLinks = [
   { label: "About +", href: "#" },
   { label: "Work", href: "#work", badge: "25" },
   { label: "Careers", href: "#" },
-  { label: "Blog & Resources", href: "#" },
+  { label: "Blog", href: "#" },
   { label: "Webinar", href: "#" },
 ];
 
@@ -40,13 +40,11 @@ export default function Navbar() {
       {/* Announcement Bar */}
       <div
         style={{
-          padding: isMobile ? "8px 10px" : "15px 30px 0 30px",
           position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
+          top: isMobile ? "5px" : "10px",
+          left: isMobile ? "5px" : "10px",
+          right: isMobile ? "5px" : "10px",
           zIndex: 1001,
-          marginTop: "-20px",
           pointerEvents: "none",
           opacity: scrolled ? 0 : 1,
           transform: scrolled ? "translateY(-20px)" : "translateY(0)",
@@ -55,8 +53,7 @@ export default function Navbar() {
       >
         <div
           style={{
-            maxWidth: "1300px",
-            margin: "0 auto",
+            width: "100%",
             backgroundColor: "#b5f5e0",
             color: "#000",
             textAlign: "center",
@@ -83,11 +80,6 @@ export default function Navbar() {
       <header
         style={{
           position: "fixed",
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          width: "100%",
-          transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
           top: scrolled
             ? isMobile
               ? "5px"
@@ -95,7 +87,10 @@ export default function Navbar() {
             : isMobile
               ? "45px"
               : "65px",
-          padding: isMobile ? "0 10px" : "0 40px",
+          left: isMobile ? "5px" : "10px",
+          right: isMobile ? "5px" : "10px",
+          zIndex: 1000,
+          transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
         <div
@@ -105,7 +100,7 @@ export default function Navbar() {
             alignItems: "center",
             justifyContent: "space-between",
             transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-            maxWidth: scrolled ? "1300px" : "100%",
+            width: "100%",
             backgroundColor: scrolled
               ? "rgba(255, 255, 255, 0.9)"
               : "transparent",
@@ -115,11 +110,10 @@ export default function Navbar() {
                 ? "10px 16px"
                 : "12px 30px"
               : isMobile
-                ? "15px 10px"
-                : "20px 0",
+                ? "15px 15px"
+                : "20px 30px",
             borderRadius: scrolled ? "100px" : "0",
             boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.08)" : "none",
-            width: "100%",
             border: scrolled
               ? "1px solid rgba(0,0,0,0.05)"
               : "1px solid transparent",
