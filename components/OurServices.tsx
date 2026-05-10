@@ -185,19 +185,21 @@ export default function OurServices() {
                           zIndex: 2,
                           display: "flex",
                           alignItems: "center",
-                          gap: "30px",
+                          gap: isMobile ? "15px" : "30px",
                           color: "#fff",
+                          width: "100%",
                         }}
                       >
-                        <span style={{ fontSize: "80px", fontWeight: "300" }}>
+                        <span style={{ fontSize: isMobile ? "40px" : "80px", fontWeight: "300", flexShrink: 0 }}>
                           ↗
                         </span>
                         <span
                           style={{
-                            fontSize: "35px",
+                            fontSize: isMobile ? "22px" : "35px",
                             fontWeight: "400",
                             letterSpacing: "-0.03em",
-                            whiteSpace: "nowrap"
+                            lineHeight: "1.1",
+                            wordBreak: "break-word",
                           }}
                         >
                           {service.name}
