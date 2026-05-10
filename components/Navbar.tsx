@@ -42,37 +42,52 @@ export default function Navbar() {
         style={{
           position: "fixed",
           top: isMobile ? "5px" : "10px",
-          left: isMobile ? "5px" : "10px",
-          right: isMobile ? "5px" : "10px",
+          left: 0,
+          right: 0,
           zIndex: 1001,
           pointerEvents: "none",
           opacity: scrolled ? 0 : 1,
           transform: scrolled ? "translateY(-20px)" : "translateY(0)",
           transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
+        {/* Mimic main container max-width and padding */}
         <div
           style={{
             width: "100%",
-            backgroundColor: "#b5f5e0",
-            color: "#000",
-            textAlign: "center",
-            fontSize: isMobile ? "11px" : "13px",
-            fontWeight: "800",
-            padding: isMobile ? "8px 16px" : "10px 24px",
-            borderRadius: "100px",
-            letterSpacing: "-0.01em",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "8px",
-            pointerEvents: "auto",
-            boxShadow: "0 4px 15px rgba(0,0,0,0.05)",
+            maxWidth: "1536px",
+            paddingLeft: isMobile ? "16px" : "32px",
+            paddingRight: isMobile ? "16px" : "32px",
           }}
         >
-          <span style={{ fontSize: "16px" }}>🚨</span> The Category Leaderboard
-          - Live Now
+          {/* Mimic Hero margin (10px) */}
+          <div style={{ margin: isMobile ? "0 5px" : "0 10px" }}>
+            <div
+              style={{
+                width: "100%",
+                backgroundColor: "#b5f5e0",
+                color: "#000",
+                textAlign: "center",
+                fontSize: isMobile ? "11px" : "13px",
+                fontWeight: "800",
+                padding: isMobile ? "8px 16px" : "10px 24px",
+                borderRadius: "100px",
+                letterSpacing: "-0.01em",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                pointerEvents: "auto",
+                boxShadow: "0 4px 15px rgba(0,0,0,0.05)",
+              }}
+            >
+              <span style={{ fontSize: "16px" }}>🚨</span> The Category Leaderboard
+              - Live Now
+            </div>
+          </div>
         </div>
       </div>
 
@@ -86,54 +101,65 @@ export default function Navbar() {
               : "15px"
             : isMobile
               ? "45px"
-              : "65px",
-          left: isMobile ? "5px" : "10px",
-          right: isMobile ? "5px" : "10px",
+              : "55px", // 10px gap below the ~35px tall announcement bar
+          left: 0,
+          right: 0,
           zIndex: 1000,
           transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <div
           style={{
-            margin: "0 auto",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
             width: "100%",
-            backgroundColor: scrolled
-              ? "rgba(255, 255, 255, 0.9)"
-              : "transparent",
-            backdropFilter: scrolled ? "blur(20px)" : "none",
-            padding: scrolled
-              ? isMobile
-                ? "10px 16px"
-                : "12px 30px"
-              : isMobile
-                ? "15px 15px"
-                : "20px 30px",
-            borderRadius: scrolled ? "100px" : "0",
-            boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.08)" : "none",
-            border: scrolled
-              ? "1px solid rgba(0,0,0,0.05)"
-              : "1px solid transparent",
+            maxWidth: "1536px",
+            paddingLeft: isMobile ? "16px" : "32px",
+            paddingRight: isMobile ? "16px" : "32px",
           }}
         >
-          {/* Logo */}
-          <Link
-            href="/"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              textDecoration: "none",
-              color: scrolled ? "#000" : "#fff",
-              fontSize: isMobile ? "20px" : "26px",
-              fontWeight: "700",
-              letterSpacing: "-0.02em",
-              flexShrink: 0,
-            }}
-          >
-            Rise at Seven
+          {/* Mimic Hero margin (10px) */}
+          <div style={{ margin: isMobile ? "0 5px" : "0 10px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+                width: "100%",
+                backgroundColor: scrolled
+                  ? "rgba(255, 255, 255, 0.9)"
+                  : "transparent",
+                backdropFilter: scrolled ? "blur(20px)" : "none",
+                padding: scrolled
+                  ? isMobile
+                    ? "10px 16px"
+                    : "12px 30px"
+                  : isMobile
+                    ? "15px 0"
+                    : "20px 0",
+                borderRadius: scrolled ? "100px" : "0",
+                boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.08)" : "none",
+                border: scrolled
+                  ? "1px solid rgba(0,0,0,0.05)"
+                  : "1px solid transparent",
+              }}
+            >
+              {/* Logo */}
+              <Link
+                href="/"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  textDecoration: "none",
+                  color: scrolled ? "#000" : "#fff",
+                  fontSize: isMobile ? "20px" : "26px",
+                  fontWeight: "700",
+                  letterSpacing: "-0.02em",
+                  flexShrink: 0,
+                }}
+              >
+                Rise at Seven
             <span
               style={{
                 fontSize: "14px",
@@ -246,6 +272,8 @@ export default function Navbar() {
               </button>
             )}
           </div>
+        </div>
+        </div>
         </div>
       </header>
 
