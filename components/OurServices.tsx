@@ -168,7 +168,7 @@ export default function OurServices() {
                         zIndex: 10,
                         display: "flex",
                         alignItems: "center",
-                        padding: isMobile ? "0 24px" : "0 60px",
+                        padding: isMobile ? "0 16px" : "0 60px",
                         backgroundColor: "#000",
                       }}
                     >
@@ -185,21 +185,22 @@ export default function OurServices() {
                           zIndex: 2,
                           display: "flex",
                           alignItems: "center",
-                          gap: isMobile ? "15px" : "30px",
+                          gap: isMobile ? "10px" : "30px",
                           color: "#fff",
                           width: "100%",
                         }}
                       >
-                        <span style={{ fontSize: isMobile ? "40px" : "80px", fontWeight: "300", flexShrink: 0 }}>
+                        <span style={{ fontSize: isMobile ? "30px" : "80px", fontWeight: "300", flexShrink: 0 }}>
                           ↗
                         </span>
                         <span
                           style={{
-                            fontSize: isMobile ? "22px" : "35px",
-                            fontWeight: "400",
+                            fontSize: isMobile ? "18px" : "35px",
+                            fontWeight: "500",
                             letterSpacing: "-0.03em",
                             lineHeight: "1.1",
                             wordBreak: "break-word",
+                            flex: 1,
                           }}
                         >
                           {service.name}
