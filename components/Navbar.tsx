@@ -91,6 +91,36 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Inline styles for responsive elements to avoid hydration flash */}
+      <style>{`
+        .nav-logo {
+          width: 160px;
+        }
+        .desktop-nav {
+          display: flex !important;
+        }
+        .desktop-cta {
+          display: flex !important;
+        }
+        .mobile-cta {
+          display: none !important;
+        }
+        @media (max-width: 1023px) {
+          .nav-logo {
+            width: 120px !important;
+          }
+          .desktop-nav {
+            display: none !important;
+          }
+          .desktop-cta {
+            display: none !important;
+          }
+          .mobile-cta {
+            display: flex !important;
+          }
+        }
+      `}</style>
+
       {/* Main Nav */}
       <header
         style={{
@@ -137,7 +167,7 @@ export default function Navbar() {
                     : "12px 30px"
                   : isMobile
                     ? "15px 20px"
-                    : "20px 0",
+                    : "20px 30px",
                 borderRadius: scrolled ? "100px" : "0",
                 boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.08)" : "none",
                 border: scrolled
@@ -147,14 +177,15 @@ export default function Navbar() {
             >
               <Link
                 href="/"
+                className="nav-logo"
                 style={{
                   display: "flex",
                   alignItems: "center",
                   textDecoration: "none",
                   color: scrolled ? "#000" : "#fff",
-                  width: isMobile ? "120px" : "160px",
                   height: "auto",
                   flexShrink: 0,
+                  transition: "width 0.3s",
                 }}
               >
                 <svg
@@ -180,15 +211,14 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Links */}
-          {mounted && !isMobile && (
-            <nav
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "20px",
-                margin: "0 20px",
-              }}
-            >
+          <nav
+            className="desktop-nav"
+            style={{
+              alignItems: "center",
+              gap: "20px",
+              margin: "0 20px",
+            }}
+          >
               {navLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -230,8 +260,7 @@ export default function Navbar() {
                   )}
                 </Link>
               ))}
-            </nav>
-          )}
+          </nav>
 
           {/* CTA & Mobile Toggle */}
           <div
@@ -242,43 +271,42 @@ export default function Navbar() {
               flexShrink: 0,
             }}
           >
-            {!isMobile && (
-              <Link
-                href="#contact"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  fontSize: "14px",
-                  fontWeight: "700",
-                  padding: "12px 28px",
-                  borderRadius: "100px",
-                  transition: "all 0.3s",
-                  backgroundColor: scrolled ? "#000" : "#fff",
-                  color: scrolled ? "#fff" : "#000",
-                  textDecoration: "none",
-                  boxShadow: "0 4px 14px rgba(0,0,0,0.1)",
-                }}
-              >
-                Get In Touch{" "}
-                <span style={{ fontSize: "18px", lineHeight: 1 }}>↗</span>
-              </Link>
-            )}
+            <Link
+              href="#contact"
+              className="desktop-cta"
+              style={{
+                alignItems: "center",
+                gap: "8px",
+                fontSize: "14px",
+                fontWeight: "700",
+                padding: "12px 28px",
+                borderRadius: "100px",
+                transition: "all 0.3s",
+                backgroundColor: scrolled ? "#000" : "#fff",
+                color: scrolled ? "#fff" : "#000",
+                textDecoration: "none",
+                boxShadow: "0 4px 14px rgba(0,0,0,0.1)",
+              }}
+            >
+              Get In Touch{" "}
+              <span style={{ fontSize: "18px", lineHeight: 1 }}>↗</span>
+            </Link>
 
-            {isMobile && (
-              <button
-                onClick={() => setMobileOpen(true)}
-                style={{
-                  padding: "8px",
-                  color: scrolled ? "#000" : "#fff",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                <Menu size={28} />
-              </button>
-            )}
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="mobile-cta"
+              style={{
+                padding: "8px",
+                color: scrolled ? "#000" : "#fff",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Menu size={28} />
+            </button>
           </div>
         </div>
         </div>
